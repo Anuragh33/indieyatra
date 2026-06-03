@@ -25,7 +25,7 @@
 
 <br/>
 
-**[🌐 Live Demo](https://indiebus.vercel.app)** &nbsp;·&nbsp; **[🐛 Report a Bug](https://github.com/Anuragh33/indieyatra/issues)** &nbsp;·&nbsp; **[✨ Request a Feature](https://github.com/Anuragh33/indieyatra/issues)**
+**[🌐 Live Demo](https://indieyatra.vercel.app)** &nbsp;·&nbsp; **[🐛 Report a Bug](https://github.com/Anuragh33/indieyatra/issues)** &nbsp;·&nbsp; **[✨ Request a Feature](https://github.com/Anuragh33/indieyatra/issues)**
 
 <br/>
 
