@@ -142,8 +142,8 @@ function FlightsLanding() {
     <>
       <Navbar />
       <main className="min-h-screen pb-24 md:pb-8">
-        <section className="relative overflow-hidden border-b border-border min-h-screen flex flex-col">
-          <div className="absolute inset-0 pointer-events-none">
+        <section className="relative overflow-hidden border-b border-border flex flex-col md:min-h-screen">
+          <div className="relative aspect-video md:absolute md:inset-0 overflow-hidden pointer-events-none">
             <img
               src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80"
               alt="Airplane in flight"
@@ -151,13 +151,13 @@ function FlightsLanding() {
             />
             <div className="absolute inset-0 bg-gradient-to-b from-bg-primary/60 via-transparent to-bg-primary/90" />
           </div>
-          <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="hidden md:block absolute inset-0 opacity-20 pointer-events-none">
             <div className="absolute top-12 right-16 w-80 h-80 rounded-full bg-flight/30 blur-3xl" />
             <div className="absolute bottom-0 left-20 w-72 h-72 rounded-full bg-purple/20 blur-3xl" />
           </div>
 
-          <div className="flex-1 flex flex-col justify-center relative">
-            <div className="max-w-7xl mx-auto px-6 py-12 w-full">
+          <div className="relative md:absolute md:inset-0 md:flex md:flex-col md:justify-center">
+            <div className="max-w-7xl mx-auto px-6 py-8 md:py-12 w-full">
               <div className="text-center max-w-2xl mx-auto mb-8">
                 <div className="inline-flex items-center gap-2 chip bg-flight/10 text-flight border border-flight/20 mb-4">
                   <Plane className="w-3 h-3" /> {t("flights.chip")}

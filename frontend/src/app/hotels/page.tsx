@@ -47,8 +47,8 @@ function HotelsLanding() {
     <>
       <Navbar />
       <main className="pb-24 md:pb-0">
-        <section className="relative overflow-hidden border-b border-border min-h-screen flex flex-col">
-          <div className="absolute inset-0 pointer-events-none">
+        <section className="relative overflow-hidden border-b border-border flex flex-col md:min-h-screen">
+          <div className="relative aspect-video md:absolute md:inset-0 overflow-hidden pointer-events-none">
             <img
               src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80"
               alt="Luxury hotel lobby"
@@ -56,13 +56,13 @@ function HotelsLanding() {
             />
             <div className="absolute inset-0 bg-gradient-to-b from-bg-primary/60 via-transparent to-bg-primary/90" />
           </div>
-          <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="hidden md:block absolute inset-0 opacity-20 pointer-events-none">
             <div className="absolute top-12 left-16 w-80 h-80 rounded-full bg-hotel/30 blur-3xl" />
             <div className="absolute bottom-0 right-20 w-72 h-72 rounded-full bg-saffron/20 blur-3xl" />
           </div>
 
-          <div className="flex-1 flex flex-col justify-center relative">
-            <div className="max-w-7xl mx-auto px-6 py-12 w-full">
+          <div className="relative md:absolute md:inset-0 md:flex md:flex-col md:justify-center">
+            <div className="max-w-7xl mx-auto px-6 py-8 md:py-12 w-full">
               <div className="text-center max-w-2xl mx-auto mb-8">
                 <div className="inline-flex items-center gap-2 chip bg-hotel/10 text-hotel border border-hotel/20 mb-4">
                   <Building2 className="w-3 h-3" /> {t("hotels.chip")}

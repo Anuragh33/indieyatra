@@ -63,9 +63,9 @@ export default function Home() {
       <Navbar />
       <main className="pb-24 md:pb-12">
         {/* HERO */}
-        <section className="relative overflow-hidden bg-hero-atmosphere border-b border-border min-h-screen flex flex-col">
-          {/* Hero image — object-contain so the full bus is always visible */}
-          <div className="absolute inset-0 pointer-events-none">
+        <section className="relative overflow-hidden bg-hero-atmosphere border-b border-border flex flex-col md:min-h-screen">
+          {/* Image: natural 16:9 on mobile (no crop), absolute fill on desktop */}
+          <div className="relative aspect-video md:absolute md:inset-0 overflow-hidden pointer-events-none">
             <img
               src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=1920&q=80"
               alt="Indian highway bus journey"
@@ -74,23 +74,23 @@ export default function Home() {
             />
             <div className="absolute inset-0 bg-gradient-to-b from-bg-primary/60 via-transparent to-bg-primary/90" />
           </div>
-          <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="hidden md:block absolute inset-0 opacity-20 pointer-events-none">
             <div className="absolute top-20 left-10 w-96 h-96 rounded-full bg-saffron/20 blur-3xl" />
             <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-purple/20 blur-3xl" />
           </div>
 
-          {/* Content pushed toward the bottom so the bus is visible above */}
-          <div className="flex-1 flex flex-col justify-end relative">
-            <div className="max-w-7xl mx-auto px-6 pb-28 w-full">
+          {/* Content: below image on mobile, overlaid at bottom on desktop */}
+          <div className="relative md:absolute md:inset-0 md:flex md:flex-col md:justify-end">
+            <div className="max-w-7xl mx-auto px-6 py-8 md:pb-28 w-full">
               <div className="text-center max-w-3xl mx-auto mb-8">
                 <div className="inline-flex items-center gap-2 chip bg-saffron/10 text-saffron border border-saffron/20 mb-4">
                   <Sparkles className="w-3 h-3" />
                   {t("home.chip")}
                 </div>
-                <h1 className="font-display text-5xl md:text-7xl font-bold tracking-tight mb-4">
+                <h1 className="font-display text-4xl md:text-7xl font-bold tracking-tight mb-4">
                   {t("home.heroTitle1")} <span className="text-gradient-saffron">{t("home.heroTitleAccent")}</span> {t("home.heroTitle2")}
                 </h1>
-                <p className="text-text-secondary text-lg">
+                <p className="text-text-secondary text-base md:text-lg">
                   {t("home.heroSubtitle")}
                 </p>
               </div>
