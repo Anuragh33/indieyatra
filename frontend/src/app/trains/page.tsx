@@ -183,7 +183,7 @@ function TrainsLanding() {
               </div>
 
               <div className="bg-bg-surface/80 backdrop-blur-md border border-border rounded-xl p-4">
-                <div className="flex flex-col md:flex-row gap-3 md:items-end flex-wrap">
+                <div className="flex flex-col md:flex-row gap-3 md:items-end">
                   <div className="flex items-end gap-2 flex-1 min-w-0">
                     <div className="flex-1 min-w-0">
                       <StationInput

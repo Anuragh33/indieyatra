@@ -76,8 +76,8 @@ function HotelsLanding() {
               </div>
 
               <div className="bg-bg-surface/80 backdrop-blur-md border border-border rounded-xl p-4">
-                <div className="flex flex-col md:flex-row gap-3 items-end flex-wrap">
-                  <div className="flex-1 min-w-[200px]">
+                <div className="flex flex-col md:flex-row gap-3 md:items-end flex-wrap">
+                  <div className="w-full md:flex-1 md:min-w-[200px]">
                     <label className="text-xs text-text-muted font-medium block mb-1">{t("hotels.destinationLabel")}</label>
                     <input
                       className="input text-sm w-full"
