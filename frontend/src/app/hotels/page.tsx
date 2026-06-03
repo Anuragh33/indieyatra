@@ -36,10 +36,16 @@ function HotelsLanding() {
   const [checkIn, setCheckIn] = useState(today);
   const [checkOut, setCheckOut] = useState(tomorrow);
   const [guests, setGuests] = useState(2);
+  const [freeCancellation, setFreeCancellation] = useState(false);
+  const [breakfastIncluded, setBreakfastIncluded] = useState(false);
+  const [poolSpa, setPoolSpa] = useState(false);
 
   const handleSearch = () => {
     if (!city.trim()) return;
     const q = new URLSearchParams({ city, check_in: checkIn, check_out: checkOut, guests: String(guests) });
+    if (freeCancellation)  q.set("free_cancel", "1");
+    if (breakfastIncluded) q.set("breakfast", "1");
+    if (poolSpa)           q.set("pool", "1");
     router.push(`/hotels/search?${q}`);
   };
 
@@ -61,23 +67,24 @@ function HotelsLanding() {
             <div className="absolute bottom-0 right-20 w-72 h-72 rounded-full bg-saffron/20 blur-3xl" />
           </div>
 
-          <div className="relative md:absolute md:inset-0 md:flex md:flex-col md:justify-center">
-            <div className="max-w-7xl mx-auto px-6 py-8 md:py-12 w-full">
-              <div className="text-center max-w-2xl mx-auto mb-8">
+          <div className="relative md:absolute md:inset-0 md:flex md:flex-col md:justify-end">
+            <div className="max-w-7xl mx-auto px-6 py-8 md:pb-28 w-full">
+              <div className="text-center max-w-3xl mx-auto mb-8">
                 <div className="inline-flex items-center gap-2 chip bg-hotel/10 text-hotel border border-hotel/20 mb-4">
                   <Building2 className="w-3 h-3" /> {t("hotels.chip")}
                 </div>
-                <h1 className="font-display text-5xl md:text-6xl font-bold tracking-tight mb-3">
+                <h1 className="font-display text-4xl md:text-7xl font-bold tracking-tight mb-4">
                   {t("hotels.heroTitle")} <span className="text-hotel">{t("hotels.heroTitleAccent")}</span>
                 </h1>
-                <p className="text-text-secondary text-base">
+                <p className="text-text-secondary text-base md:text-lg">
                   {t("hotels.heroSub")}
                 </p>
               </div>
 
-              <div className="bg-bg-surface/80 backdrop-blur-md border border-border rounded-xl p-4">
-                <div className="flex flex-col md:flex-row gap-3 md:items-end flex-wrap">
-                  <div className="w-full md:flex-1 md:min-w-[200px]">
+              <div className="bg-bg-elevated border border-border rounded-xl shadow-card overflow-hidden">
+                <div className="p-4 space-y-3">
+                  {/* Row 1: Destination */}
+                  <div>
                     <label className="text-xs text-text-muted font-medium block mb-1">{t("hotels.destinationLabel")}</label>
                     <input
                       className="input text-sm w-full"
@@ -87,41 +94,66 @@ function HotelsLanding() {
                       onKeyDown={e => e.key === "Enter" && handleSearch()}
                     />
                   </div>
-                  <div className="w-full md:w-auto">
-                    <label className="text-xs text-text-muted font-medium block mb-1">{t("hotels.checkInLabel")}</label>
-                    <input
-                      type="date"
-                      className="input text-sm w-full md:w-36"
-                      value={checkIn}
-                      min={today}
-                      onChange={e => setCheckIn(e.target.value)}
-                    />
+
+                  {/* Row 2: Check-in | Check-out | Guests */}
+                  <div className="flex flex-col md:flex-row gap-2">
+                    <div className="flex-1 min-w-0">
+                      <label className="text-xs text-text-muted font-medium block mb-1">{t("hotels.checkInLabel")}</label>
+                      <input
+                        type="date"
+                        className="input text-sm w-full"
+                        value={checkIn}
+                        min={today}
+                        onChange={e => setCheckIn(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <label className="text-xs text-text-muted font-medium block mb-1">{t("hotels.checkOutLabel")}</label>
+                      <input
+                        type="date"
+                        className="input text-sm w-full"
+                        value={checkOut}
+                        min={checkIn}
+                        onChange={e => setCheckOut(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex items-center gap-1.5 bg-bg-surface border border-border rounded-md px-3 h-[42px] mt-auto">
+                      <select
+                        className="bg-transparent text-sm text-text-primary border-none outline-none cursor-pointer"
+                        value={guests}
+                        onChange={e => setGuests(parseInt(e.target.value))}
+                      >
+                        {[1, 2, 3, 4, 5, 6].map(n => (
+                          <option key={n} value={n}>{t("hotels.guest", n)}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
-                  <div className="w-full md:w-auto">
-                    <label className="text-xs text-text-muted font-medium block mb-1">{t("hotels.checkOutLabel")}</label>
-                    <input
-                      type="date"
-                      className="input text-sm w-full md:w-36"
-                      value={checkOut}
-                      min={checkIn}
-                      onChange={e => setCheckOut(e.target.value)}
-                    />
+
+                  {/* Row 3: Amenity chips */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="w-px h-4 bg-border flex-none" />
+                    {[
+                      { label: "Free Cancellation", state: freeCancellation, set: setFreeCancellation },
+                      { label: "Breakfast Included", state: breakfastIncluded, set: setBreakfastIncluded },
+                      { label: "Pool & Spa",         state: poolSpa,          set: setPoolSpa          },
+                    ].map(f => (
+                      <label
+                        key={f.label}
+                        className={`flex items-center gap-1.5 px-2.5 h-[34px] rounded-md border cursor-pointer text-xs transition whitespace-nowrap ${
+                          f.state ? "border-hotel bg-hotel/5 text-hotel" : "border-border hover:border-border-hover text-text-secondary"
+                        }`}
+                      >
+                        <input type="checkbox" checked={f.state} onChange={e => f.set(e.target.checked)} className="accent-hotel w-3 h-3" />
+                        {f.label}
+                      </label>
+                    ))}
                   </div>
-                  <div className="w-full md:w-auto">
-                    <label className="text-xs text-text-muted font-medium block mb-1">{t("hotels.guestsLabel")}</label>
-                    <select
-                      className="input text-sm w-full md:w-28"
-                      value={guests}
-                      onChange={e => setGuests(parseInt(e.target.value))}
-                    >
-                      {[1, 2, 3, 4].map(n => (
-                        <option key={n} value={n}>{t("hotels.guest", n)}</option>
-                      ))}
-                    </select>
-                  </div>
+
+                  {/* Row 4: Search */}
                   <button
                     onClick={handleSearch}
-                    className="flex items-center gap-2 text-white font-semibold px-5 py-2.5 rounded-md w-full md:w-auto justify-center hover:opacity-90 active:scale-95 transition-all"
+                    className="w-full flex items-center gap-2 text-white font-semibold px-5 h-[42px] rounded-md justify-center hover:opacity-90 active:scale-95 transition-all"
                     style={{ background: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)" }}
                   >
                     <Search className="w-4 h-4" />

@@ -138,6 +138,20 @@ const kn: Translations = {
     airlinesTitle: "ನಾವು ಒಳಗೊಳ್ಳುವ ಏರ್‌ಲೈನ್‌ಗಳು",
   },
   legal: { ...en.legal },
+  landing: {
+    ...en.landing,
+    tagline: "ಭಾರತದ ಪ್ರೀಮಿಯಂ ಟ್ರಾವೆಲ್ ಸೂಪರ್-ಆ್ಯಪ್",
+    heroTitleMid: ", ಭಾರತದ",
+    heroTitleEnd: "ಪ್ರತಿ ಪ್ರಯಾಣ",
+    heroSub: "ಬಸ್ · ರೈಲು · ವಿಮಾನ · ಹೋಟೆಲ್ — ಒಂದೇ ಆ್ಯಪ್‌ನಲ್ಲಿ ಬುಕ್ ಮಾಡಿ",
+    trust1: "1 ಕೋಟಿ+ ಪ್ರಯಾಣಗಳು",
+    trust2: "500+ ಆಪರೇಟರ್‌ಗಳು",
+    trust3: "₹0 ಬುಕಿಂಗ್ ಶುಲ್ಕ",
+    trust4: "ನೇರ ಟ್ರ್ಯಾಕಿಂಗ್",
+    bookNow: "ಈಗ ಬುಕ್ ಮಾಡಿ",
+    explore: "ನೋಡಿ",
+    comingSoon: "ಶೀಘ್ರದಲ್ಲಿ ಬರುತ್ತಿದೆ",
+  },
 };
 
 export default kn;

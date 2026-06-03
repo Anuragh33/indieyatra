@@ -141,6 +141,20 @@ const ta: Translations = {
     airlinesTitle: "நாங்கள் உள்ளடக்கும் விமான நிறுவனங்கள்",
   },
   legal: { ...en.legal },
+  landing: {
+    ...en.landing,
+    tagline: "இந்தியாவின் பிரீமியம் பயண சூப்பர்-ஆப்",
+    heroTitleMid: ", இந்தியாவின்",
+    heroTitleEnd: "ஒவ்வொரு பயணம்",
+    heroSub: "பஸ் · ரயில் · விமானம் · ஹோட்டல் — ஒரே இடத்தில் பயணங்களை புக் செய்யுங்கள்",
+    trust1: "1 கோடி+ பயணங்கள்",
+    trust2: "500+ ஆபரேட்டர்கள்",
+    trust3: "₹0 புக்கிங் கட்டணம்",
+    trust4: "நேரடி கண்காணிப்பு",
+    bookNow: "இப்போது புக் செய்",
+    explore: "பார்க்க",
+    comingSoon: "விரைவில் வருகிறது",
+  },
 };
 
 export default ta;

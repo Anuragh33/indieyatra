@@ -189,14 +189,14 @@ export function SearchWidget() {
             </div>
 
             {/* Dates row — side by side on mobile too */}
-            <div className="flex items-center gap-2">
-              <div className="relative flex-1 md:flex-none md:w-[130px]">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="relative flex-1 min-w-0 md:flex-none md:w-[130px]">
                 <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted pointer-events-none" />
                 <input type="date" value={departDate} onChange={(e) => setDepartDate(e.target.value)}
                   className="input pl-8 w-full text-sm" />
               </div>
               {mode === "round-trip" && (
-                <div className="relative flex-1 md:flex-none md:w-[130px]">
+                <div className="relative flex-1 min-w-0 md:flex-none md:w-[130px]">
                   <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-saffron pointer-events-none" />
                   <input type="date" value={returnDate} min={departDate}
                     onChange={(e) => setReturnDate(e.target.value)}

@@ -164,6 +164,20 @@ const mr: Translations = {
     },
   },
   legal: { ...en.legal },
+  landing: {
+    ...en.landing,
+    tagline: "भारताचा प्रीमियम ट्रॅव्हल सुपर-अॅप",
+    heroTitleMid: ", भारतातील",
+    heroTitleEnd: "प्रत्येक प्रवास",
+    heroSub: "बस · ट्रेन · फ्लाइट · हॉटेल — एकाच अॅपमध्ये बुक करा",
+    trust1: "१ कोटी+ प्रवास बुक झाले",
+    trust2: "500+ ऑपरेटर",
+    trust3: "₹0 बुकिंग शुल्क",
+    trust4: "थेट ट्रॅकिंग",
+    bookNow: "आता बुक करा",
+    explore: "पाहा",
+    comingSoon: "लवकरच येत आहे",
+  },
 };
 
 export default mr;

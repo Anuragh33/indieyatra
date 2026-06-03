@@ -121,6 +121,10 @@ a {
     background-size: 16px;
     padding-right: 2.5rem;
   }
+  input[type="date"] {
+    min-width: 0;
+    max-width: 100%;
+  }
   .chip {
     @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium;
   }

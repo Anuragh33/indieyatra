@@ -93,11 +93,13 @@ function FlightsLanding() {
   const router = useRouter();
   const t = useT();
 
+  const [tripType, setTripType] = useState<"one-way"|"round-trip">("one-way");
   const [fromAirport, setFromAirport] = useState<Airport | null>(null);
   const [toAirport, setToAirport] = useState<Airport | null>(null);
   const [fromVal, setFromVal] = useState("");
   const [toVal, setToVal] = useState("");
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [returnDate, setReturnDate] = useState(new Date(Date.now() + 86400000).toISOString().slice(0, 10));
   const [adults, setAdults] = useState(1);
   const [cabin, setCabin] = useState<"economy"|"premium_economy"|"business"|"first">("economy");
 
@@ -121,7 +123,9 @@ function FlightsLanding() {
     const fromCode = fromAirport?.iata || fromVal.split(/[\s–-]+/)[0].trim().toUpperCase();
     const toCode   = toAirport?.iata   || toVal.split(/[\s–-]+/)[0].trim().toUpperCase();
     if (!fromCode || !toCode) return;
-    router.push(`/flights/search?from=${fromCode}&to=${toCode}&date=${date}&adults=${adults}&cabin=${cabin}`);
+    const q = new URLSearchParams({ from: fromCode, to: toCode, date, adults: String(adults), cabin, trip_type: tripType });
+    if (tripType === "round-trip") q.set("return_date", returnDate);
+    router.push(`/flights/search?${q}`);
   };
 
   const quickRoutes = [
@@ -157,23 +161,42 @@ function FlightsLanding() {
             <div className="absolute bottom-0 left-20 w-72 h-72 rounded-full bg-purple/20 blur-3xl" />
           </div>
 
-          <div className="relative md:absolute md:inset-0 md:flex md:flex-col md:justify-center">
-            <div className="max-w-7xl mx-auto px-6 py-8 md:py-12 w-full">
-              <div className="text-center max-w-2xl mx-auto mb-8">
+          <div className="relative md:absolute md:inset-0 md:flex md:flex-col md:justify-end">
+            <div className="max-w-7xl mx-auto px-6 py-8 md:pb-28 w-full">
+              <div className="text-center max-w-3xl mx-auto mb-8">
                 <div className="inline-flex items-center gap-2 chip bg-flight/10 text-flight border border-flight/20 mb-4">
                   <Plane className="w-3 h-3" /> {t("flights.chip")}
                 </div>
-                <h1 className="font-display text-5xl md:text-6xl font-bold tracking-tight mb-3">
+                <h1 className="font-display text-4xl md:text-7xl font-bold tracking-tight mb-4">
                   {t("flights.heroTitle")} <span className="text-flight">{t("flights.heroTitleAccent")}</span>
                 </h1>
-                <p className="text-text-secondary text-base">
+                <p className="text-text-secondary text-base md:text-lg">
                   {t("flights.heroSub")}
                 </p>
               </div>
 
-              <div className="bg-bg-surface/80 backdrop-blur-md border border-border rounded-xl p-4">
-                <div className="flex flex-col md:flex-row gap-3 md:items-end">
-                  <div className="flex items-end gap-2 flex-1 min-w-0">
+              <div className="bg-bg-elevated border border-border rounded-xl shadow-card overflow-hidden">
+                {/* Tabs */}
+                <div className="flex border-b border-border px-4 pt-3">
+                  {(["one-way", "round-trip"] as const).map((type) => (
+                    <button
+                      key={type}
+                      type="button"
+                      onClick={() => setTripType(type)}
+                      className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors -mb-px ${
+                        tripType === type
+                          ? "border-flight text-flight"
+                          : "border-transparent text-text-secondary hover:text-text-primary"
+                      }`}
+                    >
+                      {type === "one-way" ? t("flights.oneWay") : t("flights.roundTrip")}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="p-4 space-y-3">
+                  {/* Row 1: From | Swap | To */}
+                  <div className="flex items-center gap-2">
                     <div className="flex-1 min-w-0">
                       <AirportInput
                         label={t("flights.fromLabel")}
@@ -182,7 +205,7 @@ function FlightsLanding() {
                         onSelect={a => { setFromAirport(a); setFromVal(`${a.iata} – ${a.city}`); }}
                       />
                     </div>
-                    <button type="button" onClick={swap} className="btn-icon mb-0.5 shrink-0">
+                    <button type="button" onClick={swap} className="btn-icon mt-5 shrink-0">
                       <ArrowLeftRight className="w-4 h-4" />
                     </button>
                     <div className="flex-1 min-w-0">
@@ -194,34 +217,47 @@ function FlightsLanding() {
                       />
                     </div>
                   </div>
-                  <div className="w-full md:w-auto">
-                    <label className="text-xs text-text-muted font-medium block mb-1">{t("flights.departureLabel")}</label>
-                    <input
-                      type="date"
-                      className="input text-sm w-full md:w-36"
-                      value={date}
-                      min={today}
-                      onChange={e => setDate(e.target.value)}
-                    />
-                  </div>
-                  <div className="w-full md:w-auto">
-                    <label className="text-xs text-text-muted font-medium block mb-1">{t("flights.adultsLabel")}</label>
-                    <select
-                      className="input text-sm w-full md:w-24"
-                      value={adults}
-                      onChange={e => setAdults(parseInt(e.target.value))}
-                    >
-                      {[1, 2, 3, 4, 5, 6].map(n => (
-                        <option key={n} value={n}>{n} Adult{n > 1 ? "s" : ""}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
 
-                {/* Cabin class selector */}
-                <div className="mt-3 flex flex-col gap-2">
-                  <label className="text-xs text-text-muted font-medium">Cabin Class</label>
-                  <div className="flex flex-wrap gap-2">
+                  {/* Row 2: Dates + Adults */}
+                  <div className="flex flex-col md:flex-row gap-2">
+                    <div className="flex-1 min-w-0">
+                      <label className="text-xs text-text-muted font-medium block mb-1">{t("flights.departureLabel")}</label>
+                      <input
+                        type="date"
+                        className="input text-sm w-full"
+                        value={date}
+                        min={today}
+                        onChange={e => setDate(e.target.value)}
+                      />
+                    </div>
+                    {tripType === "round-trip" && (
+                      <div className="flex-1 min-w-0">
+                        <label className="text-xs text-text-muted font-medium block mb-1">{t("flights.returnLabel")}</label>
+                        <input
+                          type="date"
+                          className="input text-sm w-full border-flight/40 focus:border-flight"
+                          value={returnDate}
+                          min={date}
+                          onChange={e => setReturnDate(e.target.value)}
+                        />
+                      </div>
+                    )}
+                    <div className="flex items-center gap-1.5 bg-bg-surface border border-border rounded-md px-3 h-[42px] mt-auto">
+                      <select
+                        className="bg-transparent text-sm text-text-primary border-none outline-none cursor-pointer"
+                        value={adults}
+                        onChange={e => setAdults(parseInt(e.target.value))}
+                      >
+                        {[1, 2, 3, 4, 5, 6].map(n => (
+                          <option key={n} value={n}>{n} {n === 1 ? "Adult" : "Adults"}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Row 3: Cabin class chips */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="w-px h-4 bg-border flex-none" />
                     {([
                       { value: "economy",         label: "Economy" },
                       { value: "premium_economy", label: "Premium Economy" },
@@ -232,48 +268,49 @@ function FlightsLanding() {
                         key={value}
                         type="button"
                         onClick={() => setCabin(value)}
-                        className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${
+                        className={`flex items-center gap-1.5 px-2.5 h-[34px] rounded-md border text-xs font-medium transition whitespace-nowrap ${
                           cabin === value
-                            ? "bg-flight/15 border-flight text-flight"
-                            : "border-border text-text-secondary hover:border-flight/50 hover:text-flight/80"
+                            ? "border-flight bg-flight/10 text-flight"
+                            : "border-border hover:border-border-hover text-text-secondary"
                         }`}
                       >
                         {label}
                       </button>
                     ))}
                   </div>
-                </div>
 
-                {/* Search + voice */}
-                <div className="mt-3 flex gap-2">
-                  <button
-                    onClick={handleSearch}
-                    className="flex-1 flex items-center gap-2 text-white font-semibold px-5 py-2.5 rounded-md transition-all active:scale-95 hover:opacity-90 justify-center"
-                    style={{ background: "linear-gradient(135deg, #06B6D4 0%, #0891B2 100%)" }}
-                  >
-                    <Search className="w-4 h-4" />
-                    {t("flights.searchBtn")}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={voiceStatus === "listening" ? stopVoice : startVoice}
-                    title={voiceStatus === "listening" ? "Stop" : "Voice search"}
-                    className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-md border transition-colors ${
-                      voiceStatus === "listening"
-                        ? "border-red-500 bg-red-500/10 text-red-400 animate-pulse"
-                        : "border-border hover:border-flight text-text-muted hover:text-flight"
-                    }`}
-                  >
-                    <Mic className="w-4 h-4" />
-                  </button>
+                  {/* Row 4: Search + Voice */}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleSearch}
+                      className="flex-1 flex items-center gap-2 text-white font-semibold px-5 h-[42px] rounded-md transition-all active:scale-95 hover:opacity-90 justify-center"
+                      style={{ background: "linear-gradient(135deg, #06B6D4 0%, #0891B2 100%)" }}
+                    >
+                      <Search className="w-4 h-4" />
+                      {t("flights.searchBtn")}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={voiceStatus === "listening" ? stopVoice : startVoice}
+                      title={voiceStatus === "listening" ? "Stop" : "Voice search"}
+                      className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-md border transition-colors ${
+                        voiceStatus === "listening"
+                          ? "border-red-500 bg-red-500/10 text-red-400 animate-pulse"
+                          : "border-border hover:border-flight text-text-muted hover:text-flight"
+                      }`}
+                    >
+                      <Mic className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  <PriceCalendar
+                    from={fromAirport?.iata || ""}
+                    to={toAirport?.iata || ""}
+                    selectedDate={date}
+                    onSelect={setDate}
+                    vertical="flight"
+                  />
                 </div>
-                <PriceCalendar
-                  from={fromAirport?.iata || ""}
-                  to={toAirport?.iata || ""}
-                  selectedDate={date}
-                  onSelect={setDate}
-                  vertical="flight"
-                />
               </div>
             </div>
           </div>

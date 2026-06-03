@@ -101,11 +101,13 @@ function TrainsLanding() {
   const router = useRouter();
   const t = useT();
 
+  const [tripType, setTripType] = useState<"one-way"|"round-trip">("one-way");
   const [fromSt, setFromSt] = useState<TrainStation | null>(null);
   const [toSt, setToSt] = useState<TrainStation | null>(null);
   const [fromVal, setFromVal] = useState("");
   const [toVal, setToVal] = useState("");
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [returnDate, setReturnDate] = useState(new Date(Date.now() + 3 * 86400000).toISOString().slice(0, 10));
   const [classFilter, setClassFilter] = useState("");
   const [quota, setQuota] = useState("GN");
   const [dayTrainOnly, setDayTrainOnly] = useState(false);
@@ -131,10 +133,11 @@ function TrainsLanding() {
     const fromCode = fromSt?.code || fromVal.split(/[\s–-]+/)[0].trim().toUpperCase();
     const toCode   = toSt?.code   || toVal.split(/[\s–-]+/)[0].trim().toUpperCase();
     if (!fromCode || !toCode) return;
-    const q = new URLSearchParams({ from: fromCode, to: toCode, date, quota });
-    if (classFilter)    q.set("class", classFilter);
-    if (dayTrainOnly)   q.set("day_only", "1");
-    if (superfastOnly)  q.set("superfast", "1");
+    const q = new URLSearchParams({ from: fromCode, to: toCode, date, quota, trip_type: tripType });
+    if (classFilter)                   q.set("class", classFilter);
+    if (dayTrainOnly)                  q.set("day_only", "1");
+    if (superfastOnly)                 q.set("superfast", "1");
+    if (tripType === "round-trip")     q.set("return_date", returnDate);
     router.push(`/trains/search?${q}`);
   };
 
@@ -172,23 +175,42 @@ function TrainsLanding() {
             <div className="absolute bottom-0 right-20 w-72 h-72 rounded-full bg-purple/20 blur-3xl" />
           </div>
 
-          <div className="relative md:absolute md:inset-0 md:flex md:flex-col md:justify-center">
-            <div className="max-w-7xl mx-auto px-6 py-8 md:py-12 w-full">
-              <div className="text-center max-w-2xl mx-auto mb-8">
+          <div className="relative md:absolute md:inset-0 md:flex md:flex-col md:justify-end">
+            <div className="max-w-7xl mx-auto px-6 py-8 md:pb-28 w-full">
+              <div className="text-center max-w-3xl mx-auto mb-8">
                 <div className="inline-flex items-center gap-2 chip bg-train/10 text-train border border-train/20 mb-4">
                   <Train className="w-3 h-3" /> {t("trains.chip")}
                 </div>
-                <h1 className="font-display text-5xl md:text-6xl font-bold tracking-tight mb-3">
-                  {t("trains.heroTitle")} <span style={{ color: "#6366F1" }}>{t("trains.heroTitleAccent")}</span>
+                <h1 className="font-display text-4xl md:text-7xl font-bold tracking-tight mb-4">
+                  {t("trains.heroTitle")} <span className="text-gradient-purple">{t("trains.heroTitleAccent")}</span>
                 </h1>
-                <p className="text-text-secondary text-base">
+                <p className="text-text-secondary text-base md:text-lg">
                   {t("trains.heroSub")}
                 </p>
               </div>
 
-              <div className="bg-bg-surface/80 backdrop-blur-md border border-border rounded-xl p-4">
-                <div className="flex flex-col md:flex-row gap-3 md:items-end">
-                  <div className="flex items-end gap-2 flex-1 min-w-0">
+              <div className="bg-bg-elevated border border-border rounded-xl shadow-card overflow-hidden">
+                {/* Tabs */}
+                <div className="flex border-b border-border px-4 pt-3">
+                  {(["one-way", "round-trip"] as const).map((type) => (
+                    <button
+                      key={type}
+                      type="button"
+                      onClick={() => setTripType(type)}
+                      className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors -mb-px ${
+                        tripType === type
+                          ? "border-train text-train"
+                          : "border-transparent text-text-secondary hover:text-text-primary"
+                      }`}
+                    >
+                      {type === "one-way" ? t("trains.oneWay") : t("trains.roundTrip")}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="p-4 space-y-3">
+                  {/* Row 1: From | Swap | To */}
+                  <div className="flex items-center gap-2">
                     <div className="flex-1 min-w-0">
                       <StationInput
                         label={t("trains.fromLabel")}
@@ -197,7 +219,7 @@ function TrainsLanding() {
                         onSelect={s => { setFromSt(s); setFromVal(`${s.code} – ${s.name}`); }}
                       />
                     </div>
-                    <button type="button" onClick={swap} className="btn-icon mb-0.5 shrink-0">
+                    <button type="button" onClick={swap} className="btn-icon mt-5 shrink-0">
                       <ArrowLeftRight className="w-4 h-4" />
                     </button>
                     <div className="flex-1 min-w-0">
@@ -209,104 +231,111 @@ function TrainsLanding() {
                       />
                     </div>
                   </div>
-                  <div className="w-full md:w-auto">
-                    <label className="text-xs text-text-muted font-medium block mb-1">{t("trains.dateLabel")}</label>
-                    <input
-                      type="date"
-                      className="input text-sm w-full md:w-36"
-                      value={date}
-                      min={today}
-                      max={maxDate}
-                      onChange={e => setDate(e.target.value)}
-                    />
-                  </div>
-                  <div className="w-full md:w-auto">
-                    <label className="text-xs text-text-muted font-medium block mb-1">{t("trains.classLabel")}</label>
-                    <select
-                      className="input text-sm w-full md:w-32"
-                      value={classFilter}
-                      onChange={e => setClassFilter(e.target.value)}
-                    >
-                      <option value="">{t("trains.allClasses")}</option>
-                      {["1A", "2A", "3A", "SL", "CC", "EC", "2S"].map(c => (
-                        <option key={c} value={c}>{c}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="w-full md:w-auto">
-                    <label className="text-xs text-text-muted font-medium block mb-1">{t("trains.quotaLabel")}</label>
-                    <select
-                      className="input text-sm w-full md:w-28"
-                      value={quota}
-                      onChange={e => setQuota(e.target.value)}
-                    >
-                      <option value="GN">General</option>
-                      <option value="TQ">Tatkal</option>
-                      <option value="LD">Ladies</option>
-                      <option value="SS">Sr. Citizen</option>
-                      <option value="HP">HP</option>
-                    </select>
-                  </div>
-                </div>
 
-                {/* Train type checkboxes */}
-                <div className="mt-3 flex flex-wrap gap-3">
-                  {[
-                    { state: dayTrainOnly,   set: setDayTrainOnly,   label: "Day Trains Only",       desc: "Departs & arrives same day" },
-                    { state: superfastOnly,  set: setSuperfastOnly,  label: "Superfast / Express",   desc: "Rajdhani, Shatabdi, Vande Bharat…" },
-                  ].map(f => (
-                    <label
-                      key={f.label}
-                      className={`flex items-start gap-2.5 px-3 py-2.5 rounded-lg border cursor-pointer transition-all select-none ${
-                        f.state
-                          ? "border-train bg-train/10 text-train"
-                          : "border-border hover:border-train/40 text-text-secondary"
+                  {/* Row 2: Date | Return | Class | Quota */}
+                  <div className="flex flex-col md:flex-row gap-2">
+                    <div className="flex-1 min-w-0">
+                      <label className="text-xs text-text-muted font-medium block mb-1">{t("trains.dateLabel")}</label>
+                      <input
+                        type="date"
+                        className="input text-sm w-full"
+                        value={date}
+                        min={today}
+                        max={maxDate}
+                        onChange={e => setDate(e.target.value)}
+                      />
+                    </div>
+                    {tripType === "round-trip" && (
+                      <div className="flex-1 min-w-0">
+                        <label className="text-xs text-text-muted font-medium block mb-1">{t("trains.returnLabel")}</label>
+                        <input
+                          type="date"
+                          className="input text-sm w-full border-train/40 focus:border-train"
+                          value={returnDate}
+                          min={date}
+                          max={maxDate}
+                          onChange={e => setReturnDate(e.target.value)}
+                        />
+                      </div>
+                    )}
+                    <div className="flex items-center gap-1.5 bg-bg-surface border border-border rounded-md px-3 h-[42px] mt-auto">
+                      <select
+                        className="bg-transparent text-sm text-text-primary border-none outline-none cursor-pointer"
+                        value={classFilter}
+                        onChange={e => setClassFilter(e.target.value)}
+                      >
+                        <option value="">{t("trains.allClasses")}</option>
+                        {["1A", "2A", "3A", "SL", "CC", "EC", "2S"].map(c => (
+                          <option key={c} value={c}>{c}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex items-center gap-1.5 bg-bg-surface border border-border rounded-md px-3 h-[42px] mt-auto">
+                      <select
+                        className="bg-transparent text-sm text-text-primary border-none outline-none cursor-pointer"
+                        value={quota}
+                        onChange={e => setQuota(e.target.value)}
+                      >
+                        <option value="GN">General</option>
+                        <option value="TQ">Tatkal</option>
+                        <option value="LD">Ladies</option>
+                        <option value="SS">Sr. Citizen</option>
+                        <option value="HP">HP</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Row 3: Train type filter chips */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="w-px h-4 bg-border flex-none" />
+                    {[
+                      { state: dayTrainOnly,  set: setDayTrainOnly,  label: "Day Trains Only",     desc: "Departs & arrives same day" },
+                      { state: superfastOnly, set: setSuperfastOnly, label: "Superfast / Express", desc: "Rajdhani, Shatabdi, Vande Bharat…" },
+                    ].map(f => (
+                      <label
+                        key={f.label}
+                        className={`flex items-center gap-1.5 px-2.5 h-[34px] rounded-md border cursor-pointer text-xs transition whitespace-nowrap ${
+                          f.state ? "border-train bg-train/5 text-train" : "border-border hover:border-border-hover text-text-secondary"
+                        }`}
+                      >
+                        <input type="checkbox" checked={f.state} onChange={e => f.set(e.target.checked)} className="accent-train w-3 h-3" />
+                        {f.label}
+                      </label>
+                    ))}
+                  </div>
+
+                  {/* Row 4: Search + Voice */}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleSearch}
+                      className="flex-1 flex items-center gap-2 text-white font-semibold px-5 h-[42px] rounded-md transition-all active:scale-95 hover:opacity-90 justify-center disabled:opacity-40"
+                      style={{ background: "linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)" }}
+                    >
+                      <Search className="w-4 h-4" />
+                      {t("trains.searchBtn")}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={voiceStatus === "listening" ? stopVoice : startVoice}
+                      title={voiceStatus === "listening" ? "Stop" : "Voice search"}
+                      className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-md border transition-colors ${
+                        voiceStatus === "listening"
+                          ? "border-red-500 bg-red-500/10 text-red-400 animate-pulse"
+                          : "border-border hover:border-train text-text-muted hover:text-train"
                       }`}
                     >
-                      <input
-                        type="checkbox"
-                        checked={f.state}
-                        onChange={e => f.set(e.target.checked)}
-                        className="mt-0.5 accent-train w-3.5 h-3.5 shrink-0"
-                      />
-                      <span className="flex flex-col">
-                        <span className="text-xs font-semibold leading-tight">{f.label}</span>
-                        <span className={`text-[10px] leading-tight mt-0.5 ${f.state ? "text-train/70" : "text-text-muted"}`}>{f.desc}</span>
-                      </span>
-                    </label>
-                  ))}
-                </div>
+                      <Mic className="w-4 h-4" />
+                    </button>
+                  </div>
 
-                {/* Search + voice */}
-                <div className="mt-3 flex gap-2">
-                  <button
-                    onClick={handleSearch}
-                    className="flex-1 flex items-center gap-2 text-white font-semibold px-5 py-2.5 rounded-md transition-all active:scale-95 hover:opacity-90 justify-center"
-                    style={{ background: "linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)" }}
-                  >
-                    <Search className="w-4 h-4" />
-                    {t("trains.searchBtn")}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={voiceStatus === "listening" ? stopVoice : startVoice}
-                    title={voiceStatus === "listening" ? "Stop" : "Voice search"}
-                    className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-md border transition-colors ${
-                      voiceStatus === "listening"
-                        ? "border-red-500 bg-red-500/10 text-red-400 animate-pulse"
-                        : "border-border hover:border-train text-text-muted hover:text-train"
-                    }`}
-                  >
-                    <Mic className="w-4 h-4" />
-                  </button>
+                  <PriceCalendar
+                    from={fromSt?.code || ""}
+                    to={toSt?.code || ""}
+                    selectedDate={date}
+                    onSelect={setDate}
+                    vertical="train"
+                  />
                 </div>
-                <PriceCalendar
-                  from={fromSt?.code || ""}
-                  to={toSt?.code || ""}
-                  selectedDate={date}
-                  onSelect={setDate}
-                  vertical="train"
-                />
               </div>
             </div>
           </div>

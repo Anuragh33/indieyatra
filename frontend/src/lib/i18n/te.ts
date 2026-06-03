@@ -183,6 +183,20 @@ const te: Translations = {
     from: "నుండి",
   },
   legal: { ...en.legal },
+  landing: {
+    ...en.landing,
+    tagline: "భారతదేశపు ప్రీమియం ట్రావెల్ సూపర్-యాప్",
+    heroTitleMid: ", భారతంలో",
+    heroTitleEnd: "ప్రతి ప్రయాణం",
+    heroSub: "బస్ · రైలు · విమానం · హోటల్ — ఒకే యాప్‌లో బుక్ చేయండి",
+    trust1: "1 కోటి+ ప్రయాణాలు",
+    trust2: "500+ ఆపరేటర్లు",
+    trust3: "₹0 బుకింగ్ రుసుము",
+    trust4: "లైవ్ ట్రాకింగ్",
+    bookNow: "ఇప్పుడు బుక్ చేయండి",
+    explore: "చూడండి",
+    comingSoon: "త్వరలో వస్తోంది",
+  },
 };
 
 export default te;

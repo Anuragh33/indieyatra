@@ -152,6 +152,20 @@ const bn: Translations = {
       concierge: "ডেডিকেটেড কনসিয়ার্জ",
     },
   },
+  landing: {
+    ...en.landing,
+    tagline: "ভারতের প্রিমিয়াম ট্রাভেল সুপার-অ্যাপ",
+    heroTitleMid: ", ভারতের",
+    heroTitleEnd: "প্রতিটি যাত্রা",
+    heroSub: "বাস · ট্রেন · ফ্লাইট · হোটেল — একটি অ্যাপে বুক করুন",
+    trust1: "১ কোটি+ যাত্রা বুক হয়েছে",
+    trust2: "৫০০+ অপারেটর",
+    trust3: "₹০ বুকিং ফি",
+    trust4: "লাইভ ট্র্যাকিং",
+    bookNow: "এখনই বুক করুন",
+    explore: "দেখুন",
+    comingSoon: "শীঘ্রই আসছে",
+  },
 };
 
 export default bn;

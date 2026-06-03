@@ -152,6 +152,20 @@ const gu: Translations = {
       concierge: "ડેડિકેટેડ કૉન્સિયર્જ",
     },
   },
+  landing: {
+    ...en.landing,
+    tagline: "ભારતની પ્રીમિયમ ટ્રાવેલ સુપર-એપ",
+    heroTitleMid: ", ભારતની",
+    heroTitleEnd: "દરેક યાત્રા",
+    heroSub: "બસ · ટ્રેન · ફ્લાઈટ · હોટેલ — એક જ એપમાં બુક કરો",
+    trust1: "1 કરોડ+ પ્રવાસ",
+    trust2: "500+ ઓપરેટર",
+    trust3: "₹0 બુકિંગ ફી",
+    trust4: "લાઈવ ટ્રૅકિંગ",
+    bookNow: "હવે બુક કરો",
+    explore: "જુઓ",
+    comingSoon: "ટૂંક સમયમાં",
+  },
 };
 
 export default gu;
