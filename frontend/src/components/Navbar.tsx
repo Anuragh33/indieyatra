@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  Bell,
   Sparkles,
   Crown,
   User as UserIcon,
@@ -123,9 +122,6 @@ export function Navbar() {
           </Link>
           <button onClick={toggleTheme} className="btn-icon" aria-label="Toggle theme">
             {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-          </button>
-          <button className="btn-icon" aria-label={t("nav.notifications")}>
-            <Bell className="w-5 h-5" />
           </button>
 
           <LanguageSwitcher />
