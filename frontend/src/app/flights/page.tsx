@@ -171,25 +171,27 @@ function FlightsLanding() {
               </div>
 
               <div className="bg-bg-surface/80 backdrop-blur-md border border-border rounded-xl p-4">
-                <div className="flex flex-col md:flex-row gap-3 items-end flex-wrap">
-                  <div className="flex-1 min-w-[180px]">
-                    <AirportInput
-                      label={t("flights.fromLabel")}
-                      initialValue={fromVal}
-                      placeholder="City or airport code"
-                      onSelect={a => { setFromAirport(a); setFromVal(`${a.iata} – ${a.city}`); }}
-                    />
-                  </div>
-                  <button type="button" onClick={swap} className="btn-icon self-end mb-0.5 shrink-0">
-                    <ArrowLeftRight className="w-4 h-4" />
-                  </button>
-                  <div className="flex-1 min-w-[180px]">
-                    <AirportInput
-                      label={t("flights.toLabel")}
-                      initialValue={toVal}
-                      placeholder="City or airport code"
-                      onSelect={a => { setToAirport(a); setToVal(`${a.iata} – ${a.city}`); }}
-                    />
+                <div className="flex flex-col md:flex-row gap-3 md:items-end flex-wrap">
+                  <div className="flex items-end gap-2 flex-1 min-w-0">
+                    <div className="flex-1 min-w-0">
+                      <AirportInput
+                        label={t("flights.fromLabel")}
+                        initialValue={fromVal}
+                        placeholder="City or airport code"
+                        onSelect={a => { setFromAirport(a); setFromVal(`${a.iata} – ${a.city}`); }}
+                      />
+                    </div>
+                    <button type="button" onClick={swap} className="btn-icon mb-0.5 shrink-0">
+                      <ArrowLeftRight className="w-4 h-4" />
+                    </button>
+                    <div className="flex-1 min-w-0">
+                      <AirportInput
+                        label={t("flights.toLabel")}
+                        initialValue={toVal}
+                        placeholder="City or airport code"
+                        onSelect={a => { setToAirport(a); setToVal(`${a.iata} – ${a.city}`); }}
+                      />
+                    </div>
                   </div>
                   <div className="w-full md:w-auto">
                     <label className="text-xs text-text-muted font-medium block mb-1">{t("flights.departureLabel")}</label>

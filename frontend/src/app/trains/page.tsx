@@ -183,25 +183,27 @@ function TrainsLanding() {
               </div>
 
               <div className="bg-bg-surface/80 backdrop-blur-md border border-border rounded-xl p-4">
-                <div className="flex flex-col md:flex-row gap-3 items-end flex-wrap">
-                  <div className="flex-1 min-w-[200px]">
-                    <StationInput
-                      label={t("trains.fromLabel")}
-                      initialValue={fromVal}
-                      placeholder="City or station code"
-                      onSelect={s => { setFromSt(s); setFromVal(`${s.code} – ${s.name}`); }}
-                    />
-                  </div>
-                  <button type="button" onClick={swap} className="btn-icon self-end mb-0.5 shrink-0">
-                    <ArrowLeftRight className="w-4 h-4" />
-                  </button>
-                  <div className="flex-1 min-w-[200px]">
-                    <StationInput
-                      label={t("trains.toLabel")}
-                      initialValue={toVal}
-                      placeholder="City or station code"
-                      onSelect={s => { setToSt(s); setToVal(`${s.code} – ${s.name}`); }}
-                    />
+                <div className="flex flex-col md:flex-row gap-3 md:items-end flex-wrap">
+                  <div className="flex items-end gap-2 flex-1 min-w-0">
+                    <div className="flex-1 min-w-0">
+                      <StationInput
+                        label={t("trains.fromLabel")}
+                        initialValue={fromVal}
+                        placeholder="City or station code"
+                        onSelect={s => { setFromSt(s); setFromVal(`${s.code} – ${s.name}`); }}
+                      />
+                    </div>
+                    <button type="button" onClick={swap} className="btn-icon mb-0.5 shrink-0">
+                      <ArrowLeftRight className="w-4 h-4" />
+                    </button>
+                    <div className="flex-1 min-w-0">
+                      <StationInput
+                        label={t("trains.toLabel")}
+                        initialValue={toVal}
+                        placeholder="City or station code"
+                        onSelect={s => { setToSt(s); setToVal(`${s.code} – ${s.name}`); }}
+                      />
+                    </div>
                   </div>
                   <div className="w-full md:w-auto">
                     <label className="text-xs text-text-muted font-medium block mb-1">{t("trains.dateLabel")}</label>

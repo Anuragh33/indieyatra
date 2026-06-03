@@ -169,75 +169,82 @@ export function SearchWidget() {
 
       <div className="p-4 space-y-3">
 
-        {/* ── Main input row (NO labels — compact) ── */}
+        {/* ── Main input row ── */}
         {mode !== "multi-city" ? (
-          <div className="flex flex-wrap gap-2 items-center">
-            <CityInput value={from} query={fromQuery} suggestions={fromSugg}
-              onQueryChange={(q) => { setFrom(null); setFromQuery(q); }}
-              onSelect={(c) => { setFrom(c); setFromQuery(c.name); }}
-              placeholder="From — Mumbai, Delhi…" />
-
-            <button onClick={swap} aria-label="Swap"
-              className="flex-none w-8 h-8 flex items-center justify-center rounded-md border border-border hover:border-saffron hover:text-saffron text-text-muted transition-colors">
-              <ArrowLeftRight className="w-3.5 h-3.5" />
-            </button>
-
-            <CityInput value={to} query={toQuery} suggestions={toSugg}
-              onQueryChange={(q) => { setTo(null); setToQuery(q); }}
-              onSelect={(c) => { setTo(c); setToQuery(c.name); }}
-              placeholder="To — Goa, Bangalore…" accent />
-
-            {/* Depart date */}
-            <div className="relative flex-1 md:flex-none md:w-[130px]">
-              <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted pointer-events-none" />
-              <input type="date" value={departDate} onChange={(e) => setDepartDate(e.target.value)}
-                className="input pl-8 w-full text-sm" />
+          <div className="flex flex-col md:flex-row md:items-center gap-2">
+            {/* From / swap / To — full-width on mobile, inline on desktop */}
+            <div className="flex items-center gap-2 md:flex-1">
+              <CityInput value={from} query={fromQuery} suggestions={fromSugg}
+                onQueryChange={(q) => { setFrom(null); setFromQuery(q); }}
+                onSelect={(c) => { setFrom(c); setFromQuery(c.name); }}
+                placeholder="From — Mumbai, Delhi…" />
+              <button onClick={swap} aria-label="Swap"
+                className="flex-none w-8 h-8 flex items-center justify-center rounded-md border border-border hover:border-saffron hover:text-saffron text-text-muted transition-colors shrink-0">
+                <ArrowLeftRight className="w-3.5 h-3.5" />
+              </button>
+              <CityInput value={to} query={toQuery} suggestions={toSugg}
+                onQueryChange={(q) => { setTo(null); setToQuery(q); }}
+                onSelect={(c) => { setTo(c); setToQuery(c.name); }}
+                placeholder="To — Goa, Bangalore…" accent />
             </div>
 
-            {/* Return date — hidden on mobile one-way; invisible on desktop one-way (keeps layout) */}
-            <div className={`relative flex-1 md:flex-none md:w-[130px] ${mode !== "round-trip" ? "hidden md:block md:invisible md:pointer-events-none" : ""}`}>
-              <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-saffron pointer-events-none" />
-              <input type="date" value={returnDate} min={departDate}
-                onChange={(e) => setReturnDate(e.target.value)}
-                className="input pl-8 w-full text-sm border-saffron/40 focus:border-saffron" />
+            {/* Dates row — side by side on mobile too */}
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1 md:flex-none md:w-[130px]">
+                <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted pointer-events-none" />
+                <input type="date" value={departDate} onChange={(e) => setDepartDate(e.target.value)}
+                  className="input pl-8 w-full text-sm" />
+              </div>
+              {mode === "round-trip" && (
+                <div className="relative flex-1 md:flex-none md:w-[130px]">
+                  <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-saffron pointer-events-none" />
+                  <input type="date" value={returnDate} min={departDate}
+                    onChange={(e) => setReturnDate(e.target.value)}
+                    className="input pl-8 w-full text-sm border-saffron/40 focus:border-saffron" />
+                </div>
+              )}
             </div>
 
-            <button onClick={handleSearch} disabled={!from || !to}
-              className="flex-1 md:flex-none btn-primary flex items-center justify-center gap-1.5 px-5 h-[42px] disabled:opacity-40">
-              <Search className="w-4 h-4" />
-              <span className="font-medium">Search</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={voiceStatus === "listening" ? stopVoice : startVoice}
-              title={voiceStatus === "listening" ? "Stop listening" : "Voice search"}
-              className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-lg border transition-colors ${
-                voiceStatus === "listening"
-                  ? "border-red-500 bg-red-500/10 text-red-400 animate-pulse"
-                  : voiceStatus === "unsupported"
-                  ? "border-border text-text-muted opacity-40 cursor-not-allowed"
-                  : "border-border hover:border-teal text-text-muted hover:text-teal"
-              }`}
-            >
-              <Mic className="w-4 h-4" />
-            </button>
+            {/* Search + voice */}
+            <div className="flex items-center gap-2">
+              <button onClick={handleSearch} disabled={!from || !to}
+                className="flex-1 md:flex-none btn-primary flex items-center justify-center gap-1.5 px-5 h-[42px] disabled:opacity-40">
+                <Search className="w-4 h-4" />
+                <span className="font-medium">Search</span>
+              </button>
+              <button
+                type="button"
+                onClick={voiceStatus === "listening" ? stopVoice : startVoice}
+                title={voiceStatus === "listening" ? "Stop listening" : "Voice search"}
+                className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-lg border transition-colors ${
+                  voiceStatus === "listening"
+                    ? "border-red-500 bg-red-500/10 text-red-400 animate-pulse"
+                    : voiceStatus === "unsupported"
+                    ? "border-border text-text-muted opacity-40 cursor-not-allowed"
+                    : "border-border hover:border-teal text-text-muted hover:text-teal"
+                }`}
+              >
+                <Mic className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         ) : (
           /* ── Multi-city legs ── */
           <div className="space-y-2">
             {legs.map((leg, i) => (
-              <div key={i} className="flex flex-wrap items-center gap-2">
-                <span className="flex-none text-xs text-text-muted w-12 text-right">Leg {i + 1}</span>
-                <CityInput value={leg.from} query={leg.fromQuery} suggestions={legFromSuggs[i] ?? []}
-                  onQueryChange={(q) => updateLeg(i, { fromQuery: q, from: null })}
-                  onSelect={(c) => updateLeg(i, { from: c, fromQuery: c.name })}
-                  placeholder="From city" />
-                <CityInput value={leg.to} query={leg.toQuery} suggestions={legToSuggs[i] ?? []}
-                  onQueryChange={(q) => updateLeg(i, { toQuery: q, to: null })}
-                  onSelect={(c) => updateLeg(i, { to: c, toQuery: c.name })}
-                  placeholder="To city" accent />
-                <div className="relative flex-1 md:flex-none md:w-[130px]">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-2">
+                <span className="flex-none text-xs text-text-muted sm:w-12 sm:text-right">Leg {i + 1}</span>
+                <div className="flex items-center gap-2 flex-1">
+                  <CityInput value={leg.from} query={leg.fromQuery} suggestions={legFromSuggs[i] ?? []}
+                    onQueryChange={(q) => updateLeg(i, { fromQuery: q, from: null })}
+                    onSelect={(c) => updateLeg(i, { from: c, fromQuery: c.name })}
+                    placeholder="From city" />
+                  <CityInput value={leg.to} query={leg.toQuery} suggestions={legToSuggs[i] ?? []}
+                    onQueryChange={(q) => updateLeg(i, { toQuery: q, to: null })}
+                    onSelect={(c) => updateLeg(i, { to: c, toQuery: c.name })}
+                    placeholder="To city" accent />
+                </div>
+                <div className="relative flex-1 sm:flex-none sm:w-[130px]">
                   <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted pointer-events-none" />
                   <input type="date" value={leg.date} onChange={(e) => updateLeg(i, { date: e.target.value })}
                     className="input pl-8 w-full text-sm" />

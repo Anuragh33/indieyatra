@@ -98,7 +98,7 @@ export function Navbar() {
               </linearGradient>
             </defs>
           </svg>
-          <span className="font-display text-xl font-bold tracking-tight">
+          <span className="font-display text-lg md:text-xl font-bold tracking-tight hidden sm:inline">
             Indie<span className="text-purple">Yatra</span>
           </span>
         </Link>

@@ -175,7 +175,7 @@ export default function LandingPage() {
         </div>
 
         {/* 4 cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 px-4 md:px-6 gap-3 md:gap-4" style={{ height: 260 }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 px-4 md:px-6 gap-3 md:gap-4 h-[320px] md:h-[260px]">
           {VERTICALS.map(({ href, label, sub, desc, icon: Icon, accent, border, glow, badge, image }) => (
             <Link
               key={href}
