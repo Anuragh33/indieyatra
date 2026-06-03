@@ -99,6 +99,7 @@ function FlightsLanding() {
   const [toVal, setToVal] = useState("");
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [adults, setAdults] = useState(1);
+  const [cabin, setCabin] = useState<"economy"|"premium_economy"|"business"|"first">("economy");
 
   const today = new Date().toISOString().slice(0, 10);
 
@@ -120,7 +121,7 @@ function FlightsLanding() {
     const fromCode = fromAirport?.iata || fromVal.split(/[\s–-]+/)[0].trim().toUpperCase();
     const toCode   = toAirport?.iata   || toVal.split(/[\s–-]+/)[0].trim().toUpperCase();
     if (!fromCode || !toCode) return;
-    router.push(`/flights/search?from=${fromCode}&to=${toCode}&date=${date}&adults=${adults}`);
+    router.push(`/flights/search?from=${fromCode}&to=${toCode}&date=${date}&adults=${adults}&cabin=${cabin}`);
   };
 
   const quickRoutes = [
@@ -215,9 +216,39 @@ function FlightsLanding() {
                       ))}
                     </select>
                   </div>
+                </div>
+
+                {/* Cabin class selector */}
+                <div className="mt-3 flex flex-col gap-2">
+                  <label className="text-xs text-text-muted font-medium">Cabin Class</label>
+                  <div className="flex flex-wrap gap-2">
+                    {([
+                      { value: "economy",         label: "Economy" },
+                      { value: "premium_economy", label: "Premium Economy" },
+                      { value: "business",        label: "Business" },
+                      { value: "first",           label: "First Class" },
+                    ] as const).map(({ value, label }) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setCabin(value)}
+                        className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${
+                          cabin === value
+                            ? "bg-flight/15 border-flight text-flight"
+                            : "border-border text-text-secondary hover:border-flight/50 hover:text-flight/80"
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Search + voice */}
+                <div className="mt-3 flex gap-2">
                   <button
                     onClick={handleSearch}
-                    className="flex items-center gap-2 text-white font-semibold px-5 py-2.5 rounded-md transition-all active:scale-95 hover:opacity-90 w-full md:w-auto justify-center shrink-0"
+                    className="flex-1 flex items-center gap-2 text-white font-semibold px-5 py-2.5 rounded-md transition-all active:scale-95 hover:opacity-90 justify-center"
                     style={{ background: "linear-gradient(135deg, #06B6D4 0%, #0891B2 100%)" }}
                   >
                     <Search className="w-4 h-4" />
@@ -227,7 +258,7 @@ function FlightsLanding() {
                     type="button"
                     onClick={voiceStatus === "listening" ? stopVoice : startVoice}
                     title={voiceStatus === "listening" ? "Stop" : "Voice search"}
-                    className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-md border transition-colors shrink-0 ${
+                    className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-md border transition-colors ${
                       voiceStatus === "listening"
                         ? "border-red-500 bg-red-500/10 text-red-400 animate-pulse"
                         : "border-border hover:border-flight text-text-muted hover:text-flight"

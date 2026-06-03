@@ -108,6 +108,8 @@ function TrainsLanding() {
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [classFilter, setClassFilter] = useState("");
   const [quota, setQuota] = useState("GN");
+  const [dayTrainOnly, setDayTrainOnly] = useState(false);
+  const [superfastOnly, setSuperfastOnly] = useState(false);
 
   const { status: voiceStatus, start: startVoice, stop: stopVoice } = useVoiceSearch((r) => {
     setFromVal(r.from);
@@ -130,7 +132,9 @@ function TrainsLanding() {
     const toCode   = toSt?.code   || toVal.split(/[\s–-]+/)[0].trim().toUpperCase();
     if (!fromCode || !toCode) return;
     const q = new URLSearchParams({ from: fromCode, to: toCode, date, quota });
-    if (classFilter) q.set("class", classFilter);
+    if (classFilter)    q.set("class", classFilter);
+    if (dayTrainOnly)   q.set("day_only", "1");
+    if (superfastOnly)  q.set("superfast", "1");
     router.push(`/trains/search?${q}`);
   };
 
@@ -243,9 +247,41 @@ function TrainsLanding() {
                       <option value="HP">HP</option>
                     </select>
                   </div>
+                </div>
+
+                {/* Train type checkboxes */}
+                <div className="mt-3 flex flex-wrap gap-3">
+                  {[
+                    { state: dayTrainOnly,   set: setDayTrainOnly,   label: "Day Trains Only",       desc: "Departs & arrives same day" },
+                    { state: superfastOnly,  set: setSuperfastOnly,  label: "Superfast / Express",   desc: "Rajdhani, Shatabdi, Vande Bharat…" },
+                  ].map(f => (
+                    <label
+                      key={f.label}
+                      className={`flex items-start gap-2.5 px-3 py-2.5 rounded-lg border cursor-pointer transition-all select-none ${
+                        f.state
+                          ? "border-train bg-train/10 text-train"
+                          : "border-border hover:border-train/40 text-text-secondary"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={f.state}
+                        onChange={e => f.set(e.target.checked)}
+                        className="mt-0.5 accent-train w-3.5 h-3.5 shrink-0"
+                      />
+                      <span className="flex flex-col">
+                        <span className="text-xs font-semibold leading-tight">{f.label}</span>
+                        <span className={`text-[10px] leading-tight mt-0.5 ${f.state ? "text-train/70" : "text-text-muted"}`}>{f.desc}</span>
+                      </span>
+                    </label>
+                  ))}
+                </div>
+
+                {/* Search + voice */}
+                <div className="mt-3 flex gap-2">
                   <button
                     onClick={handleSearch}
-                    className="flex items-center gap-2 text-white font-semibold px-5 py-2.5 rounded-md transition-all active:scale-95 hover:opacity-90 w-full md:w-auto justify-center shrink-0"
+                    className="flex-1 flex items-center gap-2 text-white font-semibold px-5 py-2.5 rounded-md transition-all active:scale-95 hover:opacity-90 justify-center"
                     style={{ background: "linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)" }}
                   >
                     <Search className="w-4 h-4" />
@@ -255,7 +291,7 @@ function TrainsLanding() {
                     type="button"
                     onClick={voiceStatus === "listening" ? stopVoice : startVoice}
                     title={voiceStatus === "listening" ? "Stop" : "Voice search"}
-                    className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-md border transition-colors shrink-0 ${
+                    className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-md border transition-colors ${
                       voiceStatus === "listening"
                         ? "border-red-500 bg-red-500/10 text-red-400 animate-pulse"
                         : "border-border hover:border-train text-text-muted hover:text-train"
