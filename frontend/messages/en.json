@@ -1,0 +1,89 @@
+{
+  "nav": {
+    "buses": "Buses",
+    "trains": "Trains",
+    "flights": "Flights",
+    "hotels": "Hotels",
+    "trips": "My Trips",
+    "concierge": "Concierge",
+    "login": "Log In",
+    "signup": "Sign Up"
+  },
+  "search": {
+    "from": "From",
+    "to": "To",
+    "date": "Date",
+    "travelers": "Travelers",
+    "search": "Search",
+    "oneWay": "One Way",
+    "roundTrip": "Round Trip",
+    "multiCity": "Multi City",
+    "fromPlaceholder": "From — Mumbai, Delhi…",
+    "toPlaceholder": "To — Goa, Bangalore…",
+    "voiceSearch": "Voice Search",
+    "listening": "Listening…",
+    "swapCities": "Swap cities"
+  },
+  "trains": {
+    "title": "Search Trains",
+    "subtitle": "Book Indian Railways tickets with real-time availability",
+    "from": "From Station",
+    "to": "To Station",
+    "class": "Travel Class",
+    "quota": "Quota",
+    "search": "Search Trains",
+    "pnrStatus": "PNR Status",
+    "checkPNR": "Check PNR"
+  },
+  "flights": {
+    "title": "Book Flights",
+    "subtitle": "Domestic and international flights at the best prices",
+    "from": "From",
+    "to": "To",
+    "cabin": "Cabin Class",
+    "economy": "Economy",
+    "business": "Business",
+    "first": "First Class",
+    "search": "Search Flights"
+  },
+  "hotels": {
+    "title": "Find Hotels",
+    "subtitle": "Curated stays from budget to luxury across India",
+    "city": "City",
+    "checkIn": "Check In",
+    "checkOut": "Check Out",
+    "guests": "Guests",
+    "rooms": "Rooms",
+    "search": "Search Hotels"
+  },
+  "booking": {
+    "passenger": "Passenger",
+    "pnr": "PNR",
+    "status": "Status",
+    "confirmed": "Confirmed",
+    "waitlisted": "Waitlisted",
+    "cancelled": "Cancelled",
+    "download": "Download Ticket",
+    "share": "Share on WhatsApp"
+  },
+  "concierge": {
+    "title": "Your Concierge",
+    "subtitle": "AI-powered travel intelligence, 24/7",
+    "alerts": "Alerts",
+    "chat": "AI Chat",
+    "settings": "Settings",
+    "placeholder": "Ask about your trips, delays, or travel tips…",
+    "send": "Send",
+    "noAlerts": "No active alerts. You're all caught up!"
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "back": "Back",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "currency": "₹"
+  }
+}
