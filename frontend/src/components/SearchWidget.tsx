@@ -171,7 +171,7 @@ export function SearchWidget() {
 
         {/* ── Main input row (NO labels — compact) ── */}
         {mode !== "multi-city" ? (
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap gap-2 items-center">
             <CityInput value={from} query={fromQuery} suggestions={fromSugg}
               onQueryChange={(q) => { setFrom(null); setFromQuery(q); }}
               onSelect={(c) => { setFrom(c); setFromQuery(c.name); }}
@@ -188,14 +188,14 @@ export function SearchWidget() {
               placeholder="To — Goa, Bangalore…" accent />
 
             {/* Depart date */}
-            <div className="relative flex-none w-[130px]">
+            <div className="relative flex-1 md:flex-none md:w-[130px]">
               <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted pointer-events-none" />
               <input type="date" value={departDate} onChange={(e) => setDepartDate(e.target.value)}
                 className="input pl-8 w-full text-sm" />
             </div>
 
-            {/* Return date — invisible in one-way (keeps layout identical) */}
-            <div className={`relative flex-none w-[130px] ${mode !== "round-trip" ? "invisible pointer-events-none" : ""}`}>
+            {/* Return date — hidden on mobile one-way; invisible on desktop one-way (keeps layout) */}
+            <div className={`relative flex-1 md:flex-none md:w-[130px] ${mode !== "round-trip" ? "hidden md:block md:invisible md:pointer-events-none" : ""}`}>
               <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-saffron pointer-events-none" />
               <input type="date" value={returnDate} min={departDate}
                 onChange={(e) => setReturnDate(e.target.value)}
@@ -203,7 +203,7 @@ export function SearchWidget() {
             </div>
 
             <button onClick={handleSearch} disabled={!from || !to}
-              className="flex-none btn-primary flex items-center gap-1.5 px-5 h-[42px] disabled:opacity-40">
+              className="flex-1 md:flex-none btn-primary flex items-center justify-center gap-1.5 px-5 h-[42px] disabled:opacity-40">
               <Search className="w-4 h-4" />
               <span className="font-medium">Search</span>
             </button>
@@ -227,7 +227,7 @@ export function SearchWidget() {
           /* ── Multi-city legs ── */
           <div className="space-y-2">
             {legs.map((leg, i) => (
-              <div key={i} className="flex items-center gap-2">
+              <div key={i} className="flex flex-wrap items-center gap-2">
                 <span className="flex-none text-xs text-text-muted w-12 text-right">Leg {i + 1}</span>
                 <CityInput value={leg.from} query={leg.fromQuery} suggestions={legFromSuggs[i] ?? []}
                   onQueryChange={(q) => updateLeg(i, { fromQuery: q, from: null })}
@@ -237,7 +237,7 @@ export function SearchWidget() {
                   onQueryChange={(q) => updateLeg(i, { toQuery: q, to: null })}
                   onSelect={(c) => updateLeg(i, { to: c, toQuery: c.name })}
                   placeholder="To city" accent />
-                <div className="relative flex-none w-[130px]">
+                <div className="relative flex-1 md:flex-none md:w-[130px]">
                   <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted pointer-events-none" />
                   <input type="date" value={leg.date} onChange={(e) => updateLeg(i, { date: e.target.value })}
                     className="input pl-8 w-full text-sm" />

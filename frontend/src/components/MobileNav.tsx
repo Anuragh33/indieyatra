@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, MapPin, Sparkles, Crown, Bell } from "lucide-react";
+import { Home, MapPin, Sparkles, Crown, Building2 } from "lucide-react";
 
 const items = [
   {
@@ -26,18 +26,18 @@ const items = [
     matches: (p: string) => p === "/planner",
   },
   {
+    href: "/hotels",
+    icon: Building2,
+    label: "Hotels",
+    activeClass: "text-hotel",
+    matches: (p: string) => p === "/hotels" || p.startsWith("/hotels/"),
+  },
+  {
     href: "/rewards",
     icon: Crown,
     label: "Rewards",
-    activeClass: "text-hotel",
+    activeClass: "text-saffron",
     matches: (p: string) => p === "/rewards",
-  },
-  {
-    href: "/alerts",
-    icon: Bell,
-    label: "Alerts",
-    activeClass: "text-flight",
-    matches: (p: string) => p === "/alerts",
   },
 ];
 
