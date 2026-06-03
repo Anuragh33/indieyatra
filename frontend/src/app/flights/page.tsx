@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
-import { Plane, Search, ArrowLeftRight, Zap, TrendingUp, Crown, Clock, Mic } from "lucide-react";
+import { Plane, Search, ArrowLeftRight, Zap, TrendingUp, Crown, Clock, Mic, MapPin, Calendar } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
 import { Navbar } from "@/components/Navbar";
 import { MobileNav } from "@/components/MobileNav";
@@ -18,8 +18,8 @@ interface Airport {
   state: string;
 }
 
-function AirportInput({ label, initialValue, onSelect, placeholder }: {
-  label: string; initialValue: string; onSelect: (a: Airport) => void; placeholder: string;
+function AirportInput({ initialValue, onSelect, placeholder }: {
+  initialValue: string; onSelect: (a: Airport) => void; placeholder: string;
 }) {
   const [q, setQ] = useState(initialValue);
   const [opts, setOpts] = useState<Airport[]>([]);
@@ -50,10 +50,10 @@ function AirportInput({ label, initialValue, onSelect, placeholder }: {
   };
 
   return (
-    <div ref={wrap} className="relative">
-      <label className="text-xs text-text-muted font-medium block mb-1">{label}</label>
+    <div ref={wrap} className="relative flex-1 min-w-0">
+      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 z-10 pointer-events-none text-text-muted" />
       <input
-        className="input text-sm"
+        className="input pl-9 w-full text-sm"
         placeholder={placeholder}
         value={q}
         onChange={e => onChange(e.target.value)}
@@ -195,54 +195,83 @@ function FlightsLanding() {
                 </div>
 
                 <div className="p-4 space-y-3">
-                  {/* Row 1: From | Swap | To */}
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1 min-w-0">
+                  {/* Main input row */}
+                  <div className="flex flex-col md:flex-row md:items-center gap-2">
+                    {/* From / Swap / To */}
+                    <div className="flex items-center gap-2 md:flex-1">
                       <AirportInput
-                        label={t("flights.fromLabel")}
                         initialValue={fromVal}
-                        placeholder="City or airport code"
+                        placeholder="From — Mumbai, Delhi…"
                         onSelect={a => { setFromAirport(a); setFromVal(`${a.iata} – ${a.city}`); }}
                       />
-                    </div>
-                    <button type="button" onClick={swap} className="btn-icon mt-5 shrink-0">
-                      <ArrowLeftRight className="w-4 h-4" />
-                    </button>
-                    <div className="flex-1 min-w-0">
+                      <button
+                        type="button"
+                        onClick={swap}
+                        className="flex-none w-8 h-8 flex items-center justify-center rounded-md border border-border hover:border-flight hover:text-flight text-text-muted transition-colors shrink-0"
+                      >
+                        <ArrowLeftRight className="w-3.5 h-3.5" />
+                      </button>
                       <AirportInput
-                        label={t("flights.toLabel")}
                         initialValue={toVal}
-                        placeholder="City or airport code"
+                        placeholder="To — Goa, Bengaluru…"
                         onSelect={a => { setToAirport(a); setToVal(`${a.iata} – ${a.city}`); }}
                       />
                     </div>
-                  </div>
 
-                  {/* Row 2: Dates + Adults */}
-                  <div className="flex flex-col md:flex-row gap-2">
-                    <div className="flex-1 min-w-0">
-                      <label className="text-xs text-text-muted font-medium block mb-1">{t("flights.departureLabel")}</label>
-                      <input
-                        type="date"
-                        className="input text-sm w-full"
-                        value={date}
-                        min={today}
-                        onChange={e => setDate(e.target.value)}
-                      />
-                    </div>
-                    {tripType === "round-trip" && (
-                      <div className="flex-1 min-w-0">
-                        <label className="text-xs text-text-muted font-medium block mb-1">{t("flights.returnLabel")}</label>
+                    {/* Dates */}
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="relative flex-1 min-w-0 md:flex-none md:w-[130px]">
+                        <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted pointer-events-none" />
                         <input
                           type="date"
-                          className="input text-sm w-full border-flight/40 focus:border-flight"
-                          value={returnDate}
-                          min={date}
-                          onChange={e => setReturnDate(e.target.value)}
+                          className="input pl-8 w-full text-sm"
+                          value={date}
+                          min={today}
+                          onChange={e => setDate(e.target.value)}
                         />
                       </div>
-                    )}
-                    <div className="flex items-center gap-1.5 bg-bg-surface border border-border rounded-md px-3 h-[42px] mt-auto">
+                      {tripType === "round-trip" && (
+                        <div className="relative flex-1 min-w-0 md:flex-none md:w-[130px]">
+                          <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-flight pointer-events-none" />
+                          <input
+                            type="date"
+                            className="input pl-8 w-full text-sm border-flight/40 focus:border-flight"
+                            value={returnDate}
+                            min={date}
+                            onChange={e => setReturnDate(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Search + Voice */}
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={handleSearch}
+                        className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-5 h-[42px] rounded-md font-semibold text-white transition-all active:scale-95 hover:opacity-90"
+                        style={{ background: "linear-gradient(135deg, #06B6D4 0%, #0891B2 100%)" }}
+                      >
+                        <Search className="w-4 h-4" />
+                        {t("flights.searchBtn")}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={voiceStatus === "listening" ? stopVoice : startVoice}
+                        title={voiceStatus === "listening" ? "Stop" : "Voice search"}
+                        className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-md border transition-colors ${
+                          voiceStatus === "listening"
+                            ? "border-red-500 bg-red-500/10 text-red-400 animate-pulse"
+                            : "border-border hover:border-flight text-text-muted hover:text-flight"
+                        }`}
+                      >
+                        <Mic className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Options row */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-1.5 bg-bg-surface border border-border rounded-md px-3 h-[34px]">
                       <select
                         className="bg-transparent text-sm text-text-primary border-none outline-none cursor-pointer"
                         value={adults}
@@ -253,10 +282,6 @@ function FlightsLanding() {
                         ))}
                       </select>
                     </div>
-                  </div>
-
-                  {/* Row 3: Cabin class chips */}
-                  <div className="flex items-center gap-2 flex-wrap">
                     <div className="w-px h-4 bg-border flex-none" />
                     {([
                       { value: "economy",         label: "Economy" },
@@ -277,30 +302,6 @@ function FlightsLanding() {
                         {label}
                       </button>
                     ))}
-                  </div>
-
-                  {/* Row 4: Search + Voice */}
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleSearch}
-                      className="flex-1 flex items-center gap-2 text-white font-semibold px-5 h-[42px] rounded-md transition-all active:scale-95 hover:opacity-90 justify-center"
-                      style={{ background: "linear-gradient(135deg, #06B6D4 0%, #0891B2 100%)" }}
-                    >
-                      <Search className="w-4 h-4" />
-                      {t("flights.searchBtn")}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={voiceStatus === "listening" ? stopVoice : startVoice}
-                      title={voiceStatus === "listening" ? "Stop" : "Voice search"}
-                      className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-md border transition-colors ${
-                        voiceStatus === "listening"
-                          ? "border-red-500 bg-red-500/10 text-red-400 animate-pulse"
-                          : "border-border hover:border-flight text-text-muted hover:text-flight"
-                      }`}
-                    >
-                      <Mic className="w-4 h-4" />
-                    </button>
                   </div>
 
                   <PriceCalendar

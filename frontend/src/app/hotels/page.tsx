@@ -1,7 +1,7 @@
 "use client";
 import { useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
-import { Building2, Star, Wifi, Coffee, TrendingUp, Crown, MapPin, Waves, Mountain, Utensils, Search } from "lucide-react";
+import { Building2, Star, Wifi, Coffee, TrendingUp, Crown, MapPin, Waves, Mountain, Utensils, Search, Calendar } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { MobileNav } from "@/components/MobileNav";
 import { useT } from "@/lib/i18n";
@@ -83,41 +83,60 @@ function HotelsLanding() {
 
               <div className="bg-bg-elevated border border-border rounded-xl shadow-card overflow-hidden">
                 <div className="p-4 space-y-3">
-                  {/* Row 1: Destination */}
-                  <div>
-                    <label className="text-xs text-text-muted font-medium block mb-1">{t("hotels.destinationLabel")}</label>
-                    <input
-                      className="input text-sm w-full"
-                      placeholder={t("hotels.destinationPlaceholder")}
-                      value={city}
-                      onChange={e => setCity(e.target.value)}
-                      onKeyDown={e => e.key === "Enter" && handleSearch()}
-                    />
+                  {/* Main input row */}
+                  <div className="flex flex-col md:flex-row md:items-center gap-2">
+                    {/* Destination */}
+                    <div className="relative flex-1 min-w-0">
+                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 z-10 pointer-events-none text-text-muted" />
+                      <input
+                        className="input pl-9 w-full text-sm"
+                        placeholder={t("hotels.destinationPlaceholder")}
+                        value={city}
+                        onChange={e => setCity(e.target.value)}
+                        onKeyDown={e => e.key === "Enter" && handleSearch()}
+                      />
+                    </div>
+
+                    {/* Dates */}
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="relative flex-1 min-w-0 md:flex-none md:w-[130px]">
+                        <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted pointer-events-none" />
+                        <input
+                          type="date"
+                          className="input pl-8 w-full text-sm"
+                          value={checkIn}
+                          min={today}
+                          onChange={e => setCheckIn(e.target.value)}
+                        />
+                      </div>
+                      <div className="relative flex-1 min-w-0 md:flex-none md:w-[130px]">
+                        <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-hotel pointer-events-none" />
+                        <input
+                          type="date"
+                          className="input pl-8 w-full text-sm border-hotel/40 focus:border-hotel"
+                          value={checkOut}
+                          min={checkIn}
+                          onChange={e => setCheckOut(e.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Search */}
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={handleSearch}
+                        className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-5 h-[42px] rounded-md font-semibold text-white transition-all active:scale-95 hover:opacity-90"
+                        style={{ background: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)" }}
+                      >
+                        <Search className="w-4 h-4" />
+                        {t("hotels.searchBtn")}
+                      </button>
+                    </div>
                   </div>
 
-                  {/* Row 2: Check-in | Check-out | Guests */}
-                  <div className="flex flex-col md:flex-row gap-2">
-                    <div className="flex-1 min-w-0">
-                      <label className="text-xs text-text-muted font-medium block mb-1">{t("hotels.checkInLabel")}</label>
-                      <input
-                        type="date"
-                        className="input text-sm w-full"
-                        value={checkIn}
-                        min={today}
-                        onChange={e => setCheckIn(e.target.value)}
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <label className="text-xs text-text-muted font-medium block mb-1">{t("hotels.checkOutLabel")}</label>
-                      <input
-                        type="date"
-                        className="input text-sm w-full"
-                        value={checkOut}
-                        min={checkIn}
-                        onChange={e => setCheckOut(e.target.value)}
-                      />
-                    </div>
-                    <div className="flex items-center gap-1.5 bg-bg-surface border border-border rounded-md px-3 h-[42px] mt-auto">
+                  {/* Options row */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-1.5 bg-bg-surface border border-border rounded-md px-3 h-[34px]">
                       <select
                         className="bg-transparent text-sm text-text-primary border-none outline-none cursor-pointer"
                         value={guests}
@@ -128,10 +147,6 @@ function HotelsLanding() {
                         ))}
                       </select>
                     </div>
-                  </div>
-
-                  {/* Row 3: Amenity chips */}
-                  <div className="flex items-center gap-2 flex-wrap">
                     <div className="w-px h-4 bg-border flex-none" />
                     {[
                       { label: "Free Cancellation", state: freeCancellation, set: setFreeCancellation },
@@ -149,16 +164,6 @@ function HotelsLanding() {
                       </label>
                     ))}
                   </div>
-
-                  {/* Row 4: Search */}
-                  <button
-                    onClick={handleSearch}
-                    className="w-full flex items-center gap-2 text-white font-semibold px-5 h-[42px] rounded-md justify-center hover:opacity-90 active:scale-95 transition-all"
-                    style={{ background: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)" }}
-                  >
-                    <Search className="w-4 h-4" />
-                    {t("hotels.searchBtn")}
-                  </button>
                 </div>
               </div>
             </div>

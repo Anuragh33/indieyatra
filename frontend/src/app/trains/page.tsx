@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import {
-  Train, Search, Zap, ArrowLeftRight, TrendingUp, Crown, Clock, MapPin, Mic,
+  Train, Search, Zap, ArrowLeftRight, TrendingUp, Crown, Clock, MapPin, Mic, Calendar,
 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
 import { Navbar } from "@/components/Navbar";
@@ -21,9 +21,8 @@ interface TrainStation {
 }
 
 function StationInput({
-  label, initialValue, onSelect, placeholder,
+  initialValue, onSelect, placeholder,
 }: {
-  label: string;
   initialValue: string;
   onSelect: (s: TrainStation) => void;
   placeholder: string;
@@ -57,10 +56,10 @@ function StationInput({
   };
 
   return (
-    <div ref={wrap} className="relative">
-      <label className="text-xs text-text-muted font-medium block mb-1">{label}</label>
+    <div ref={wrap} className="relative flex-1 min-w-0">
+      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 z-10 pointer-events-none text-text-muted" />
       <input
-        className="input text-sm"
+        className="input pl-9 w-full text-sm"
         placeholder={placeholder}
         value={q}
         onChange={e => onChange(e.target.value)}
@@ -209,56 +208,85 @@ function TrainsLanding() {
                 </div>
 
                 <div className="p-4 space-y-3">
-                  {/* Row 1: From | Swap | To */}
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1 min-w-0">
+                  {/* Main input row */}
+                  <div className="flex flex-col md:flex-row md:items-center gap-2">
+                    {/* From / Swap / To */}
+                    <div className="flex items-center gap-2 md:flex-1">
                       <StationInput
-                        label={t("trains.fromLabel")}
                         initialValue={fromVal}
-                        placeholder="City or station code"
+                        placeholder="From — Delhi, Kolkata…"
                         onSelect={s => { setFromSt(s); setFromVal(`${s.code} – ${s.name}`); }}
                       />
-                    </div>
-                    <button type="button" onClick={swap} className="btn-icon mt-5 shrink-0">
-                      <ArrowLeftRight className="w-4 h-4" />
-                    </button>
-                    <div className="flex-1 min-w-0">
+                      <button
+                        type="button"
+                        onClick={swap}
+                        className="flex-none w-8 h-8 flex items-center justify-center rounded-md border border-border hover:border-train hover:text-train text-text-muted transition-colors shrink-0"
+                      >
+                        <ArrowLeftRight className="w-3.5 h-3.5" />
+                      </button>
                       <StationInput
-                        label={t("trains.toLabel")}
                         initialValue={toVal}
-                        placeholder="City or station code"
+                        placeholder="To — Mumbai, Chennai…"
                         onSelect={s => { setToSt(s); setToVal(`${s.code} – ${s.name}`); }}
                       />
                     </div>
-                  </div>
 
-                  {/* Row 2: Date | Return | Class | Quota */}
-                  <div className="flex flex-col md:flex-row gap-2">
-                    <div className="flex-1 min-w-0">
-                      <label className="text-xs text-text-muted font-medium block mb-1">{t("trains.dateLabel")}</label>
-                      <input
-                        type="date"
-                        className="input text-sm w-full"
-                        value={date}
-                        min={today}
-                        max={maxDate}
-                        onChange={e => setDate(e.target.value)}
-                      />
-                    </div>
-                    {tripType === "round-trip" && (
-                      <div className="flex-1 min-w-0">
-                        <label className="text-xs text-text-muted font-medium block mb-1">{t("trains.returnLabel")}</label>
+                    {/* Dates */}
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="relative flex-1 min-w-0 md:flex-none md:w-[130px]">
+                        <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted pointer-events-none" />
                         <input
                           type="date"
-                          className="input text-sm w-full border-train/40 focus:border-train"
-                          value={returnDate}
-                          min={date}
+                          className="input pl-8 w-full text-sm"
+                          value={date}
+                          min={today}
                           max={maxDate}
-                          onChange={e => setReturnDate(e.target.value)}
+                          onChange={e => setDate(e.target.value)}
                         />
                       </div>
-                    )}
-                    <div className="flex items-center gap-1.5 bg-bg-surface border border-border rounded-md px-3 h-[42px] mt-auto">
+                      {tripType === "round-trip" && (
+                        <div className="relative flex-1 min-w-0 md:flex-none md:w-[130px]">
+                          <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-train pointer-events-none" />
+                          <input
+                            type="date"
+                            className="input pl-8 w-full text-sm border-train/40 focus:border-train"
+                            value={returnDate}
+                            min={date}
+                            max={maxDate}
+                            onChange={e => setReturnDate(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Search + Voice */}
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={handleSearch}
+                        className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-5 h-[42px] rounded-md font-semibold text-white transition-all active:scale-95 hover:opacity-90"
+                        style={{ background: "linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)" }}
+                      >
+                        <Search className="w-4 h-4" />
+                        {t("trains.searchBtn")}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={voiceStatus === "listening" ? stopVoice : startVoice}
+                        title={voiceStatus === "listening" ? "Stop" : "Voice search"}
+                        className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-md border transition-colors ${
+                          voiceStatus === "listening"
+                            ? "border-red-500 bg-red-500/10 text-red-400 animate-pulse"
+                            : "border-border hover:border-train text-text-muted hover:text-train"
+                        }`}
+                      >
+                        <Mic className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Options row */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-1.5 bg-bg-surface border border-border rounded-md px-3 h-[34px]">
                       <select
                         className="bg-transparent text-sm text-text-primary border-none outline-none cursor-pointer"
                         value={classFilter}
@@ -270,7 +298,7 @@ function TrainsLanding() {
                         ))}
                       </select>
                     </div>
-                    <div className="flex items-center gap-1.5 bg-bg-surface border border-border rounded-md px-3 h-[42px] mt-auto">
+                    <div className="flex items-center gap-1.5 bg-bg-surface border border-border rounded-md px-3 h-[34px]">
                       <select
                         className="bg-transparent text-sm text-text-primary border-none outline-none cursor-pointer"
                         value={quota}
@@ -283,14 +311,10 @@ function TrainsLanding() {
                         <option value="HP">HP</option>
                       </select>
                     </div>
-                  </div>
-
-                  {/* Row 3: Train type filter chips */}
-                  <div className="flex items-center gap-2 flex-wrap">
                     <div className="w-px h-4 bg-border flex-none" />
                     {[
-                      { state: dayTrainOnly,  set: setDayTrainOnly,  label: "Day Trains Only",     desc: "Departs & arrives same day" },
-                      { state: superfastOnly, set: setSuperfastOnly, label: "Superfast / Express", desc: "Rajdhani, Shatabdi, Vande Bharat…" },
+                      { state: dayTrainOnly,  set: setDayTrainOnly,  label: "Day Trains Only" },
+                      { state: superfastOnly, set: setSuperfastOnly, label: "Superfast / Express" },
                     ].map(f => (
                       <label
                         key={f.label}
@@ -302,30 +326,6 @@ function TrainsLanding() {
                         {f.label}
                       </label>
                     ))}
-                  </div>
-
-                  {/* Row 4: Search + Voice */}
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleSearch}
-                      className="flex-1 flex items-center gap-2 text-white font-semibold px-5 h-[42px] rounded-md transition-all active:scale-95 hover:opacity-90 justify-center disabled:opacity-40"
-                      style={{ background: "linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)" }}
-                    >
-                      <Search className="w-4 h-4" />
-                      {t("trains.searchBtn")}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={voiceStatus === "listening" ? stopVoice : startVoice}
-                      title={voiceStatus === "listening" ? "Stop" : "Voice search"}
-                      className={`flex-none w-[42px] h-[42px] flex items-center justify-center rounded-md border transition-colors ${
-                        voiceStatus === "listening"
-                          ? "border-red-500 bg-red-500/10 text-red-400 animate-pulse"
-                          : "border-border hover:border-train text-text-muted hover:text-train"
-                      }`}
-                    >
-                      <Mic className="w-4 h-4" />
-                    </button>
                   </div>
 
                   <PriceCalendar
