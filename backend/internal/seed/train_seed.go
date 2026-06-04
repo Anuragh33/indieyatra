@@ -541,6 +541,317 @@ var trainDefs = []trainDef{
 			{Code: "UDZ", Num: 2, Arr: "12:25", Dep: "--", Day: 1, Dist: 330, Plt: "1"},
 		},
 	},
+
+	// ── Additional trains for frequency on popular corridors ──────────────────
+
+	// Delhi ↔ Kolkata (add frequency beyond 12301/12302)
+	{
+		Number: "12273", Name: "Howrah Duronto Express", TType: "Duronto",
+		Super: true, Pantry: true, RunsOn: "Mon,Fri", Classes: []string{"1A", "2A", "3A"},
+		DepTime: "13:45", ArrTime: "05:00", ArrDay: 2, DurMin: 915,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "13:45", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "HWH", Num: 2, Arr: "05:00", Dep: "--", Day: 2, Dist: 1447, Plt: "9"},
+		},
+	},
+	{
+		Number: "12274", Name: "Howrah Duronto Express (Return)", TType: "Duronto",
+		Super: true, Pantry: true, RunsOn: "Tue,Sat", Classes: []string{"1A", "2A", "3A"},
+		DepTime: "14:05", ArrTime: "05:30", ArrDay: 2, DurMin: 925,
+		Stops: []stopDef{
+			{Code: "HWH", Num: 1, Arr: "--", Dep: "14:05", Day: 1, Dist: 0, Plt: "9"},
+			{Code: "NZM", Num: 2, Arr: "05:30", Dep: "--", Day: 2, Dist: 1447, Plt: "7"},
+		},
+	},
+	{
+		Number: "13009", Name: "Doon Express", TType: "Express",
+		Super: false, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "17:35", ArrTime: "19:55", ArrDay: 2, DurMin: 1580,
+		Stops: []stopDef{
+			{Code: "HWH", Num: 1, Arr: "--", Dep: "17:35", Day: 1, Dist: 0, Plt: "5"},
+			{Code: "CNB", Num: 2, Arr: "08:15", Dep: "08:25", Halt: 10, Day: 2, Dist: 955, Plt: "1"},
+			{Code: "AGC", Num: 3, Arr: "10:55", Dep: "11:00", Halt: 5, Day: 2, Dist: 1252, Plt: "4"},
+			{Code: "NDLS", Num: 4, Arr: "19:55", Dep: "--", Day: 2, Dist: 1447, Plt: "12"},
+		},
+	},
+	{
+		Number: "13010", Name: "Doon Express (Return)", TType: "Express",
+		Super: false, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "17:35", ArrTime: "18:05", ArrDay: 2, DurMin: 1470,
+		Stops: []stopDef{
+			{Code: "NDLS", Num: 1, Arr: "--", Dep: "17:35", Day: 1, Dist: 0, Plt: "12"},
+			{Code: "AGC", Num: 2, Arr: "20:00", Dep: "20:05", Halt: 5, Day: 1, Dist: 195, Plt: "4"},
+			{Code: "CNB", Num: 3, Arr: "22:25", Dep: "22:35", Halt: 10, Day: 1, Dist: 492, Plt: "1"},
+			{Code: "HWH", Num: 4, Arr: "18:05", Dep: "--", Day: 2, Dist: 1447, Plt: "5"},
+		},
+	},
+
+	// Delhi ↔ Hyderabad (add frequency beyond 12721)
+	{
+		Number: "12723", Name: "Telangana Express", TType: "Superfast",
+		Super: true, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "06:25", ArrTime: "06:00", ArrDay: 2, DurMin: 1415,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "06:25", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "NGP", Num: 2, Arr: "15:45", Dep: "15:55", Halt: 10, Day: 1, Dist: 1100, Plt: "1"},
+			{Code: "SC", Num: 3, Arr: "06:00", Dep: "--", Day: 2, Dist: 1571, Plt: "6"},
+		},
+	},
+	{
+		Number: "12724", Name: "Telangana Express (Return)", TType: "Superfast",
+		Super: true, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "07:00", ArrTime: "06:30", ArrDay: 2, DurMin: 1410,
+		Stops: []stopDef{
+			{Code: "SC", Num: 1, Arr: "--", Dep: "07:00", Day: 1, Dist: 0, Plt: "6"},
+			{Code: "NGP", Num: 2, Arr: "20:35", Dep: "20:45", Halt: 10, Day: 1, Dist: 471, Plt: "1"},
+			{Code: "NZM", Num: 3, Arr: "06:30", Dep: "--", Day: 2, Dist: 1571, Plt: "7"},
+		},
+	},
+	{
+		Number: "12707", Name: "Andhra Pradesh Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "08:00", ArrTime: "07:40", ArrDay: 2, DurMin: 1420,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "08:00", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "NGP", Num: 2, Arr: "17:10", Dep: "17:20", Halt: 10, Day: 1, Dist: 1100, Plt: "2"},
+			{Code: "SC", Num: 3, Arr: "07:40", Dep: "--", Day: 2, Dist: 1571, Plt: "4"},
+		},
+	},
+
+	// Delhi ↔ Bengaluru (add frequency beyond 22691)
+	{
+		Number: "12649", Name: "Karnataka Sampark Kranti Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Tue,Thu,Sun", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "10:45", ArrTime: "07:30", ArrDay: 3, DurMin: 2925,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "10:45", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "NGP", Num: 2, Arr: "20:30", Dep: "20:40", Halt: 10, Day: 1, Dist: 1100, Plt: "2"},
+			{Code: "SC", Num: 3, Arr: "04:45", Dep: "04:55", Halt: 10, Day: 2, Dist: 1516, Plt: "4"},
+			{Code: "SBC", Num: 4, Arr: "07:30", Dep: "--", Day: 3, Dist: 2150, Plt: "8"},
+		},
+	},
+	{
+		Number: "12650", Name: "Karnataka Sampark Kranti Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Mon,Wed,Sat", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "21:30", ArrTime: "18:15", ArrDay: 3, DurMin: 2925,
+		Stops: []stopDef{
+			{Code: "SBC", Num: 1, Arr: "--", Dep: "21:30", Day: 1, Dist: 0, Plt: "8"},
+			{Code: "SC", Num: 2, Arr: "00:05", Dep: "00:15", Halt: 10, Day: 2, Dist: 634, Plt: "4"},
+			{Code: "NGP", Num: 3, Arr: "08:40", Dep: "08:50", Halt: 10, Day: 2, Dist: 1050, Plt: "2"},
+			{Code: "NZM", Num: 4, Arr: "18:15", Dep: "--", Day: 3, Dist: 2150, Plt: "7"},
+		},
+	},
+
+	// Delhi ↔ Chennai (add frequency beyond 12621/12622)
+	{
+		Number: "12615", Name: "Grand Trunk Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "18:10", ArrTime: "12:55", ArrDay: 3, DurMin: 2925,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "18:10", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "CNB", Num: 2, Arr: "00:50", Dep: "01:00", Halt: 10, Day: 2, Dist: 492, Plt: "1"},
+			{Code: "NGP", Num: 3, Arr: "09:35", Dep: "09:45", Halt: 10, Day: 2, Dist: 1095, Plt: "1"},
+			{Code: "SC", Num: 4, Arr: "18:30", Dep: "18:40", Halt: 10, Day: 2, Dist: 1516, Plt: "6"},
+			{Code: "MAS", Num: 5, Arr: "12:55", Dep: "--", Day: 3, Dist: 2183, Plt: "9"},
+		},
+	},
+	{
+		Number: "12616", Name: "Grand Trunk Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "19:15", ArrTime: "13:15", ArrDay: 3, DurMin: 2880,
+		Stops: []stopDef{
+			{Code: "MAS", Num: 1, Arr: "--", Dep: "19:15", Day: 1, Dist: 0, Plt: "9"},
+			{Code: "SC", Num: 2, Arr: "04:45", Dep: "04:55", Halt: 10, Day: 2, Dist: 667, Plt: "6"},
+			{Code: "NGP", Num: 3, Arr: "13:40", Dep: "13:50", Halt: 10, Day: 2, Dist: 1088, Plt: "1"},
+			{Code: "CNB", Num: 4, Arr: "22:20", Dep: "22:30", Halt: 10, Day: 2, Dist: 1691, Plt: "1"},
+			{Code: "NZM", Num: 5, Arr: "13:15", Dep: "--", Day: 3, Dist: 2183, Plt: "7"},
+		},
+	},
+	{
+		Number: "12434", Name: "Chennai Rajdhani Express", TType: "Rajdhani",
+		Super: true, Pantry: true, RunsOn: "Mon,Wed,Fri,Sat", Classes: []string{"1A", "2A", "3A"},
+		DepTime: "15:30", ArrTime: "07:40", ArrDay: 2, DurMin: 970,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "15:30", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "NGP", Num: 2, Arr: "00:20", Dep: "00:30", Halt: 10, Day: 2, Dist: 1100, Plt: "1"},
+			{Code: "MAS", Num: 3, Arr: "07:40", Dep: "--", Day: 2, Dist: 2183, Plt: "8"},
+		},
+	},
+	{
+		Number: "12433", Name: "Chennai Rajdhani Express (Return)", TType: "Rajdhani",
+		Super: true, Pantry: true, RunsOn: "Tue,Thu,Sat,Sun", Classes: []string{"1A", "2A", "3A"},
+		DepTime: "06:05", ArrTime: "21:55", ArrDay: 2, DurMin: 970,
+		Stops: []stopDef{
+			{Code: "MAS", Num: 1, Arr: "--", Dep: "06:05", Day: 1, Dist: 0, Plt: "8"},
+			{Code: "NGP", Num: 2, Arr: "13:00", Dep: "13:10", Halt: 10, Day: 1, Dist: 1083, Plt: "1"},
+			{Code: "NZM", Num: 3, Arr: "21:55", Dep: "--", Day: 2, Dist: 2183, Plt: "7"},
+		},
+	},
+
+	// Mumbai ↔ Delhi (add frequency beyond 12951/12952)
+	{
+		Number: "12953", Name: "August Kranti Rajdhani Express", TType: "Rajdhani",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A"},
+		DepTime: "17:40", ArrTime: "10:55", ArrDay: 2, DurMin: 1035,
+		Stops: []stopDef{
+			{Code: "MMCT", Num: 1, Arr: "--", Dep: "17:40", Day: 1, Dist: 0, Plt: "2"},
+			{Code: "BRC", Num: 2, Arr: "21:50", Dep: "21:55", Halt: 5, Day: 1, Dist: 392, Plt: "1"},
+			{Code: "NZM", Num: 3, Arr: "10:55", Dep: "--", Day: 2, Dist: 1384, Plt: "7"},
+		},
+	},
+	{
+		Number: "12954", Name: "August Kranti Rajdhani Express (Return)", TType: "Rajdhani",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A"},
+		DepTime: "17:25", ArrTime: "10:35", ArrDay: 2, DurMin: 1030,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "17:25", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "BRC", Num: 2, Arr: "05:40", Dep: "05:45", Halt: 5, Day: 2, Dist: 992, Plt: "1"},
+			{Code: "MMCT", Num: 3, Arr: "10:35", Dep: "--", Day: 2, Dist: 1384, Plt: "2"},
+		},
+	},
+	{
+		Number: "12137", Name: "Punjab Mail", TType: "Mail",
+		Super: false, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "19:30", ArrTime: "12:15", ArrDay: 2, DurMin: 1005,
+		Stops: []stopDef{
+			{Code: "CSTM", Num: 1, Arr: "--", Dep: "19:30", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "BRC", Num: 2, Arr: "23:55", Dep: "00:00", Halt: 5, Day: 1, Dist: 392, Plt: "1"},
+			{Code: "BPL", Num: 3, Arr: "07:00", Dep: "07:10", Halt: 10, Day: 2, Dist: 900, Plt: "2"},
+			{Code: "NZM", Num: 4, Arr: "12:15", Dep: "--", Day: 2, Dist: 1524, Plt: "7"},
+		},
+	},
+	{
+		Number: "12138", Name: "Punjab Mail (Return)", TType: "Mail",
+		Super: false, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "17:30", ArrTime: "10:15", ArrDay: 2, DurMin: 1005,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "17:30", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "BPL", Num: 2, Arr: "23:00", Dep: "23:10", Halt: 10, Day: 1, Dist: 702, Plt: "2"},
+			{Code: "BRC", Num: 3, Arr: "05:10", Dep: "05:15", Halt: 5, Day: 2, Dist: 1132, Plt: "1"},
+			{Code: "CSTM", Num: 4, Arr: "10:15", Dep: "--", Day: 2, Dist: 1524, Plt: "1"},
+		},
+	},
+
+	// Mumbai ↔ Chennai (add frequency beyond 12163)
+	{
+		Number: "11041", Name: "Mumbai-Chennai Express", TType: "Express",
+		Super: false, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "21:10", ArrTime: "23:45", ArrDay: 2, DurMin: 1595,
+		Stops: []stopDef{
+			{Code: "CSTM", Num: 1, Arr: "--", Dep: "21:10", Day: 1, Dist: 0, Plt: "2"},
+			{Code: "PUNE", Num: 2, Arr: "23:50", Dep: "00:00", Halt: 10, Day: 1, Dist: 192, Plt: "3"},
+			{Code: "SC", Num: 3, Arr: "10:55", Dep: "11:05", Halt: 10, Day: 2, Dist: 1079, Plt: "6"},
+			{Code: "MAS", Num: 4, Arr: "23:45", Dep: "--", Day: 2, Dist: 1279, Plt: "9"},
+		},
+	},
+	{
+		Number: "11042", Name: "Mumbai-Chennai Express (Return)", TType: "Express",
+		Super: false, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "00:10", ArrTime: "02:55", ArrDay: 2, DurMin: 1605,
+		Stops: []stopDef{
+			{Code: "MAS", Num: 1, Arr: "--", Dep: "00:10", Day: 1, Dist: 0, Plt: "9"},
+			{Code: "SC", Num: 2, Arr: "11:15", Dep: "11:25", Halt: 10, Day: 1, Dist: 667, Plt: "6"},
+			{Code: "PUNE", Num: 3, Arr: "00:45", Dep: "00:55", Halt: 10, Day: 2, Dist: 1087, Plt: "3"},
+			{Code: "CSTM", Num: 4, Arr: "02:55", Dep: "--", Day: 2, Dist: 1279, Plt: "2"},
+		},
+	},
+
+	// Bengaluru ↔ Chennai (add SBC→MAS direction)
+	{
+		Number: "12027", Name: "Bengaluru-Chennai Shatabdi Express", TType: "Shatabdi",
+		Super: true, Pantry: true, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat,Sun", Classes: []string{"CC", "EC"},
+		DepTime: "16:00", ArrTime: "21:00", ArrDay: 1, DurMin: 300,
+		Stops: []stopDef{
+			{Code: "SBC", Num: 1, Arr: "--", Dep: "16:00", Day: 1, Dist: 0, Plt: "5"},
+			{Code: "MAS", Num: 2, Arr: "21:00", Dep: "--", Day: 1, Dist: 362, Plt: "7"},
+		},
+	},
+
+	// Delhi ↔ Patna (add NZM↔PNBE)
+	{
+		Number: "12309", Name: "Rajendra Nagar Patna Rajdhani Express", TType: "Rajdhani",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A"},
+		DepTime: "18:25", ArrTime: "08:20", ArrDay: 2, DurMin: 835,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "18:25", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "CNB", Num: 2, Arr: "00:35", Dep: "00:45", Halt: 10, Day: 2, Dist: 492, Plt: "1"},
+			{Code: "PNBE", Num: 3, Arr: "08:20", Dep: "--", Day: 2, Dist: 1004, Plt: "1"},
+		},
+	},
+	{
+		Number: "12310", Name: "Rajendra Nagar Patna Rajdhani Express (Return)", TType: "Rajdhani",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A"},
+		DepTime: "19:05", ArrTime: "09:00", ArrDay: 2, DurMin: 835,
+		Stops: []stopDef{
+			{Code: "PNBE", Num: 1, Arr: "--", Dep: "19:05", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "CNB", Num: 2, Arr: "02:45", Dep: "02:55", Halt: 10, Day: 2, Dist: 512, Plt: "1"},
+			{Code: "NZM", Num: 3, Arr: "09:00", Dep: "--", Day: 2, Dist: 1004, Plt: "7"},
+		},
+	},
+
+	// Mumbai ↔ Pune (add MMCT↔PUNE frequency)
+	{
+		Number: "12127", Name: "Intercity Express (Mumbai–Pune)", TType: "Superfast",
+		Super: true, Pantry: false, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat,Sun", Classes: []string{"CC", "2S"},
+		DepTime: "06:05", ArrTime: "08:30", ArrDay: 1, DurMin: 145,
+		Stops: []stopDef{
+			{Code: "CSTM", Num: 1, Arr: "--", Dep: "06:05", Day: 1, Dist: 0, Plt: "2"},
+			{Code: "PUNE", Num: 2, Arr: "08:30", Dep: "--", Day: 1, Dist: 192, Plt: "3"},
+		},
+	},
+	{
+		Number: "12128", Name: "Intercity Express (Pune–Mumbai)", TType: "Superfast",
+		Super: true, Pantry: false, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat,Sun", Classes: []string{"CC", "2S"},
+		DepTime: "17:45", ArrTime: "20:10", ArrDay: 1, DurMin: 145,
+		Stops: []stopDef{
+			{Code: "PUNE", Num: 1, Arr: "--", Dep: "17:45", Day: 1, Dist: 0, Plt: "3"},
+			{Code: "CSTM", Num: 2, Arr: "20:10", Dep: "--", Day: 1, Dist: 192, Plt: "2"},
+		},
+	},
+
+	// Delhi ↔ Lucknow
+	{
+		Number: "12003", Name: "Lucknow Shatabdi Express", TType: "Shatabdi",
+		Super: true, Pantry: true, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat,Sun", Classes: []string{"CC", "EC"},
+		DepTime: "06:10", ArrTime: "12:30", ArrDay: 1, DurMin: 380,
+		Stops: []stopDef{
+			{Code: "NDLS", Num: 1, Arr: "--", Dep: "06:10", Day: 1, Dist: 0, Plt: "3"},
+			{Code: "CNB", Num: 2, Arr: "10:45", Dep: "10:47", Halt: 2, Day: 1, Dist: 440, Plt: "2"},
+			{Code: "LKO", Num: 3, Arr: "12:30", Dep: "--", Day: 1, Dist: 512, Plt: "1"},
+		},
+	},
+	{
+		Number: "12004", Name: "Lucknow Shatabdi Express (Return)", TType: "Shatabdi",
+		Super: true, Pantry: true, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat,Sun", Classes: []string{"CC", "EC"},
+		DepTime: "17:00", ArrTime: "23:20", ArrDay: 1, DurMin: 380,
+		Stops: []stopDef{
+			{Code: "LKO", Num: 1, Arr: "--", Dep: "17:00", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "CNB", Num: 2, Arr: "18:45", Dep: "18:47", Halt: 2, Day: 1, Dist: 72, Plt: "2"},
+			{Code: "NDLS", Num: 3, Arr: "23:20", Dep: "--", Day: 1, Dist: 512, Plt: "3"},
+		},
+	},
+
+	// Delhi ↔ Jodhpur
+	{
+		Number: "12461", Name: "Mandore Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "21:05", ArrTime: "11:30", ArrDay: 2, DurMin: 865,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "21:05", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "JP", Num: 2, Arr: "04:10", Dep: "04:20", Halt: 10, Day: 2, Dist: 305, Plt: "1"},
+			{Code: "JU", Num: 3, Arr: "11:30", Dep: "--", Day: 2, Dist: 586, Plt: "1"},
+		},
+	},
+	{
+		Number: "12462", Name: "Mandore Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "17:30", ArrTime: "08:00", ArrDay: 2, DurMin: 870,
+		Stops: []stopDef{
+			{Code: "JU", Num: 1, Arr: "--", Dep: "17:30", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "JP", Num: 2, Arr: "00:50", Dep: "01:00", Halt: 10, Day: 2, Dist: 281, Plt: "1"},
+			{Code: "NZM", Num: 3, Arr: "08:00", Dep: "--", Day: 2, Dist: 586, Plt: "7"},
+		},
+	},
 }
 
 // SeedTrainsIfEmpty seeds train data if no stations exist yet.
@@ -712,6 +1023,141 @@ func GenerateTrainRef() string {
 		b[i] = chars[rand.Intn(len(chars))]
 	}
 	return "IY-TRN-" + string(b)
+}
+
+// SeedAdditionalTrains creates any trains in trainDefs that are not yet in the DB,
+// along with route stops and 90 days of schedules. Safe to call on every startup.
+func SeedAdditionalTrains() error {
+	// Need stations to already exist
+	var stationCount int64
+	db.DB.Model(&models.Station{}).Count(&stationCount)
+	if stationCount == 0 {
+		return nil
+	}
+
+	// Build station code→model map
+	var stations []models.Station
+	db.DB.Find(&stations)
+	stationByCode := make(map[string]models.Station, len(stations))
+	for _, s := range stations {
+		stationByCode[s.Code] = s
+	}
+
+	// Get existing train numbers
+	var existingNums []string
+	db.DB.Model(&models.Train{}).Pluck("number", &existingNums)
+	exists := make(map[string]bool, len(existingNums))
+	for _, n := range existingNums {
+		exists[n] = true
+	}
+
+	now := time.Now().UTC()
+	today := now.Truncate(24 * time.Hour)
+	horizon := today.AddDate(0, 0, 90)
+	added := 0
+
+	for _, td := range trainDefs {
+		if exists[td.Number] {
+			continue
+		}
+		train := models.Train{
+			Number:      td.Number,
+			Name:        td.Name,
+			TrainType:   td.TType,
+			IsSuperfast: td.Super,
+			HasPantry:   td.Pantry,
+			RunsOn:      td.RunsOn,
+			Classes:     joinStrings(td.Classes),
+		}
+		if err := db.DB.Create(&train).Error; err != nil {
+			log.Printf("  ✗ train %s: %v", td.Number, err)
+			continue
+		}
+
+		for _, sd := range td.Stops {
+			sta, ok := stationByCode[sd.Code]
+			if !ok {
+				log.Printf("  ⚠ station %s not found for train %s", sd.Code, td.Number)
+				continue
+			}
+			stop := models.TrainRouteStop{
+				TrainID:       train.ID,
+				StationID:     sta.ID,
+				StopNumber:    sd.Num,
+				ArrivalTime:   sd.Arr,
+				DepartureTime: sd.Dep,
+				HaltMin:       sd.Halt,
+				DistanceKM:    sd.Dist,
+				DayNumber:     sd.Day,
+				Platform:      sd.Plt,
+			}
+			if err := db.DB.Create(&stop).Error; err != nil {
+				log.Printf("  ✗ stop for %s: %v", td.Number, err)
+			}
+		}
+
+		if len(td.Stops) < 2 {
+			added++
+			continue
+		}
+		originSta, ok1 := stationByCode[td.Stops[0].Code]
+		termSta, ok2 := stationByCode[td.Stops[len(td.Stops)-1].Code]
+		if !ok1 || !ok2 {
+			added++
+			continue
+		}
+		termDist := td.Stops[len(td.Stops)-1].Dist
+
+		var schedules []models.TrainSchedule
+		for d := today; d.Before(horizon); d = d.AddDate(0, 0, 1) {
+			schedules = append(schedules, models.TrainSchedule{
+				TrainID:       train.ID,
+				FromStationID: originSta.ID,
+				ToStationID:   termSta.ID,
+				JourneyDate:   time.Date(d.Year(), d.Month(), d.Day(), 0, 0, 0, 0, time.UTC),
+				DepartureTime: td.DepTime,
+				ArrivalTime:   td.ArrTime,
+				ArrivalDay:    td.ArrDay,
+				DurationMin:   td.DurMin,
+				IsActive:      true,
+			})
+		}
+		if err := db.DB.CreateInBatches(&schedules, 100).Error; err != nil {
+			log.Printf("  ✗ schedules for %s: %v", td.Number, err)
+			added++
+			continue
+		}
+
+		var avails []models.TrainClassAvailability
+		for _, sched := range schedules {
+			for _, cls := range td.Classes {
+				cap := classCapacity(cls)
+				avail := cap - rand.Intn(cap/3+1)
+				base, tatkal := classFares(cls, termDist)
+				base = math.Round((base+float64(rand.Intn(50)-25))/10) * 10
+				avails = append(avails, models.TrainClassAvailability{
+					ScheduleID:  sched.ID,
+					Class:       cls,
+					TotalBerths: cap,
+					Available:   avail,
+					BaseFare:    base,
+					TatkalFare:  tatkal,
+					Status:      "AVAILABLE",
+				})
+			}
+		}
+		if len(avails) > 0 {
+			if err := db.DB.CreateInBatches(&avails, 200).Error; err != nil {
+				log.Printf("  ✗ availability for %s: %v", td.Number, err)
+			}
+		}
+		added++
+	}
+
+	if added > 0 {
+		log.Printf("✓ SeedAdditionalTrains: added %d new trains", added)
+	}
+	return nil
 }
 
 // ExtendTrainSchedules ensures every Go-seeded train has schedules through today+days.

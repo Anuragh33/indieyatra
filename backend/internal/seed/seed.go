@@ -122,6 +122,9 @@ func RunIfEmpty() error {
 		if err := SeedTrainsIfEmpty(); err != nil {
 			return err
 		}
+		if err := SeedAdditionalTrains(); err != nil {
+			log.Printf("⚠ additional trains: %v", err)
+		}
 		SeedFlights()
 		if err := ExtendTrainSchedules(90); err != nil {
 			log.Printf("⚠ extend train schedules: %v", err)
@@ -375,6 +378,9 @@ func RunIfEmpty() error {
 	if err := SeedTrainsIfEmpty(); err != nil {
 		return fmt.Errorf("seed trains: %w", err)
 	}
+	if err := SeedAdditionalTrains(); err != nil {
+		log.Printf("⚠ additional trains: %v", err)
+	}
 	SeedFlights()
 	if err := ExtendTrainSchedules(90); err != nil {
 		log.Printf("⚠ extend train schedules: %v", err)
@@ -393,15 +399,15 @@ func RunIfEmpty() error {
 // have at least one schedule (i.e., the top-8 Go-seeded routes). Safe to call on
 // every startup — routes already covered up to horizon are skipped.
 func ExtendBusSchedules(days int) error {
-	// Only extend routes seeded via Go (short 3-letter city codes: MUM, BLR, etc.)
+	// All routes whose from-city uses a short Go-seed code (MUM, BLR, etc.)
+	// This covers both routes that already have schedules and those that don't yet.
 	var routeIDs []string
 	if err := db.DB.Raw(`
-		SELECT DISTINCT s.route_id::text
-		FROM schedules s
-		JOIN routes r ON r.id = s.route_id
+		SELECT r.id::text
+		FROM routes r
 		JOIN cities fc ON fc.id = r.from_city_id
 		WHERE LENGTH(fc.code) <= 4
-		LIMIT 100
+		LIMIT 200
 	`).Scan(&routeIDs).Error; err != nil {
 		return err
 	}
