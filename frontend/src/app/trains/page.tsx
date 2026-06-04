@@ -141,18 +141,18 @@ function TrainsLanding() {
   };
 
   const quickRoutes = [
-    { from: "NDLS", to: "HWH", label: "Delhi → Kolkata" },
-    { from: "MMCT", to: "NZM", label: "Mumbai → Delhi" },
-    { from: "NZM", to: "SBC", label: "Delhi → Bengaluru" },
-    { from: "MAS", to: "SBC", label: "Chennai → Bengaluru" },
-    { from: "NDLS", to: "BSB", label: "Delhi → Varanasi" },
-    { from: "MMCT", to: "ADI", label: "Mumbai → Ahmedabad" },
-    { from: "SBC", to: "MYS", label: "Bengaluru → Mysuru" },
-    { from: "MAS", to: "CBE", label: "Chennai → Coimbatore" },
-    { from: "NDLS", to: "DDN", label: "Delhi → Dehradun" },
-    { from: "HWH", to: "BBS", label: "Kolkata → Bhubaneswar" },
-    { from: "NDLS", to: "JP", label: "Delhi → Jaipur" },
-    { from: "CSTM", to: "PUNE", label: "Mumbai → Pune" },
+    { from: "NDLS", to: "HWH",  label: "Delhi → Kolkata" },
+    { from: "MMCT", to: "NZM",  label: "Mumbai → Delhi" },
+    { from: "NZM",  to: "SBC",  label: "Delhi → Bengaluru" },
+    { from: "MAS",  to: "SBC",  label: "Chennai → Bengaluru" },
+    { from: "NDLS", to: "BSB",  label: "Delhi → Varanasi" },
+    { from: "CSTM", to: "MAS",  label: "Mumbai → Chennai" },
+    { from: "NZM",  to: "MAS",  label: "Delhi → Chennai" },
+    { from: "NZM",  to: "SC",   label: "Delhi → Hyderabad" },
+    { from: "HWH",  to: "NDLS", label: "Kolkata → Delhi" },
+    { from: "NDLS", to: "ASR",  label: "Delhi → Amritsar" },
+    { from: "NDLS", to: "BPL",  label: "Delhi → Bhopal" },
+    { from: "CSTM", to: "NZM",  label: "Mumbai → Delhi Niz" },
   ];
 
   return (
@@ -370,18 +370,18 @@ function TrainsLanding() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
-                { from: "NDLS", fromCity: "New Delhi", to: "HWH", toCity: "Kolkata", dist: "1443 km", dur: "17h", fare: 565, trains: 8 },
-                { from: "MMCT", fromCity: "Mumbai", to: "NZM", toCity: "Delhi", dist: "1148 km", dur: "16h", fare: 490, trains: 12 },
-                { from: "NZM", fromCity: "Delhi", to: "SBC", toCity: "Bengaluru", dist: "2444 km", dur: "33h", fare: 890, trains: 6 },
-                { from: "MAS", fromCity: "Chennai", to: "SBC", toCity: "Bengaluru", dist: "357 km", dur: "5h", fare: 210, trains: 14 },
-                { from: "CSTM", fromCity: "Mumbai", to: "PUNE", toCity: "Pune", dist: "192 km", dur: "3h", fare: 125, trains: 22 },
-                { from: "SBC", fromCity: "Bengaluru", to: "SC", toCity: "Hyderabad", dist: "576 km", dur: "10h", fare: 285, trains: 9 },
-                { from: "NDLS", fromCity: "New Delhi", to: "BSB", toCity: "Varanasi", dist: "763 km", dur: "8h 30m", fare: 395, trains: 10 },
-                { from: "MMCT", fromCity: "Mumbai", to: "ADI", toCity: "Ahmedabad", dist: "492 km", dur: "6h 20m", fare: 245, trains: 18 },
-                { from: "NDLS", fromCity: "New Delhi", to: "AGC", toCity: "Agra", dist: "195 km", dur: "2h 10m", fare: 135, trains: 28 },
-                { from: "MAS", fromCity: "Chennai", to: "CBE", toCity: "Coimbatore", dist: "497 km", dur: "7h 45m", fare: 220, trains: 12 },
-                { from: "HWH", fromCity: "Kolkata", to: "BBS", toCity: "Bhubaneswar", dist: "441 km", dur: "7h", fare: 195, trains: 16 },
-                { from: "NDLS", fromCity: "New Delhi", to: "JP", toCity: "Jaipur", dist: "308 km", dur: "4h 10m", fare: 165, trains: 20 },
+                { from: "NDLS", fromCity: "New Delhi",  to: "HWH",  toCity: "Kolkata",           dist: "1443 km", dur: "17h",     fare: 565, trains: 8  },
+                { from: "MMCT", fromCity: "Mumbai",     to: "NZM",  toCity: "Delhi",              dist: "1148 km", dur: "16h",     fare: 490, trains: 12 },
+                { from: "NZM",  fromCity: "Delhi",      to: "SBC",  toCity: "Bengaluru",          dist: "2444 km", dur: "33h",     fare: 890, trains: 6  },
+                { from: "MAS",  fromCity: "Chennai",    to: "SBC",  toCity: "Bengaluru",          dist: "357 km",  dur: "5h",      fare: 210, trains: 14 },
+                { from: "NDLS", fromCity: "New Delhi",  to: "BSB",  toCity: "Varanasi",           dist: "763 km",  dur: "8h 30m", fare: 395, trains: 10 },
+                { from: "CSTM", fromCity: "Mumbai",     to: "MAS",  toCity: "Chennai",            dist: "1279 km", dur: "21h",     fare: 650, trains: 7  },
+                { from: "NZM",  fromCity: "Delhi",      to: "MAS",  toCity: "Chennai",            dist: "2183 km", dur: "32h",     fare: 875, trains: 5  },
+                { from: "NZM",  fromCity: "Delhi",      to: "SC",   toCity: "Hyderabad",          dist: "1571 km", dur: "22h",     fare: 680, trains: 6  },
+                { from: "HWH",  fromCity: "Kolkata",    to: "NDLS", toCity: "New Delhi",          dist: "1447 km", dur: "18h",     fare: 550, trains: 9  },
+                { from: "NDLS", fromCity: "New Delhi",  to: "ASR",  toCity: "Amritsar",           dist: "448 km",  dur: "5h 30m", fare: 295, trains: 18 },
+                { from: "NDLS", fromCity: "New Delhi",  to: "BPL",  toCity: "Bhopal",             dist: "702 km",  dur: "7h 30m", fare: 375, trains: 8  },
+                { from: "CSTM", fromCity: "Mumbai",     to: "NZM",  toCity: "Delhi Nizamuddin",   dist: "1524 km", dur: "20h",     fare: 720, trains: 7  },
               ].map((r, i) => (
                 <button
                   key={i}

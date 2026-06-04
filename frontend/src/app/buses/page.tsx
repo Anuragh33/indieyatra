@@ -5,7 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { MobileNav } from "@/components/MobileNav";
 import { SearchWidget } from "@/components/SearchWidget";
 import { apiGet } from "@/lib/api";
-import type { City, Route } from "@/lib/types";
+import type { Route } from "@/lib/types";
 import { useCurrency } from "@/lib/currency";
 import { Star, TrendingUp, Crown, Sparkles, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
@@ -16,12 +16,10 @@ export default function Home() {
   const router = useRouter();
   const t = useT();
   const { format: formatPrice } = useCurrency();
-  const [cities, setCities] = useState<City[]>([]);
   const [routes, setRoutes] = useState<Route[]>([]);
   const [priceTrend, setPriceTrend] = useState<{ month: string; price: number }[]>([]);
 
   useEffect(() => {
-    apiGet<City[]>("/api/destinations/top").then(setCities).catch(() => {});
     apiGet<Route[]>("/api/routes/popular")
       .then((r) => {
         setRoutes(r);
@@ -116,45 +114,49 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {cities.slice(0, 8).map((city, i) => (
-              <motion.button
-                key={city.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, delay: i * 0.06 }}
-                onClick={() => router.push(`/search?from=MUM&to=${city.code}`)}
-                className="group card card-hover overflow-hidden text-left"
-              >
-                <div className="aspect-[4/3] bg-bg-elevated relative overflow-hidden">
-                  {city.image_url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={city.image_url}
-                      alt={city.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <MapPin className="w-8 h-8 text-text-muted" />
+            {routes.slice(0, 8).map((r, i) => {
+              const city = r.to_city;
+              if (!city) return null;
+              return (
+                <motion.button
+                  key={r.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: i * 0.06 }}
+                  onClick={() => router.push(`/search?from=${r.from_city?.code}&to=${city.code}`)}
+                  className="group card card-hover overflow-hidden text-left"
+                >
+                  <div className="aspect-[4/3] bg-bg-elevated relative overflow-hidden">
+                    {city.image_url ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={city.image_url}
+                        alt={city.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <MapPin className="w-8 h-8 text-text-muted" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-3">
+                      <div className="font-semibold text-white">{city.name}</div>
+                      <div className="text-xs text-white/70">{city.state}</div>
                     </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-3">
-                    <div className="font-semibold text-white">{city.name}</div>
-                    <div className="text-xs text-white/70">{city.state}</div>
                   </div>
-                </div>
-                <div className="p-3 flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-xs text-text-secondary">
-                    <Star className="w-3 h-3 fill-saffron text-saffron" />
-                    {((city.popularity || 90) / 20).toFixed(1)}
+                  <div className="p-3 flex items-center justify-between">
+                    <div className="flex items-center gap-1 text-xs text-text-secondary">
+                      <Star className="w-3 h-3 fill-saffron text-saffron" />
+                      {((city.popularity || 90) / 20).toFixed(1)}
+                    </div>
+                    <div className="text-xs">
+                      {t("home.from")} <span className="text-saffron font-semibold">{formatPrice(380 + (city.popularity || 0))}</span>
+                    </div>
                   </div>
-                  <div className="text-xs">
-                    {t("home.from")} <span className="text-saffron font-semibold">{formatPrice(380 + (city.popularity || 0))}</span>
-                  </div>
-                </div>
-              </motion.button>
-            ))}
+                </motion.button>
+              );
+            })}
           </div>
         </section>
 

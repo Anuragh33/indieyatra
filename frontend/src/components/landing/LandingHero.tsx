@@ -15,7 +15,6 @@ export function LandingHero() {
       icon: Bus,
       accent: "#FF6B1A",
       glow: "group-hover:shadow-[0_0_40px_rgba(255,107,26,0.25)]",
-      badge: null,
       image: "https://images.unsplash.com/photo-1570118054363-ff4d296962f5?w=900&q=80",
     },
     {
@@ -26,7 +25,6 @@ export function LandingHero() {
       icon: Train,
       accent: "#6366F1",
       glow: "group-hover:shadow-[0_0_40px_rgba(99,102,241,0.25)]",
-      badge: null,
       image: "https://images.unsplash.com/photo-1442570468985-f63ed5de9086?w=900&q=80",
     },
     {
@@ -37,7 +35,6 @@ export function LandingHero() {
       icon: Plane,
       accent: "#06B6D4",
       glow: "group-hover:shadow-[0_0_40px_rgba(6,182,212,0.25)]",
-      badge: t("landing.comingSoon"),
       image: "https://images.unsplash.com/photo-1529074963764-98f45c47344b?w=900&q=80",
     },
     {
@@ -48,7 +45,6 @@ export function LandingHero() {
       icon: Building2,
       accent: "#F59E0B",
       glow: "group-hover:shadow-[0_0_40px_rgba(245,158,11,0.25)]",
-      badge: t("landing.comingSoon"),
       image: "https://images.unsplash.com/photo-1724947052687-e580b3010aad?w=900&q=80",
     },
   ] as const;
@@ -82,7 +78,7 @@ export function LandingHero() {
 
       {/* 4 vertical cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 px-4 md:px-6 gap-3 md:gap-4 h-[320px] md:h-[260px]">
-        {VERTICALS.map(({ href, label, sub, desc, icon: Icon, accent, glow, badge, image }) => (
+        {VERTICALS.map(({ href, label, sub, desc, icon: Icon, accent, glow, image }) => (
           <Link
             key={href}
             href={href}
@@ -99,14 +95,6 @@ export function LandingHero() {
               className="absolute bottom-0 left-0 right-0 h-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               style={{ background: `radial-gradient(ellipse at 50% 120%, ${accent}22 0%, transparent 70%)` }}
             />
-
-            {badge && (
-              <div className="absolute top-4 right-4 z-10">
-                <span className="text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-sm bg-black/40 text-white/80 border border-white/20 uppercase tracking-widest">
-                  {badge}
-                </span>
-              </div>
-            )}
 
             <div className="relative z-10 mt-auto p-4 md:p-5">
               <div
@@ -130,7 +118,7 @@ export function LandingHero() {
                 className="flex items-center gap-1.5 text-sm font-semibold group-hover:gap-3 transition-all duration-300 opacity-80 group-hover:opacity-100"
                 style={{ color: accent }}
               >
-                {badge ? t("landing.explore") : t("landing.bookNow")}
+                {t("landing.bookNow")}
                 <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
               </div>
             </div>
