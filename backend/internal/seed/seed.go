@@ -74,6 +74,47 @@ var cities = []models.City{
 		BusStands: "Hamidia Road Bus Stand", ImageURL: "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?w=800", Popularity: 58},
 	{Name: "Nashik", State: "Maharashtra", Code: "NSK", Latitude: 19.9975, Longitude: 73.7898,
 		BusStands: "Mahamarg Bus Terminal,CBS", ImageURL: "https://images.unsplash.com/photo-1625730580977-7d4b3a7b8a4c?w=800", Popularity: 56},
+	// Wave 2 cities
+	{Name: "Thiruvananthapuram", State: "Kerala", Code: "TRV", Latitude: 8.5241, Longitude: 76.9366,
+		BusStands: "KSRTC Central,Thampanoor", ImageURL: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800", Popularity: 71},
+	{Name: "Pondicherry", State: "Puducherry", Code: "PDY", Latitude: 11.9416, Longitude: 79.8083,
+		BusStands: "New Bus Stand", ImageURL: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800", Popularity: 69},
+	{Name: "Tirupati", State: "Andhra Pradesh", Code: "TPT", Latitude: 13.6288, Longitude: 79.4192,
+		BusStands: "Tirupati Bus Stand", ImageURL: "https://images.unsplash.com/photo-1543832923-44667a44c804?w=800", Popularity: 74},
+	{Name: "Bhubaneswar", State: "Odisha", Code: "BBI", Latitude: 20.2961, Longitude: 85.8245,
+		BusStands: "Baramunda Bus Terminal", ImageURL: "https://images.unsplash.com/photo-1558431382-27e303142255?w=800", Popularity: 63},
+	{Name: "Patna", State: "Bihar", Code: "PAT", Latitude: 25.5941, Longitude: 85.1376,
+		BusStands: "Mithapur Bus Terminal,Patliputra", ImageURL: "https://images.unsplash.com/photo-1558431382-27e303142255?w=800", Popularity: 60},
+	{Name: "Ranchi", State: "Jharkhand", Code: "RNC", Latitude: 23.3441, Longitude: 85.3096,
+		BusStands: "Ranchi Bus Stand", ImageURL: "https://images.unsplash.com/photo-1558431382-27e303142255?w=800", Popularity: 55},
+	{Name: "Guwahati", State: "Assam", Code: "GHY", Latitude: 26.1445, Longitude: 91.7362,
+		BusStands: "ISBT Betkuchi", ImageURL: "https://images.unsplash.com/photo-1558431382-27e303142255?w=800", Popularity: 58},
+	{Name: "Siliguri", State: "West Bengal", Code: "SGT", Latitude: 26.7271, Longitude: 88.3953,
+		BusStands: "Tenzing Norgay Central Bus Terminus", ImageURL: "https://images.unsplash.com/photo-1558431382-27e303142255?w=800", Popularity: 57},
+	{Name: "Salem", State: "Tamil Nadu", Code: "SLM", Latitude: 11.6643, Longitude: 78.1460,
+		BusStands: "New Bus Stand", ImageURL: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800", Popularity: 53},
+	{Name: "Hubli", State: "Karnataka", Code: "HBL", Latitude: 15.3647, Longitude: 75.1240,
+		BusStands: "Hubli Bus Stand", ImageURL: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=800", Popularity: 52},
+	{Name: "Surat", State: "Gujarat", Code: "STV", Latitude: 21.1702, Longitude: 72.8311,
+		BusStands: "Surat Central Bus Stand,Katargam", ImageURL: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=800", Popularity: 64},
+	{Name: "Rajkot", State: "Gujarat", Code: "RAJ", Latitude: 22.3039, Longitude: 70.8022,
+		BusStands: "Rajkot Bus Stand", ImageURL: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=800", Popularity: 55},
+	{Name: "Prayagraj", State: "Uttar Pradesh", Code: "PYG", Latitude: 25.4358, Longitude: 81.8463,
+		BusStands: "Civil Lines,Rambagh", ImageURL: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800", Popularity: 67},
+	{Name: "Shimla", State: "Himachal Pradesh", Code: "SML", Latitude: 31.1048, Longitude: 77.1734,
+		BusStands: "ISBT Tutikandi", ImageURL: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800", Popularity: 76},
+	{Name: "Haridwar", State: "Uttarakhand", Code: "HRW", Latitude: 29.9457, Longitude: 78.1642,
+		BusStands: "ISBT Haridwar", ImageURL: "https://images.unsplash.com/photo-1588083949404-c4f1ed1323b3?w=800", Popularity: 73},
+	{Name: "Aurangabad", State: "Maharashtra", Code: "AUG", Latitude: 19.8762, Longitude: 75.3433,
+		BusStands: "Central Bus Stand", ImageURL: "https://images.unsplash.com/photo-1625730580977-7d4b3a7b8a4c?w=800", Popularity: 59},
+	{Name: "Nanded", State: "Maharashtra", Code: "NND", Latitude: 19.1608, Longitude: 77.3212,
+		BusStands: "Nanded Bus Stand", ImageURL: "https://images.unsplash.com/photo-1625730580977-7d4b3a7b8a4c?w=800", Popularity: 48},
+	{Name: "Vijayawada", State: "Andhra Pradesh", Code: "VJA", Latitude: 16.5062, Longitude: 80.6480,
+		BusStands: "Pandit Nehru Bus Station", ImageURL: "https://images.unsplash.com/photo-1543832923-44667a44c804?w=800", Popularity: 62},
+	{Name: "Nellore", State: "Andhra Pradesh", Code: "NLR", Latitude: 14.4426, Longitude: 79.9865,
+		BusStands: "Nellore Bus Stand", ImageURL: "https://images.unsplash.com/photo-1543832923-44667a44c804?w=800", Popularity: 50},
+	{Name: "Warangal", State: "Telangana", Code: "WGL", Latitude: 17.9689, Longitude: 79.5941,
+		BusStands: "Warangal Bus Stand", ImageURL: "https://images.unsplash.com/photo-1565374395542-0ce18882c857?w=800", Popularity: 51},
 }
 
 var operators = []models.Operator{
@@ -95,6 +136,14 @@ var operators = []models.Operator{
 	{Name: "Kallada Travels", Slug: "kallada", LogoURL: "https://logo.clearbit.com/kalladatravels.com", Rating: 4.4, TotalReviews: 11200},
 	{Name: "Sharma Transports", Slug: "sharma", LogoURL: "https://logo.clearbit.com/sharmatransports.com", Rating: 4.0, TotalReviews: 3800},
 	{Name: "Paulo Travels", Slug: "paulo", LogoURL: "https://logo.clearbit.com/paulotravels.com", Rating: 4.2, TotalReviews: 6700},
+	{Name: "RSRTC", Slug: "rsrtc", LogoURL: "https://logo.clearbit.com/rsrtc.rajasthan.gov.in", Rating: 3.8, TotalReviews: 6100, IsGovernment: true},
+	{Name: "OSRTC", Slug: "osrtc", LogoURL: "https://logo.clearbit.com/osrtc.in", Rating: 3.9, TotalReviews: 4800, IsGovernment: true},
+	{Name: "BSRTC", Slug: "bsrtc", LogoURL: "https://logo.clearbit.com/bsrtc.bih.nic.in", Rating: 3.7, TotalReviews: 3900, IsGovernment: true},
+	{Name: "NBSTC", Slug: "nbstc", LogoURL: "https://logo.clearbit.com/nbstc.in", Rating: 3.8, TotalReviews: 3200, IsGovernment: true},
+	{Name: "Neeta Tours", Slug: "neeta", LogoURL: "https://logo.clearbit.com/neetabus.com", Rating: 4.3, TotalReviews: 8900},
+	{Name: "Raj National Express", Slug: "rnexpress", LogoURL: "https://logo.clearbit.com/rajnationalexpress.com", Rating: 4.1, TotalReviews: 5600},
+	{Name: "Greenline Travels", Slug: "greenline", LogoURL: "https://logo.clearbit.com/greenlinetravels.com", Rating: 4.2, TotalReviews: 4100},
+	{Name: "Dolphin Travels", Slug: "dolphin", LogoURL: "https://logo.clearbit.com/dolphintravels.in", Rating: 4.0, TotalReviews: 3700},
 }
 
 var busTypes = []struct {
@@ -119,8 +168,20 @@ func RunIfEmpty() error {
 	db.DB.Model(&models.City{}).Count(&count)
 	if count > 0 {
 		log.Printf("✓ Bus seed skipped (already %d cities)", count)
+		if err := SeedAdditionalOperators(); err != nil {
+			log.Printf("⚠ additional operators: %v", err)
+		}
+		if err := SeedAdditionalCities(); err != nil {
+			log.Printf("⚠ additional cities: %v", err)
+		}
+		if err := SeedAdditionalRoutes(); err != nil {
+			log.Printf("⚠ additional routes: %v", err)
+		}
 		if err := SeedTrainsIfEmpty(); err != nil {
 			return err
+		}
+		if err := SeedAdditionalStations(); err != nil {
+			log.Printf("⚠ additional stations: %v", err)
 		}
 		if err := SeedAdditionalTrains(); err != nil {
 			log.Printf("⚠ additional trains: %v", err)
@@ -173,6 +234,47 @@ func RunIfEmpty() error {
 		{"MYQ", "MAQ"}, {"CBE", "MDU"}, {"COK", "MDU"}, {"AMD", "IDR"},
 		{"IDR", "BPL"}, {"NGP", "HYD"}, {"VZG", "HYD"}, {"DDN", "RSK"},
 		{"CCU", "BLR"}, {"CCU", "DEL"}, {"AMD", "MUM"},
+		// New cities → metro
+		{"TRV", "COK"}, {"TRV", "MAA"}, {"TRV", "BLR"}, {"TRV", "HYD"},
+		{"PDY", "MAA"}, {"PDY", "BLR"}, {"PDY", "CBE"},
+		{"TPT", "HYD"}, {"TPT", "BLR"}, {"TPT", "MAA"},
+		{"BBI", "CCU"}, {"BBI", "HYD"}, {"BBI", "DEL"},
+		{"PAT", "DEL"}, {"PAT", "CCU"}, {"PAT", "LKO"},
+		{"RNC", "CCU"}, {"RNC", "DEL"}, {"RNC", "PAT"},
+		{"GHY", "CCU"}, {"GHY", "DEL"}, {"GHY", "SGT"},
+		{"SLM", "MAA"}, {"SLM", "BLR"}, {"SLM", "CBE"},
+		{"HBL", "BLR"}, {"HBL", "MAQ"}, {"HBL", "MYQ"},
+		{"STV", "MUM"}, {"STV", "AMD"}, {"STV", "PNQ"},
+		{"RAJ", "AMD"}, {"RAJ", "MUM"}, {"RAJ", "STV"},
+		{"PYG", "LKO"}, {"PYG", "VNS"}, {"PYG", "DEL"}, {"PYG", "AGR"},
+		{"SML", "DEL"}, {"SML", "CHD"}, {"SML", "DDN"},
+		{"HRW", "DEL"}, {"HRW", "DDN"}, {"HRW", "RSK"},
+		{"AUG", "MUM"}, {"AUG", "PNQ"}, {"AUG", "NGP"}, {"AUG", "HYD"},
+		{"NND", "HYD"}, {"NND", "AUG"}, {"NND", "PNQ"},
+		{"VJA", "HYD"}, {"VJA", "VZG"}, {"VJA", "MAA"}, {"VJA", "BLR"},
+		{"NLR", "MAA"}, {"NLR", "HYD"}, {"NLR", "VJA"},
+		{"WGL", "HYD"}, {"WGL", "VZG"}, {"WGL", "VJA"},
+		// Additional cross-regional
+		{"MUM", "IDR"}, {"MUM", "BPL"}, {"MUM", "AUG"},
+		{"DEL", "VNS"}, {"DEL", "PYG"}, {"DEL", "PAT"}, {"DEL", "SML"},
+		{"BLR", "HBL"}, {"BLR", "TPT"}, {"BLR", "TRV"},
+		{"HYD", "AUG"}, {"HYD", "NND"}, {"HYD", "WGL"},
+		{"CCU", "PAT"}, {"CCU", "RNC"}, {"CCU", "BBI"}, {"CCU", "SGT"},
+		{"AMD", "BPL"}, {"AMD", "IDR"}, {"AMD", "RAJ"},
+		{"PNQ", "AUG"}, {"PNQ", "STV"}, {"PNQ", "AMD"},
+		{"LKO", "PAT"}, {"LKO", "PYG"}, {"LKO", "DEL"},
+		{"JAI", "ATQ"}, {"JAI", "AMD"}, {"JAI", "BPL"}, {"JAI", "LKO"},
+		{"CHD", "SML"}, {"CHD", "ATQ"}, {"CHD", "DDN"},
+		{"VNS", "PYG"}, {"VNS", "PAT"}, {"VNS", "AGR"},
+		{"DDN", "HRW"}, {"RSK", "HRW"}, {"DDN", "SML"},
+		{"MYQ", "CBE"}, {"MYQ", "MDU"}, {"MYQ", "COK"},
+		{"COK", "TRV"}, {"COK", "CBE"}, {"COK", "HYD"},
+		{"MAQ", "BLR"}, {"MAQ", "COK"}, {"MAQ", "MYQ"},
+		{"VZG", "BBI"}, {"VZG", "VJA"}, {"VZG", "MAA"},
+		{"IDR", "BPL"}, {"IDR", "AUG"}, {"IDR", "NGP"},
+		{"BPL", "NGP"}, {"BPL", "HYD"},
+		{"NGP", "BBI"}, {"NGP", "RNC"},
+		{"SGT", "GHY"}, {"SGT", "CCU"}, {"SGT", "PAT"},
 	}
 	var routes []models.Route
 	for _, p := range pairs {
@@ -378,6 +480,9 @@ func RunIfEmpty() error {
 	if err := SeedTrainsIfEmpty(); err != nil {
 		return fmt.Errorf("seed trains: %w", err)
 	}
+	if err := SeedAdditionalStations(); err != nil {
+		log.Printf("⚠ additional stations: %v", err)
+	}
 	if err := SeedAdditionalTrains(); err != nil {
 		log.Printf("⚠ additional trains: %v", err)
 	}
@@ -392,6 +497,166 @@ func RunIfEmpty() error {
 	if err := SeedHotelsIfEmpty(); err != nil {
 		return fmt.Errorf("seed hotels: %w", err)
 	}
+	return nil
+}
+
+// SeedAdditionalOperators creates any operators in the operators slice not yet in the DB.
+// Safe to call on every startup.
+func SeedAdditionalOperators() error {
+	var existingSlugs []string
+	db.DB.Model(&models.Operator{}).Pluck("slug", &existingSlugs)
+	existsSlug := make(map[string]bool, len(existingSlugs))
+	for _, s := range existingSlugs {
+		existsSlug[s] = true
+	}
+	var toAdd []models.Operator
+	for _, o := range operators {
+		if !existsSlug[o.Slug] {
+			toAdd = append(toAdd, o)
+		}
+	}
+	if len(toAdd) == 0 {
+		return nil
+	}
+	if err := db.DB.CreateInBatches(&toAdd, 50).Error; err != nil {
+		return fmt.Errorf("SeedAdditionalOperators: %w", err)
+	}
+	log.Printf("✓ SeedAdditionalOperators: added %d operators", len(toAdd))
+	return nil
+}
+
+// SeedAdditionalCities creates any cities in the cities slice not yet in the DB.
+// Safe to call on every startup.
+func SeedAdditionalCities() error {
+	var existingCodes []string
+	db.DB.Model(&models.City{}).Pluck("code", &existingCodes)
+	existsCode := make(map[string]bool, len(existingCodes))
+	for _, c := range existingCodes {
+		existsCode[c] = true
+	}
+	var toAdd []models.City
+	for _, c := range cities {
+		if !existsCode[c.Code] {
+			toAdd = append(toAdd, c)
+		}
+	}
+	if len(toAdd) == 0 {
+		return nil
+	}
+	if err := db.DB.CreateInBatches(&toAdd, 50).Error; err != nil {
+		return fmt.Errorf("SeedAdditionalCities: %w", err)
+	}
+	log.Printf("✓ SeedAdditionalCities: added %d cities", len(toAdd))
+	return nil
+}
+
+// SeedAdditionalRoutes creates bus routes for any city pairs not yet in the DB.
+// Safe to call on every startup.
+func SeedAdditionalRoutes() error {
+	var allCities []models.City
+	db.DB.Find(&allCities)
+	if len(allCities) == 0 {
+		return nil
+	}
+	cityByCode := make(map[string]models.City, len(allCities))
+	for _, c := range allCities {
+		cityByCode[c.Code] = c
+	}
+
+	type routeKey struct{ from, to string }
+	var existing []struct{ FromCityID, ToCityID string }
+	db.DB.Raw("SELECT from_city_id::text as from_city_id, to_city_id::text as to_city_id FROM routes").Scan(&existing)
+	existsRoute := make(map[routeKey]bool, len(existing))
+	for _, r := range existing {
+		existsRoute[routeKey{r.FromCityID, r.ToCityID}] = true
+	}
+
+	pairs := [][2]string{
+		// Metro ↔ Metro
+		{"MUM", "GOA"}, {"MUM", "PNQ"}, {"MUM", "DEL"}, {"DEL", "JAI"},
+		{"DEL", "MNL"}, {"BLR", "MAA"}, {"BLR", "COK"}, {"HYD", "BLR"},
+		{"HYD", "MAA"}, {"MAA", "COK"}, {"PNQ", "GOA"}, {"MUM", "HYD"},
+		{"DEL", "BLR"}, {"MUM", "JAI"}, {"BLR", "GOA"}, {"DEL", "MAA"},
+		// Metro → Tier-2
+		{"MUM", "NGP"}, {"MUM", "AMD"}, {"MUM", "NSK"}, {"MUM", "VNS"},
+		{"DEL", "LKO"}, {"DEL", "AGR"}, {"DEL", "CHD"}, {"DEL", "ATQ"},
+		{"DEL", "UDR"}, {"DEL", "JDH"}, {"DEL", "DDN"}, {"DEL", "RSK"},
+		{"BLR", "MYQ"}, {"BLR", "MAQ"}, {"BLR", "CBE"}, {"BLR", "MDU"},
+		{"HYD", "VZG"}, {"HYD", "NGP"}, {"MAA", "CBE"}, {"MAA", "MDU"},
+		// Tier-2 ↔ Tier-2
+		{"PNQ", "NGP"}, {"PNQ", "NSK"}, {"AGR", "LKO"}, {"LKO", "VNS"},
+		{"JAI", "UDR"}, {"JAI", "JDH"}, {"JAI", "ATQ"}, {"UDR", "JDH"},
+		{"MYQ", "MAQ"}, {"CBE", "MDU"}, {"COK", "MDU"}, {"AMD", "IDR"},
+		{"IDR", "BPL"}, {"NGP", "HYD"}, {"VZG", "HYD"}, {"DDN", "RSK"},
+		{"CCU", "BLR"}, {"CCU", "DEL"}, {"AMD", "MUM"},
+		// Wave 2 city connections
+		{"TRV", "COK"}, {"TRV", "MAA"}, {"TRV", "BLR"}, {"TRV", "HYD"},
+		{"PDY", "MAA"}, {"PDY", "BLR"}, {"PDY", "CBE"},
+		{"TPT", "HYD"}, {"TPT", "BLR"}, {"TPT", "MAA"},
+		{"BBI", "CCU"}, {"BBI", "HYD"}, {"BBI", "DEL"},
+		{"PAT", "DEL"}, {"PAT", "CCU"}, {"PAT", "LKO"},
+		{"RNC", "CCU"}, {"RNC", "DEL"}, {"RNC", "PAT"},
+		{"GHY", "CCU"}, {"GHY", "DEL"}, {"GHY", "SGT"},
+		{"SLM", "MAA"}, {"SLM", "BLR"}, {"SLM", "CBE"},
+		{"HBL", "BLR"}, {"HBL", "MAQ"}, {"HBL", "MYQ"},
+		{"STV", "MUM"}, {"STV", "AMD"}, {"STV", "PNQ"},
+		{"RAJ", "AMD"}, {"RAJ", "MUM"}, {"RAJ", "STV"},
+		{"PYG", "LKO"}, {"PYG", "VNS"}, {"PYG", "DEL"}, {"PYG", "AGR"},
+		{"SML", "DEL"}, {"SML", "CHD"}, {"SML", "DDN"},
+		{"HRW", "DEL"}, {"HRW", "DDN"}, {"HRW", "RSK"},
+		{"AUG", "MUM"}, {"AUG", "PNQ"}, {"AUG", "NGP"}, {"AUG", "HYD"},
+		{"NND", "HYD"}, {"NND", "AUG"}, {"NND", "PNQ"},
+		{"VJA", "HYD"}, {"VJA", "VZG"}, {"VJA", "MAA"}, {"VJA", "BLR"},
+		{"NLR", "MAA"}, {"NLR", "HYD"}, {"NLR", "VJA"},
+		{"WGL", "HYD"}, {"WGL", "VZG"}, {"WGL", "VJA"},
+		{"MUM", "IDR"}, {"MUM", "BPL"}, {"MUM", "AUG"},
+		{"DEL", "VNS"}, {"DEL", "PYG"}, {"DEL", "PAT"}, {"DEL", "SML"},
+		{"BLR", "HBL"}, {"BLR", "TPT"}, {"BLR", "TRV"},
+		{"HYD", "AUG"}, {"HYD", "NND"}, {"HYD", "WGL"},
+		{"CCU", "PAT"}, {"CCU", "RNC"}, {"CCU", "BBI"}, {"CCU", "SGT"},
+		{"AMD", "BPL"}, {"AMD", "IDR"}, {"AMD", "RAJ"},
+		{"PNQ", "AUG"}, {"PNQ", "STV"}, {"PNQ", "AMD"},
+		{"LKO", "PAT"}, {"LKO", "PYG"}, {"LKO", "DEL"},
+		{"JAI", "ATQ"}, {"JAI", "AMD"}, {"JAI", "BPL"}, {"JAI", "LKO"},
+		{"CHD", "SML"}, {"CHD", "ATQ"}, {"CHD", "DDN"},
+		{"VNS", "PYG"}, {"VNS", "PAT"}, {"VNS", "AGR"},
+		{"DDN", "HRW"}, {"RSK", "HRW"}, {"DDN", "SML"},
+		{"MYQ", "CBE"}, {"MYQ", "MDU"}, {"MYQ", "COK"},
+		{"COK", "TRV"}, {"COK", "CBE"}, {"COK", "HYD"},
+		{"MAQ", "BLR"}, {"MAQ", "COK"}, {"MAQ", "MYQ"},
+		{"VZG", "BBI"}, {"VZG", "VJA"}, {"VZG", "MAA"},
+		{"IDR", "BPL"}, {"IDR", "AUG"}, {"IDR", "NGP"},
+		{"BPL", "NGP"}, {"BPL", "HYD"},
+		{"NGP", "BBI"}, {"NGP", "RNC"},
+		{"SGT", "GHY"}, {"SGT", "CCU"}, {"SGT", "PAT"},
+	}
+
+	var toAdd []models.Route
+	for _, p := range pairs {
+		from, ok1 := cityByCode[p[0]]
+		to, ok2 := cityByCode[p[1]]
+		if !ok1 || !ok2 {
+			continue
+		}
+		k := routeKey{from.ID.String(), to.ID.String()}
+		if existsRoute[k] {
+			continue
+		}
+		dist := haversine(from.Latitude, from.Longitude, to.Latitude, to.Longitude)
+		dur := int(dist/55.0) * 60
+		pop := 50 + rand.Intn(50)
+		toAdd = append(toAdd, models.Route{
+			FromCityID: from.ID, ToCityID: to.ID,
+			DistanceKM: int(dist), AvgDurationMin: dur, Popularity: pop,
+		})
+	}
+	if len(toAdd) == 0 {
+		return nil
+	}
+	if err := db.DB.CreateInBatches(&toAdd, 100).Error; err != nil {
+		return fmt.Errorf("SeedAdditionalRoutes: %w", err)
+	}
+	log.Printf("✓ SeedAdditionalRoutes: added %d routes", len(toAdd))
 	return nil
 }
 

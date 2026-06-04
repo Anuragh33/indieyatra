@@ -70,6 +70,14 @@ var trainStations = []models.Station{
 	{Name: "Kolkata Chitpur", Code: "KOAA", City: "Kolkata", State: "West Bengal", Zone: "ER", Latitude: 22.5897, Longitude: 88.3697},
 	{Name: "Nashik Road", Code: "NK", City: "Nashik", State: "Maharashtra", Zone: "CR", Latitude: 19.9975, Longitude: 73.7898},
 	{Name: "Aurangabad Junction", Code: "AWB", City: "Aurangabad", State: "Maharashtra", Zone: "SCR", Latitude: 19.8762, Longitude: 75.3433},
+	// Additional stations for expanded connectivity
+	{Name: "Madgaon Junction", Code: "MAO", City: "Goa", State: "Goa", Zone: "KR", Latitude: 15.3580, Longitude: 73.9199},
+	{Name: "Kharagpur Junction", Code: "KGP", City: "Kharagpur", State: "West Bengal", Zone: "SER", Latitude: 22.3271, Longitude: 87.3204},
+	{Name: "Tirupati Junction", Code: "TPTY", City: "Tirupati", State: "Andhra Pradesh", Zone: "SCR", Latitude: 13.6288, Longitude: 79.4192},
+	{Name: "Prayagraj Junction", Code: "ALD", City: "Prayagraj", State: "Uttar Pradesh", Zone: "NCR", Latitude: 25.4358, Longitude: 81.8463},
+	{Name: "Nanded Junction", Code: "NED", City: "Nanded", State: "Maharashtra", Zone: "SCR", Latitude: 19.1608, Longitude: 77.3212},
+	{Name: "Dibrugarh Junction", Code: "DBRT", City: "Dibrugarh", State: "Assam", Zone: "NFR", Latitude: 27.4728, Longitude: 94.9120},
+	{Name: "Kochuveli", Code: "KCVL", City: "Thiruvananthapuram", State: "Kerala", Zone: "SR", Latitude: 8.5024, Longitude: 76.9674},
 }
 
 type stopDef struct {
@@ -512,7 +520,7 @@ var trainDefs = []trainDef{
 		},
 	},
 	{
-		Number: "12841", Name: "East Coast Express", TType: "Superfast",
+		Number: "18046", Name: "East Coast Express", TType: "Superfast",
 		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
 		DepTime: "06:30", ArrTime: "21:00", ArrDay: 2, DurMin: 1470,
 		Stops: []stopDef{
@@ -852,6 +860,586 @@ var trainDefs = []trainDef{
 			{Code: "NZM", Num: 3, Arr: "08:00", Dep: "--", Day: 2, Dist: 586, Plt: "7"},
 		},
 	},
+
+	// ── Wave 3: More corridors ─────────────────────────────────────────────────
+
+	// Coromandel return (MAS→HWH)
+	{
+		Number: "12842", Name: "Coromandel Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "08:45", ArrTime: "11:05", ArrDay: 2, DurMin: 1580,
+		Stops: []stopDef{
+			{Code: "MAS", Num: 1, Arr: "--", Dep: "08:45", Day: 1, Dist: 0, Plt: "9"},
+			{Code: "BZA", Num: 2, Arr: "14:05", Dep: "14:15", Halt: 10, Day: 1, Dist: 433, Plt: "1"},
+			{Code: "VSKP", Num: 3, Arr: "19:00", Dep: "19:10", Halt: 10, Day: 1, Dist: 726, Plt: "2"},
+			{Code: "BBS", Num: 4, Arr: "00:30", Dep: "00:35", Halt: 5, Day: 2, Dist: 1067, Plt: "1"},
+			{Code: "HWH", Num: 5, Arr: "11:05", Dep: "--", Day: 2, Dist: 1662, Plt: "5"},
+		},
+	},
+	// East Coast Express return
+	{
+		Number: "18047", Name: "East Coast Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "06:50", ArrTime: "21:30", ArrDay: 2, DurMin: 2200,
+		Stops: []stopDef{
+			{Code: "SC", Num: 1, Arr: "--", Dep: "06:50", Day: 1, Dist: 0, Plt: "4"},
+			{Code: "VSKP", Num: 2, Arr: "15:40", Dep: "15:50", Halt: 10, Day: 1, Dist: 708, Plt: "1"},
+			{Code: "BBS", Num: 3, Arr: "22:15", Dep: "22:25", Halt: 10, Day: 1, Dist: 983, Plt: "1"},
+			{Code: "HWH", Num: 4, Arr: "21:30", Dep: "--", Day: 2, Dist: 1424, Plt: "2"},
+		},
+	},
+	// Delhi ↔ Chandigarh
+	{
+		Number: "12011", Name: "Kalka Shatabdi Express", TType: "Shatabdi",
+		Super: true, Pantry: true, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat,Sun", Classes: []string{"CC", "EC"},
+		DepTime: "07:40", ArrTime: "11:40", ArrDay: 1, DurMin: 240,
+		Stops: []stopDef{
+			{Code: "NDLS", Num: 1, Arr: "--", Dep: "07:40", Day: 1, Dist: 0, Plt: "3"},
+			{Code: "CDG", Num: 2, Arr: "10:30", Dep: "10:32", Halt: 2, Day: 1, Dist: 244, Plt: "1"},
+			{Code: "CDG", Num: 3, Arr: "11:40", Dep: "--", Day: 1, Dist: 302, Plt: "1"},
+		},
+	},
+	{
+		Number: "12012", Name: "Kalka Shatabdi Express (Return)", TType: "Shatabdi",
+		Super: true, Pantry: true, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat,Sun", Classes: []string{"CC", "EC"},
+		DepTime: "17:30", ArrTime: "21:30", ArrDay: 1, DurMin: 240,
+		Stops: []stopDef{
+			{Code: "CDG", Num: 1, Arr: "--", Dep: "17:30", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "NDLS", Num: 2, Arr: "21:30", Dep: "--", Day: 1, Dist: 244, Plt: "3"},
+		},
+	},
+	// Delhi ↔ Jammu
+	{
+		Number: "12035", Name: "Jammu Mail", TType: "Mail",
+		Super: false, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "21:35", ArrTime: "06:15", ArrDay: 2, DurMin: 520,
+		Stops: []stopDef{
+			{Code: "NDLS", Num: 1, Arr: "--", Dep: "21:35", Day: 1, Dist: 0, Plt: "3"},
+			{Code: "LDH", Num: 2, Arr: "03:10", Dep: "03:20", Halt: 10, Day: 2, Dist: 310, Plt: "2"},
+			{Code: "JAT", Num: 3, Arr: "06:15", Dep: "--", Day: 2, Dist: 582, Plt: "1"},
+		},
+	},
+	{
+		Number: "12036", Name: "Jammu Mail (Return)", TType: "Mail",
+		Super: false, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "22:00", ArrTime: "06:40", ArrDay: 2, DurMin: 520,
+		Stops: []stopDef{
+			{Code: "JAT", Num: 1, Arr: "--", Dep: "22:00", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "LDH", Num: 2, Arr: "00:50", Dep: "01:00", Halt: 10, Day: 2, Dist: 272, Plt: "2"},
+			{Code: "NDLS", Num: 3, Arr: "06:40", Dep: "--", Day: 2, Dist: 582, Plt: "3"},
+		},
+	},
+	// Mumbai ↔ Nagpur
+	{
+		Number: "11027", Name: "Sevagram Express", TType: "Superfast",
+		Super: true, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "21:25", ArrTime: "08:20", ArrDay: 2, DurMin: 655,
+		Stops: []stopDef{
+			{Code: "CSTM", Num: 1, Arr: "--", Dep: "21:25", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "PUNE", Num: 2, Arr: "00:10", Dep: "00:20", Halt: 10, Day: 2, Dist: 192, Plt: "3"},
+			{Code: "NGP", Num: 3, Arr: "08:20", Dep: "--", Day: 2, Dist: 1083, Plt: "1"},
+		},
+	},
+	{
+		Number: "11028", Name: "Sevagram Express (Return)", TType: "Superfast",
+		Super: true, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "20:55", ArrTime: "07:45", ArrDay: 2, DurMin: 650,
+		Stops: []stopDef{
+			{Code: "NGP", Num: 1, Arr: "--", Dep: "20:55", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "PUNE", Num: 2, Arr: "05:15", Dep: "05:25", Halt: 10, Day: 2, Dist: 891, Plt: "3"},
+			{Code: "CSTM", Num: 3, Arr: "07:45", Dep: "--", Day: 2, Dist: 1083, Plt: "1"},
+		},
+	},
+	// Mumbai ↔ Kolkata (iconic Gitanjali Express)
+	{
+		Number: "12859", Name: "Gitanjali Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "06:05", ArrTime: "18:25", ArrDay: 2, DurMin: 2180,
+		Stops: []stopDef{
+			{Code: "CSTM", Num: 1, Arr: "--", Dep: "06:05", Day: 1, Dist: 0, Plt: "2"},
+			{Code: "NGP", Num: 2, Arr: "15:30", Dep: "15:45", Halt: 15, Day: 1, Dist: 1083, Plt: "1"},
+			{Code: "RNC", Num: 3, Arr: "03:15", Dep: "03:25", Halt: 10, Day: 2, Dist: 1570, Plt: "1"},
+			{Code: "HWH", Num: 4, Arr: "18:25", Dep: "--", Day: 2, Dist: 1968, Plt: "4"},
+		},
+	},
+	{
+		Number: "12860", Name: "Gitanjali Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "13:55", ArrTime: "14:05", ArrDay: 3, DurMin: 2170,
+		Stops: []stopDef{
+			{Code: "HWH", Num: 1, Arr: "--", Dep: "13:55", Day: 1, Dist: 0, Plt: "4"},
+			{Code: "RNC", Num: 2, Arr: "23:35", Dep: "23:45", Halt: 10, Day: 1, Dist: 398, Plt: "1"},
+			{Code: "NGP", Num: 3, Arr: "11:00", Dep: "11:15", Halt: 15, Day: 2, Dist: 885, Plt: "1"},
+			{Code: "CSTM", Num: 4, Arr: "14:05", Dep: "--", Day: 3, Dist: 1968, Plt: "2"},
+		},
+	},
+	// Delhi ↔ Bhubaneswar
+	{
+		Number: "12821", Name: "Dhauli Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "22:30", ArrTime: "19:20", ArrDay: 2, DurMin: 1250,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "22:30", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "CNB", Num: 2, Arr: "04:35", Dep: "04:45", Halt: 10, Day: 2, Dist: 492, Plt: "1"},
+			{Code: "KGP", Num: 3, Arr: "13:05", Dep: "13:15", Halt: 10, Day: 2, Dist: 1187, Plt: "1"},
+			{Code: "BBS", Num: 4, Arr: "19:20", Dep: "--", Day: 2, Dist: 1473, Plt: "1"},
+		},
+	},
+	{
+		Number: "12822", Name: "Dhauli Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "07:25", ArrTime: "05:10", ArrDay: 2, DurMin: 1305,
+		Stops: []stopDef{
+			{Code: "BBS", Num: 1, Arr: "--", Dep: "07:25", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "KGP", Num: 2, Arr: "13:30", Dep: "13:40", Halt: 10, Day: 1, Dist: 286, Plt: "1"},
+			{Code: "CNB", Num: 3, Arr: "21:45", Dep: "21:55", Halt: 10, Day: 1, Dist: 981, Plt: "1"},
+			{Code: "NZM", Num: 4, Arr: "05:10", Dep: "--", Day: 2, Dist: 1473, Plt: "7"},
+		},
+	},
+	// Hyderabad ↔ Chennai
+	{
+		Number: "12603", Name: "Hyderabad-Chennai Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "15:20", ArrTime: "03:40", ArrDay: 2, DurMin: 740,
+		Stops: []stopDef{
+			{Code: "SC", Num: 1, Arr: "--", Dep: "15:20", Day: 1, Dist: 0, Plt: "6"},
+			{Code: "BZA", Num: 2, Arr: "21:10", Dep: "21:20", Halt: 10, Day: 1, Dist: 388, Plt: "1"},
+			{Code: "MAS", Num: 3, Arr: "03:40", Dep: "--", Day: 2, Dist: 793, Plt: "9"},
+		},
+	},
+	{
+		Number: "12604", Name: "Hyderabad-Chennai Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "23:45", ArrTime: "12:05", ArrDay: 2, DurMin: 740,
+		Stops: []stopDef{
+			{Code: "MAS", Num: 1, Arr: "--", Dep: "23:45", Day: 1, Dist: 0, Plt: "9"},
+			{Code: "BZA", Num: 2, Arr: "05:45", Dep: "05:55", Halt: 10, Day: 2, Dist: 405, Plt: "1"},
+			{Code: "SC", Num: 3, Arr: "12:05", Dep: "--", Day: 2, Dist: 793, Plt: "6"},
+		},
+	},
+	// Delhi ↔ Visakhapatnam
+	{
+		Number: "12785", Name: "AP Sampark Kranti Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Mon,Wed,Fri", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "11:45", ArrTime: "21:30", ArrDay: 2, DurMin: 1905,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "11:45", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "NGP", Num: 2, Arr: "21:15", Dep: "21:25", Halt: 10, Day: 1, Dist: 1100, Plt: "2"},
+			{Code: "VSKP", Num: 3, Arr: "21:30", Dep: "--", Day: 2, Dist: 1841, Plt: "1"},
+		},
+	},
+	{
+		Number: "12786", Name: "AP Sampark Kranti Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Tue,Thu,Sat", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "06:45", ArrTime: "16:00", ArrDay: 2, DurMin: 1875,
+		Stops: []stopDef{
+			{Code: "VSKP", Num: 1, Arr: "--", Dep: "06:45", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "NGP", Num: 2, Arr: "06:00", Dep: "06:10", Halt: 10, Day: 2, Dist: 741, Plt: "2"},
+			{Code: "NZM", Num: 3, Arr: "16:00", Dep: "--", Day: 2, Dist: 1841, Plt: "7"},
+		},
+	},
+	// Kerala Express (Delhi ↔ Thiruvananthapuram)
+	{
+		Number: "12625", Name: "Kerala Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "11:15", ArrTime: "10:20", ArrDay: 3, DurMin: 2825,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "11:15", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "NGP", Num: 2, Arr: "20:30", Dep: "20:40", Halt: 10, Day: 1, Dist: 1100, Plt: "2"},
+			{Code: "SC", Num: 3, Arr: "04:45", Dep: "04:55", Halt: 10, Day: 2, Dist: 1516, Plt: "4"},
+			{Code: "ERS", Num: 4, Arr: "22:15", Dep: "22:20", Halt: 5, Day: 2, Dist: 2590, Plt: "2"},
+			{Code: "TVC", Num: 5, Arr: "10:20", Dep: "--", Day: 3, Dist: 2906, Plt: "1"},
+		},
+	},
+	{
+		Number: "12626", Name: "Kerala Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "11:50", ArrTime: "10:55", ArrDay: 3, DurMin: 2825,
+		Stops: []stopDef{
+			{Code: "TVC", Num: 1, Arr: "--", Dep: "11:50", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "ERS", Num: 2, Arr: "19:00", Dep: "19:05", Halt: 5, Day: 1, Dist: 220, Plt: "2"},
+			{Code: "SC", Num: 3, Arr: "12:25", Dep: "12:35", Halt: 10, Day: 2, Dist: 1390, Plt: "4"},
+			{Code: "NGP", Num: 4, Arr: "20:30", Dep: "20:40", Halt: 10, Day: 2, Dist: 1806, Plt: "2"},
+			{Code: "NZM", Num: 5, Arr: "10:55", Dep: "--", Day: 3, Dist: 2906, Plt: "7"},
+		},
+	},
+	// Chennai ↔ Kochi
+	{
+		Number: "12083", Name: "Jan Shatabdi Express (Chennai–Kochi)", TType: "Shatabdi",
+		Super: true, Pantry: false, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat,Sun", Classes: []string{"CC", "2S"},
+		DepTime: "06:00", ArrTime: "13:45", ArrDay: 1, DurMin: 465,
+		Stops: []stopDef{
+			{Code: "MAS", Num: 1, Arr: "--", Dep: "06:00", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "CBE", Num: 2, Arr: "12:10", Dep: "12:15", Halt: 5, Day: 1, Dist: 497, Plt: "1"},
+			{Code: "ERS", Num: 3, Arr: "13:45", Dep: "--", Day: 1, Dist: 600, Plt: "2"},
+		},
+	},
+	{
+		Number: "12084", Name: "Jan Shatabdi Express (Kochi–Chennai)", TType: "Shatabdi",
+		Super: true, Pantry: false, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat,Sun", Classes: []string{"CC", "2S"},
+		DepTime: "15:00", ArrTime: "22:45", ArrDay: 1, DurMin: 465,
+		Stops: []stopDef{
+			{Code: "ERS", Num: 1, Arr: "--", Dep: "15:00", Day: 1, Dist: 0, Plt: "2"},
+			{Code: "CBE", Num: 2, Arr: "16:25", Dep: "16:30", Halt: 5, Day: 1, Dist: 103, Plt: "1"},
+			{Code: "MAS", Num: 3, Arr: "22:45", Dep: "--", Day: 1, Dist: 600, Plt: "7"},
+		},
+	},
+	// Delhi ↔ Ranchi
+	{
+		Number: "12835", Name: "Hatia Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "22:05", ArrTime: "19:50", ArrDay: 2, DurMin: 1305,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "22:05", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "CNB", Num: 2, Arr: "04:10", Dep: "04:20", Halt: 10, Day: 2, Dist: 492, Plt: "1"},
+			{Code: "ALD", Num: 3, Arr: "06:30", Dep: "06:40", Halt: 10, Day: 2, Dist: 634, Plt: "1"},
+			{Code: "RNC", Num: 4, Arr: "19:50", Dep: "--", Day: 2, Dist: 1152, Plt: "1"},
+		},
+	},
+	{
+		Number: "12836", Name: "Hatia Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "07:50", ArrTime: "04:15", ArrDay: 2, DurMin: 1225,
+		Stops: []stopDef{
+			{Code: "RNC", Num: 1, Arr: "--", Dep: "07:50", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "ALD", Num: 2, Arr: "18:45", Dep: "18:55", Halt: 10, Day: 1, Dist: 518, Plt: "1"},
+			{Code: "CNB", Num: 3, Arr: "21:00", Dep: "21:10", Halt: 10, Day: 1, Dist: 660, Plt: "1"},
+			{Code: "NZM", Num: 4, Arr: "04:15", Dep: "--", Day: 2, Dist: 1152, Plt: "7"},
+		},
+	},
+	// Ahmedabad ↔ Mumbai Duronto
+	{
+		Number: "12297", Name: "Ahmedabad-Mumbai Duronto Express", TType: "Duronto",
+		Super: true, Pantry: true, RunsOn: "Mon,Wed,Fri,Sun", Classes: []string{"1A", "2A", "3A"},
+		DepTime: "23:00", ArrTime: "05:45", ArrDay: 2, DurMin: 405,
+		Stops: []stopDef{
+			{Code: "ADI", Num: 1, Arr: "--", Dep: "23:00", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "MMCT", Num: 2, Arr: "05:45", Dep: "--", Day: 2, Dist: 492, Plt: "5"},
+		},
+	},
+	{
+		Number: "12298", Name: "Ahmedabad-Mumbai Duronto Express (Return)", TType: "Duronto",
+		Super: true, Pantry: true, RunsOn: "Tue,Thu,Sat,Sun", Classes: []string{"1A", "2A", "3A"},
+		DepTime: "23:30", ArrTime: "06:15", ArrDay: 2, DurMin: 405,
+		Stops: []stopDef{
+			{Code: "MMCT", Num: 1, Arr: "--", Dep: "23:30", Day: 1, Dist: 0, Plt: "5"},
+			{Code: "ADI", Num: 2, Arr: "06:15", Dep: "--", Day: 2, Dist: 492, Plt: "1"},
+		},
+	},
+	// Mumbai ↔ Hyderabad
+	{
+		Number: "17031", Name: "Mumbai-Hyderabad Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "21:15", ArrTime: "17:30", ArrDay: 2, DurMin: 1215,
+		Stops: []stopDef{
+			{Code: "CSTM", Num: 1, Arr: "--", Dep: "21:15", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "PUNE", Num: 2, Arr: "00:10", Dep: "00:20", Halt: 10, Day: 2, Dist: 192, Plt: "3"},
+			{Code: "NED", Num: 3, Arr: "08:45", Dep: "08:55", Halt: 10, Day: 2, Dist: 556, Plt: "1"},
+			{Code: "SC", Num: 4, Arr: "17:30", Dep: "--", Day: 2, Dist: 735, Plt: "6"},
+		},
+	},
+	{
+		Number: "17032", Name: "Mumbai-Hyderabad Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "06:10", ArrTime: "00:45", ArrDay: 2, DurMin: 1115,
+		Stops: []stopDef{
+			{Code: "SC", Num: 1, Arr: "--", Dep: "06:10", Day: 1, Dist: 0, Plt: "6"},
+			{Code: "NED", Num: 2, Arr: "13:35", Dep: "13:45", Halt: 10, Day: 1, Dist: 179, Plt: "1"},
+			{Code: "PUNE", Num: 3, Arr: "21:55", Dep: "22:05", Halt: 10, Day: 1, Dist: 543, Plt: "3"},
+			{Code: "CSTM", Num: 4, Arr: "00:45", Dep: "--", Day: 2, Dist: 735, Plt: "1"},
+		},
+	},
+	// Bangalore ↔ Thiruvananthapuram
+	{
+		Number: "16315", Name: "Bangalore-Kochuveli Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "21:30", ArrTime: "16:00", ArrDay: 2, DurMin: 1110,
+		Stops: []stopDef{
+			{Code: "SBC", Num: 1, Arr: "--", Dep: "21:30", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "CBE", Num: 2, Arr: "01:00", Dep: "01:05", Halt: 5, Day: 2, Dist: 360, Plt: "1"},
+			{Code: "ERS", Num: 3, Arr: "08:00", Dep: "08:05", Halt: 5, Day: 2, Dist: 620, Plt: "2"},
+			{Code: "TVC", Num: 4, Arr: "16:00", Dep: "--", Day: 2, Dist: 905, Plt: "1"},
+		},
+	},
+	{
+		Number: "16316", Name: "Bangalore-Kochuveli Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "11:15", ArrTime: "06:00", ArrDay: 2, DurMin: 1125,
+		Stops: []stopDef{
+			{Code: "TVC", Num: 1, Arr: "--", Dep: "11:15", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "ERS", Num: 2, Arr: "18:30", Dep: "18:35", Halt: 5, Day: 1, Dist: 220, Plt: "2"},
+			{Code: "CBE", Num: 3, Arr: "21:15", Dep: "21:20", Halt: 5, Day: 1, Dist: 545, Plt: "1"},
+			{Code: "SBC", Num: 4, Arr: "06:00", Dep: "--", Day: 2, Dist: 905, Plt: "1"},
+		},
+	},
+	// Howrah ↔ Bangalore Duronto
+	{
+		Number: "12245", Name: "Howrah-Bangalore Duronto Express", TType: "Duronto",
+		Super: true, Pantry: true, RunsOn: "Mon,Thu", Classes: []string{"1A", "2A", "3A"},
+		DepTime: "08:00", ArrTime: "11:45", ArrDay: 2, DurMin: 1665,
+		Stops: []stopDef{
+			{Code: "HWH", Num: 1, Arr: "--", Dep: "08:00", Day: 1, Dist: 0, Plt: "3"},
+			{Code: "BBS", Num: 2, Arr: "17:30", Dep: "17:40", Halt: 10, Day: 1, Dist: 441, Plt: "1"},
+			{Code: "VSKP", Num: 3, Arr: "22:30", Dep: "22:40", Halt: 10, Day: 1, Dist: 716, Plt: "2"},
+			{Code: "SC", Num: 4, Arr: "09:00", Dep: "09:10", Halt: 10, Day: 2, Dist: 1457, Plt: "4"},
+			{Code: "SBC", Num: 5, Arr: "11:45", Dep: "--", Day: 2, Dist: 1889, Plt: "8"},
+		},
+	},
+	{
+		Number: "12246", Name: "Howrah-Bangalore Duronto Express (Return)", TType: "Duronto",
+		Super: true, Pantry: true, RunsOn: "Tue,Fri", Classes: []string{"1A", "2A", "3A"},
+		DepTime: "22:00", ArrTime: "01:35", ArrDay: 3, DurMin: 1655,
+		Stops: []stopDef{
+			{Code: "SBC", Num: 1, Arr: "--", Dep: "22:00", Day: 1, Dist: 0, Plt: "8"},
+			{Code: "SC", Num: 2, Arr: "00:40", Dep: "00:50", Halt: 10, Day: 2, Dist: 432, Plt: "4"},
+			{Code: "VSKP", Num: 3, Arr: "11:30", Dep: "11:40", Halt: 10, Day: 2, Dist: 1173, Plt: "2"},
+			{Code: "BBS", Num: 4, Arr: "16:45", Dep: "16:55", Halt: 10, Day: 2, Dist: 1448, Plt: "1"},
+			{Code: "HWH", Num: 5, Arr: "01:35", Dep: "--", Day: 3, Dist: 1889, Plt: "3"},
+		},
+	},
+	// Hyderabad ↔ Visakhapatnam
+	{
+		Number: "12709", Name: "Simhapuri Express", TType: "Superfast",
+		Super: true, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "16:40", ArrTime: "08:00", ArrDay: 2, DurMin: 920,
+		Stops: []stopDef{
+			{Code: "SC", Num: 1, Arr: "--", Dep: "16:40", Day: 1, Dist: 0, Plt: "6"},
+			{Code: "BZA", Num: 2, Arr: "23:10", Dep: "23:20", Halt: 10, Day: 1, Dist: 388, Plt: "1"},
+			{Code: "VSKP", Num: 3, Arr: "08:00", Dep: "--", Day: 2, Dist: 708, Plt: "1"},
+		},
+	},
+	{
+		Number: "12710", Name: "Simhapuri Express (Return)", TType: "Superfast",
+		Super: true, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "16:30", ArrTime: "07:55", ArrDay: 2, DurMin: 925,
+		Stops: []stopDef{
+			{Code: "VSKP", Num: 1, Arr: "--", Dep: "16:30", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "BZA", Num: 2, Arr: "01:40", Dep: "01:50", Halt: 10, Day: 2, Dist: 320, Plt: "1"},
+			{Code: "SC", Num: 3, Arr: "07:55", Dep: "--", Day: 2, Dist: 708, Plt: "6"},
+		},
+	},
+	// Mumbai ↔ Kolkata second option (Howrah Mail)
+	{
+		Number: "12809", Name: "Mumbai-Howrah Mail", TType: "Mail",
+		Super: false, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "20:05", ArrTime: "05:55", ArrDay: 3, DurMin: 2270,
+		Stops: []stopDef{
+			{Code: "CSTM", Num: 1, Arr: "--", Dep: "20:05", Day: 1, Dist: 0, Plt: "2"},
+			{Code: "NGP", Num: 2, Arr: "06:00", Dep: "06:10", Halt: 10, Day: 2, Dist: 1083, Plt: "1"},
+			{Code: "KGP", Num: 3, Arr: "19:10", Dep: "19:20", Halt: 10, Day: 2, Dist: 1854, Plt: "1"},
+			{Code: "HWH", Num: 4, Arr: "05:55", Dep: "--", Day: 3, Dist: 1968, Plt: "6"},
+		},
+	},
+	{
+		Number: "12810", Name: "Mumbai-Howrah Mail (Return)", TType: "Mail",
+		Super: false, Pantry: true, RunsOn: "Daily", Classes: []string{"1A", "2A", "3A", "SL"},
+		DepTime: "19:50", ArrTime: "05:10", ArrDay: 3, DurMin: 2240,
+		Stops: []stopDef{
+			{Code: "HWH", Num: 1, Arr: "--", Dep: "19:50", Day: 1, Dist: 0, Plt: "6"},
+			{Code: "KGP", Num: 2, Arr: "21:45", Dep: "21:55", Halt: 10, Day: 1, Dist: 114, Plt: "1"},
+			{Code: "NGP", Num: 3, Arr: "10:50", Dep: "11:00", Halt: 10, Day: 2, Dist: 885, Plt: "1"},
+			{Code: "CSTM", Num: 4, Arr: "05:10", Dep: "--", Day: 3, Dist: 1968, Plt: "2"},
+		},
+	},
+	// Mumbai ↔ Goa (via Konkan Railway - uses MAO)
+	{
+		Number: "10103", Name: "Mandovi Express", TType: "Express",
+		Super: false, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "07:10", ArrTime: "19:45", ArrDay: 1, DurMin: 755,
+		Stops: []stopDef{
+			{Code: "CSTM", Num: 1, Arr: "--", Dep: "07:10", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "MAO", Num: 2, Arr: "19:45", Dep: "--", Day: 1, Dist: 593, Plt: "1"},
+		},
+	},
+	{
+		Number: "10104", Name: "Mandovi Express (Return)", TType: "Express",
+		Super: false, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "07:45", ArrTime: "20:25", ArrDay: 1, DurMin: 760,
+		Stops: []stopDef{
+			{Code: "MAO", Num: 1, Arr: "--", Dep: "07:45", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "CSTM", Num: 2, Arr: "20:25", Dep: "--", Day: 1, Dist: 593, Plt: "1"},
+		},
+	},
+	// Delhi ↔ Goa (uses MAO)
+	{
+		Number: "22413", Name: "Goa Sampark Kranti Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Mon,Thu", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "11:00", ArrTime: "20:45", ArrDay: 2, DurMin: 2025,
+		Stops: []stopDef{
+			{Code: "NZM", Num: 1, Arr: "--", Dep: "11:00", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "NGP", Num: 2, Arr: "20:10", Dep: "20:20", Halt: 10, Day: 1, Dist: 1100, Plt: "2"},
+			{Code: "PUNE", Num: 3, Arr: "05:20", Dep: "05:30", Halt: 10, Day: 2, Dist: 1566, Plt: "3"},
+			{Code: "MAO", Num: 4, Arr: "20:45", Dep: "--", Day: 2, Dist: 1888, Plt: "1"},
+		},
+	},
+	// Jaipur ↔ Ahmedabad
+	{
+		Number: "12975", Name: "Jaipur-Ahmedabad SF Express", TType: "Superfast",
+		Super: true, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "16:10", ArrTime: "04:15", ArrDay: 2, DurMin: 725,
+		Stops: []stopDef{
+			{Code: "JP", Num: 1, Arr: "--", Dep: "16:10", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "ADI", Num: 2, Arr: "04:15", Dep: "--", Day: 2, Dist: 628, Plt: "1"},
+		},
+	},
+	{
+		Number: "12976", Name: "Jaipur-Ahmedabad SF Express (Return)", TType: "Superfast",
+		Super: true, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "15:30", ArrTime: "03:45", ArrDay: 2, DurMin: 735,
+		Stops: []stopDef{
+			{Code: "ADI", Num: 1, Arr: "--", Dep: "15:30", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "JP", Num: 2, Arr: "03:45", Dep: "--", Day: 2, Dist: 628, Plt: "1"},
+		},
+	},
+	// Chennai ↔ Mysuru
+	{
+		Number: "16001", Name: "Chennai-Mysuru Express", TType: "Express",
+		Super: false, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "22:20", ArrTime: "08:40", ArrDay: 2, DurMin: 620,
+		Stops: []stopDef{
+			{Code: "MAS", Num: 1, Arr: "--", Dep: "22:20", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "SBC", Num: 2, Arr: "05:10", Dep: "05:20", Halt: 10, Day: 2, Dist: 362, Plt: "5"},
+			{Code: "MYS", Num: 3, Arr: "08:40", Dep: "--", Day: 2, Dist: 497, Plt: "1"},
+		},
+	},
+	{
+		Number: "16002", Name: "Chennai-Mysuru Express (Return)", TType: "Express",
+		Super: false, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "19:30", ArrTime: "06:10", ArrDay: 2, DurMin: 640,
+		Stops: []stopDef{
+			{Code: "MYS", Num: 1, Arr: "--", Dep: "19:30", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "SBC", Num: 2, Arr: "22:45", Dep: "22:55", Halt: 10, Day: 1, Dist: 135, Plt: "5"},
+			{Code: "MAS", Num: 3, Arr: "06:10", Dep: "--", Day: 2, Dist: 497, Plt: "7"},
+		},
+	},
+	// Mumbai ↔ Patna
+	{
+		Number: "11061", Name: "Pawan Express", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "17:30", ArrTime: "22:05", ArrDay: 2, DurMin: 1715,
+		Stops: []stopDef{
+			{Code: "LTT", Num: 1, Arr: "--", Dep: "17:30", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "NGP", Num: 2, Arr: "04:00", Dep: "04:10", Halt: 10, Day: 2, Dist: 1083, Plt: "1"},
+			{Code: "ALD", Num: 3, Arr: "11:15", Dep: "11:25", Halt: 10, Day: 2, Dist: 1476, Plt: "1"},
+			{Code: "PNBE", Num: 4, Arr: "22:05", Dep: "--", Day: 2, Dist: 1852, Plt: "1"},
+		},
+	},
+	{
+		Number: "11062", Name: "Pawan Express (Return)", TType: "Superfast",
+		Super: true, Pantry: true, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "09:40", ArrTime: "14:30", ArrDay: 2, DurMin: 1730,
+		Stops: []stopDef{
+			{Code: "PNBE", Num: 1, Arr: "--", Dep: "09:40", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "ALD", Num: 2, Arr: "19:05", Dep: "19:15", Halt: 10, Day: 1, Dist: 376, Plt: "1"},
+			{Code: "NGP", Num: 3, Arr: "02:20", Dep: "02:30", Halt: 10, Day: 2, Dist: 769, Plt: "1"},
+			{Code: "LTT", Num: 4, Arr: "14:30", Dep: "--", Day: 2, Dist: 1852, Plt: "1"},
+		},
+	},
+	// Kolkata ↔ Puri
+	{
+		Number: "12837", Name: "Puri Express", TType: "Superfast",
+		Super: true, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "22:00", ArrTime: "07:50", ArrDay: 2, DurMin: 590,
+		Stops: []stopDef{
+			{Code: "HWH", Num: 1, Arr: "--", Dep: "22:00", Day: 1, Dist: 0, Plt: "3"},
+			{Code: "BBS", Num: 2, Arr: "05:15", Dep: "05:25", Halt: 10, Day: 2, Dist: 441, Plt: "1"},
+			{Code: "PURI", Num: 3, Arr: "07:50", Dep: "--", Day: 2, Dist: 502, Plt: "1"},
+		},
+	},
+	{
+		Number: "12838", Name: "Puri Express (Return)", TType: "Superfast",
+		Super: true, Pantry: false, RunsOn: "Daily", Classes: []string{"2A", "3A", "SL"},
+		DepTime: "21:30", ArrTime: "07:10", ArrDay: 2, DurMin: 580,
+		Stops: []stopDef{
+			{Code: "PURI", Num: 1, Arr: "--", Dep: "21:30", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "BBS", Num: 2, Arr: "23:25", Dep: "23:35", Halt: 10, Day: 1, Dist: 61, Plt: "1"},
+			{Code: "HWH", Num: 3, Arr: "07:10", Dep: "--", Day: 2, Dist: 502, Plt: "3"},
+		},
+	},
+	// Vande Bharat: Mumbai ↔ Pune (new)
+	{
+		Number: "22221", Name: "Mumbai-Pune Vande Bharat Express", TType: "Vande Bharat",
+		Super: true, Pantry: true, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat,Sun", Classes: []string{"CC", "EC"},
+		DepTime: "06:00", ArrTime: "08:00", ArrDay: 1, DurMin: 120,
+		Stops: []stopDef{
+			{Code: "CSTM", Num: 1, Arr: "--", Dep: "06:00", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "PUNE", Num: 2, Arr: "08:00", Dep: "--", Day: 1, Dist: 192, Plt: "3"},
+		},
+	},
+	{
+		Number: "22222", Name: "Mumbai-Pune Vande Bharat Express (Return)", TType: "Vande Bharat",
+		Super: true, Pantry: true, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat,Sun", Classes: []string{"CC", "EC"},
+		DepTime: "18:30", ArrTime: "20:30", ArrDay: 1, DurMin: 120,
+		Stops: []stopDef{
+			{Code: "PUNE", Num: 1, Arr: "--", Dep: "18:30", Day: 1, Dist: 0, Plt: "3"},
+			{Code: "CSTM", Num: 2, Arr: "20:30", Dep: "--", Day: 1, Dist: 192, Plt: "1"},
+		},
+	},
+	// Vande Bharat: Chennai ↔ Hyderabad
+	{
+		Number: "20701", Name: "Chennai-Hyderabad Vande Bharat Express", TType: "Vande Bharat",
+		Super: true, Pantry: true, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat", Classes: []string{"CC", "EC"},
+		DepTime: "06:00", ArrTime: "12:30", ArrDay: 1, DurMin: 390,
+		Stops: []stopDef{
+			{Code: "MAS", Num: 1, Arr: "--", Dep: "06:00", Day: 1, Dist: 0, Plt: "7"},
+			{Code: "BZA", Num: 2, Arr: "09:15", Dep: "09:17", Halt: 2, Day: 1, Dist: 405, Plt: "1"},
+			{Code: "SC", Num: 3, Arr: "12:30", Dep: "--", Day: 1, Dist: 793, Plt: "6"},
+		},
+	},
+	{
+		Number: "20702", Name: "Chennai-Hyderabad Vande Bharat Express (Return)", TType: "Vande Bharat",
+		Super: true, Pantry: true, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat", Classes: []string{"CC", "EC"},
+		DepTime: "15:00", ArrTime: "21:30", ArrDay: 1, DurMin: 390,
+		Stops: []stopDef{
+			{Code: "SC", Num: 1, Arr: "--", Dep: "15:00", Day: 1, Dist: 0, Plt: "6"},
+			{Code: "BZA", Num: 2, Arr: "18:20", Dep: "18:22", Halt: 2, Day: 1, Dist: 405, Plt: "1"},
+			{Code: "MAS", Num: 3, Arr: "21:30", Dep: "--", Day: 1, Dist: 793, Plt: "7"},
+		},
+	},
+	// Vande Bharat: Bengaluru ↔ Hyderabad
+	{
+		Number: "20703", Name: "Bangalore-Hyderabad Vande Bharat Express", TType: "Vande Bharat",
+		Super: true, Pantry: true, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat", Classes: []string{"CC", "EC"},
+		DepTime: "06:20", ArrTime: "12:15", ArrDay: 1, DurMin: 355,
+		Stops: []stopDef{
+			{Code: "SBC", Num: 1, Arr: "--", Dep: "06:20", Day: 1, Dist: 0, Plt: "1"},
+			{Code: "SC", Num: 2, Arr: "12:15", Dep: "--", Day: 1, Dist: 574, Plt: "6"},
+		},
+	},
+	{
+		Number: "20704", Name: "Bangalore-Hyderabad Vande Bharat Express (Return)", TType: "Vande Bharat",
+		Super: true, Pantry: true, RunsOn: "Mon,Tue,Wed,Thu,Fri,Sat", Classes: []string{"CC", "EC"},
+		DepTime: "13:15", ArrTime: "19:10", ArrDay: 1, DurMin: 355,
+		Stops: []stopDef{
+			{Code: "SC", Num: 1, Arr: "--", Dep: "13:15", Day: 1, Dist: 0, Plt: "6"},
+			{Code: "SBC", Num: 2, Arr: "19:10", Dep: "--", Day: 1, Dist: 574, Plt: "1"},
+		},
+	},
+}
+
+// SeedAdditionalStations creates any stations in trainStations that are not yet in the DB.
+// Safe to call on every startup.
+func SeedAdditionalStations() error {
+	var existingCodes []string
+	db.DB.Model(&models.Station{}).Pluck("code", &existingCodes)
+	existsCode := make(map[string]bool, len(existingCodes))
+	for _, c := range existingCodes {
+		existsCode[c] = true
+	}
+	var toAdd []models.Station
+	for _, s := range trainStations {
+		if !existsCode[s.Code] {
+			toAdd = append(toAdd, s)
+		}
+	}
+	if len(toAdd) == 0 {
+		return nil
+	}
+	if err := db.DB.CreateInBatches(&toAdd, 50).Error; err != nil {
+		return fmt.Errorf("SeedAdditionalStations: %w", err)
+	}
+	log.Printf("✓ SeedAdditionalStations: added %d new stations", len(toAdd))
+	return nil
 }
 
 // SeedTrainsIfEmpty seeds train data if no stations exist yet.

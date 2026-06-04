@@ -187,7 +187,7 @@ var flightDefs = []flightDef{
 	{"6E", "6E-771", "BOM", "IXZ", "14:00", "16:30", 150, "A320", "Economy", 180, 7800, "Saver", false, false, 15, 82},
 	// Delhi ↔ Dehradun
 	{"6E", "6E-161", "DEL", "DED", "06:00", "06:55", 55, "ATR-72", "Economy", 70, 2800, "Saver", false, false, 15, 85},
-	{"AI", "AI-411", "DEL", "DED", "09:00", "09:55", 55, "ATR-72", "Economy", 70, 3400, "Value", true, false, 15, 82},
+	{"AI", "AI-416", "DEL", "DED", "09:00", "09:55", 55, "ATR-72", "Economy", 70, 3400, "Value", true, false, 15, 82},
 	{"6E", "6E-162", "DED", "DEL", "07:30", "08:25", 55, "ATR-72", "Economy", 70, 2800, "Saver", false, false, 15, 85},
 	// Chennai ↔ Visakhapatnam
 	{"6E", "6E-611", "MAA", "VTZ", "06:30", "07:45", 75, "A320", "Economy", 180, 3200, "Saver", false, false, 15, 86},
@@ -195,7 +195,7 @@ var flightDefs = []flightDef{
 	{"6E", "6E-612", "VTZ", "MAA", "08:30", "09:45", 75, "A320", "Economy", 180, 3200, "Saver", false, false, 15, 86},
 	// Kolkata ↔ Bhubaneswar
 	{"6E", "6E-621", "CCU", "BBI", "07:00", "07:55", 55, "ATR-72", "Economy", 70, 2400, "Saver", false, false, 15, 85},
-	{"AI", "AI-561", "CCU", "BBI", "11:30", "12:25", 55, "ATR-72", "Economy", 70, 2900, "Value", true, false, 15, 81},
+	{"AI", "AI-565", "CCU", "BBI", "11:30", "12:25", 55, "ATR-72", "Economy", 70, 2900, "Value", true, false, 15, 81},
 	{"6E", "6E-622", "BBI", "CCU", "08:30", "09:25", 55, "ATR-72", "Economy", 70, 2400, "Saver", false, false, 15, 85},
 	// Delhi ↔ Indore
 	{"6E", "6E-291", "DEL", "IDR", "07:30", "09:00", 90, "A320", "Economy", 180, 3600, "Saver", false, false, 15, 86},
@@ -205,6 +205,110 @@ var flightDefs = []flightDef{
 	{"6E", "6E-381", "BOM", "IDR", "07:00", "08:20", 80, "A320", "Economy", 180, 2900, "Saver", false, false, 15, 87},
 	{"AI", "AI-531", "BOM", "IDR", "14:00", "15:20", 80, "A319", "Economy", 144, 3500, "Value", true, false, 25, 83},
 	{"6E", "6E-382", "IDR", "BOM", "09:00", "10:20", 80, "A320", "Economy", 180, 2900, "Saver", false, false, 15, 87},
+	// Bengaluru ↔ Chennai
+	{"6E", "6E-401", "BLR", "MAA", "06:00", "07:10", 70, "A320", "Economy", 180, 2600, "Saver", false, false, 15, 92},
+	{"AI", "AI-511", "BLR", "MAA", "09:30", "10:40", 70, "A320", "Economy", 150, 3200, "Value", true, false, 25, 88},
+	{"UK", "UK-811", "BLR", "MAA", "13:00", "14:10", 70, "A320neo", "Economy", 158, 4200, "Flexi", true, true, 20, 90},
+	{"SG", "SG-611", "BLR", "MAA", "18:00", "19:10", 70, "B737", "Economy", 189, 2400, "Saver", false, false, 15, 84},
+	{"6E", "6E-402", "MAA", "BLR", "07:30", "08:40", 70, "A320", "Economy", 180, 2600, "Saver", false, false, 15, 92},
+	{"AI", "AI-512", "MAA", "BLR", "11:00", "12:10", 70, "A320", "Economy", 150, 3200, "Value", true, false, 25, 88},
+	{"SG", "SG-612", "MAA", "BLR", "16:00", "17:10", 70, "B737", "Economy", 189, 2400, "Saver", false, false, 15, 84},
+	// Bengaluru ↔ Kolkata
+	{"6E", "6E-451", "BLR", "CCU", "06:30", "09:30", 180, "A321", "Economy", 189, 5800, "Saver", false, false, 15, 85},
+	{"AI", "AI-521", "BLR", "CCU", "10:00", "13:00", 180, "A321", "Economy", 162, 6800, "Value", true, false, 25, 81},
+	{"6E", "6E-452", "CCU", "BLR", "07:30", "10:30", 180, "A321", "Economy", 189, 5800, "Saver", false, false, 15, 85},
+	{"UK", "UK-821", "CCU", "BLR", "14:00", "17:00", 180, "A320neo", "Economy", 158, 7800, "Flexi", true, true, 20, 88},
+	// Mumbai ↔ Kolkata
+	{"6E", "6E-761", "BOM", "CCU", "07:00", "09:30", 150, "A321", "Economy", 189, 5200, "Saver", false, false, 15, 86},
+	{"AI", "AI-711", "BOM", "CCU", "10:30", "13:00", 150, "A321", "Economy", 162, 6200, "Value", true, false, 25, 82},
+	{"UK", "UK-891", "BOM", "CCU", "16:00", "18:30", 150, "A320neo", "Economy", 158, 7500, "Flexi", true, true, 20, 89},
+	{"6E", "6E-762", "CCU", "BOM", "06:00", "08:30", 150, "A321", "Economy", 189, 5200, "Saver", false, false, 15, 86},
+	{"SG", "SG-701", "CCU", "BOM", "13:00", "15:30", 150, "B737", "Economy", 189, 4500, "Saver", false, false, 15, 80},
+	// Hyderabad ↔ Chennai
+	{"6E", "6E-641", "HYD", "MAA", "06:30", "07:45", 75, "A320", "Economy", 180, 2800, "Saver", false, false, 15, 89},
+	{"AI", "AI-571", "HYD", "MAA", "11:00", "12:15", 75, "A319", "Economy", 144, 3500, "Value", true, false, 25, 85},
+	{"SG", "SG-641", "HYD", "MAA", "15:30", "16:45", 75, "B737", "Economy", 189, 2400, "Saver", false, false, 15, 82},
+	{"6E", "6E-642", "MAA", "HYD", "08:00", "09:15", 75, "A320", "Economy", 180, 2800, "Saver", false, false, 15, 89},
+	{"AI", "AI-572", "MAA", "HYD", "13:00", "14:15", 75, "A319", "Economy", 144, 3500, "Value", true, false, 25, 85},
+	// Hyderabad ↔ Mumbai
+	{"6E", "6E-651", "HYD", "BOM", "07:00", "08:30", 90, "A320", "Economy", 180, 3400, "Saver", false, false, 15, 88},
+	{"AI", "AI-581", "HYD", "BOM", "11:30", "13:00", 90, "A321", "Economy", 162, 4200, "Value", true, false, 25, 84},
+	{"UK", "UK-861", "HYD", "BOM", "16:00", "17:30", 90, "A320neo", "Economy", 158, 5500, "Flexi", true, true, 20, 91},
+	{"6E", "6E-652", "BOM", "HYD", "08:30", "10:00", 90, "A320", "Economy", 180, 3400, "Saver", false, false, 15, 88},
+	{"SG", "SG-651", "BOM", "HYD", "14:00", "15:30", 90, "B737", "Economy", 189, 2900, "Saver", false, false, 15, 83},
+	// Delhi ↔ Lucknow
+	{"6E", "6E-241", "DEL", "LKO", "07:00", "08:05", 65, "A320", "Economy", 180, 3000, "Saver", false, false, 15, 87},
+	{"AI", "AI-436", "DEL", "LKO", "12:00", "13:05", 65, "A319", "Economy", 144, 3600, "Value", true, false, 25, 83},
+	{"SG", "SG-241", "DEL", "LKO", "17:00", "18:05", 65, "B737", "Economy", 189, 2600, "Saver", false, false, 15, 80},
+	{"6E", "6E-242", "LKO", "DEL", "08:30", "09:35", 65, "A320", "Economy", 180, 3000, "Saver", false, false, 15, 87},
+	// Delhi ↔ Patna
+	{"6E", "6E-231", "DEL", "PAT", "06:30", "07:50", 80, "A320", "Economy", 180, 3500, "Saver", false, false, 15, 84},
+	{"AI", "AI-381", "DEL", "PAT", "11:00", "12:20", 80, "A319", "Economy", 144, 4200, "Value", true, false, 25, 80},
+	{"6E", "6E-232", "PAT", "DEL", "08:30", "09:50", 80, "A320", "Economy", 180, 3500, "Saver", false, false, 15, 84},
+	// Delhi ↔ Bhubaneswar
+	{"6E", "6E-221", "DEL", "BBI", "07:00", "09:10", 130, "A320", "Economy", 180, 4500, "Saver", false, false, 15, 83},
+	{"AI", "AI-371", "DEL", "BBI", "12:30", "14:40", 130, "A321", "Economy", 162, 5400, "Value", true, false, 25, 79},
+	{"6E", "6E-222", "BBI", "DEL", "07:30", "09:40", 130, "A320", "Economy", 180, 4500, "Saver", false, false, 15, 83},
+	// Mumbai ↔ Thiruvananthapuram
+	{"6E", "6E-391", "BOM", "TRV", "07:30", "09:30", 120, "A320", "Economy", 180, 4000, "Saver", false, false, 15, 86},
+	{"AI", "AI-621", "BOM", "TRV", "13:00", "15:00", 120, "A320", "Economy", 150, 4800, "Value", true, false, 25, 82},
+	{"6E", "6E-392", "TRV", "BOM", "10:30", "12:30", 120, "A320", "Economy", 180, 4000, "Saver", false, false, 15, 86},
+	// Delhi ↔ Goa
+	{"6E", "6E-721", "DEL", "GOI", "07:00", "09:30", 150, "A320", "Economy", 180, 5000, "Saver", false, false, 15, 88},
+	{"AI", "AI-631", "DEL", "GOI", "12:00", "14:30", 150, "A321", "Economy", 162, 6000, "Value", true, false, 25, 84},
+	{"UK", "UK-741", "DEL", "GOI", "17:00", "19:30", 150, "A320neo", "Economy", 158, 7200, "Flexi", true, true, 20, 90},
+	{"6E", "6E-722", "GOI", "DEL", "08:00", "10:30", 150, "A320", "Economy", 180, 5000, "Saver", false, false, 15, 88},
+	{"SG", "SG-721", "GOI", "DEL", "15:00", "17:30", 150, "B737", "Economy", 189, 4200, "Saver", false, false, 15, 83},
+	// Delhi ↔ Ranchi
+	{"6E", "6E-691", "DEL", "IXR", "07:30", "09:10", 100, "A320", "Economy", 180, 4000, "Saver", false, false, 15, 82},
+	{"AI", "AI-681", "DEL", "IXR", "13:00", "14:40", 100, "A319", "Economy", 144, 4800, "Value", true, false, 25, 78},
+	{"6E", "6E-692", "IXR", "DEL", "10:00", "11:40", 100, "A320", "Economy", 180, 4000, "Saver", false, false, 15, 82},
+	// Kolkata ↔ Hyderabad
+	{"6E", "6E-781", "CCU", "HYD", "07:00", "09:10", 130, "A320", "Economy", 180, 4800, "Saver", false, false, 15, 83},
+	{"AI", "AI-741", "CCU", "HYD", "13:00", "15:10", 130, "A321", "Economy", 162, 5600, "Value", true, false, 25, 79},
+	{"6E", "6E-782", "HYD", "CCU", "08:00", "10:10", 130, "A320", "Economy", 180, 4800, "Saver", false, false, 15, 83},
+	// Mumbai ↔ Visakhapatnam
+	{"6E", "6E-661", "BOM", "VTZ", "08:00", "10:20", 140, "A320", "Economy", 180, 4600, "Saver", false, false, 15, 82},
+	{"AI", "AI-661", "BOM", "VTZ", "14:00", "16:20", 140, "A319", "Economy", 144, 5400, "Value", true, false, 25, 78},
+	{"6E", "6E-662", "VTZ", "BOM", "07:00", "09:20", 140, "A320", "Economy", 180, 4600, "Saver", false, false, 15, 82},
+	// Chennai ↔ Kolkata
+	{"6E", "6E-791", "MAA", "CCU", "07:00", "09:30", 150, "A320", "Economy", 180, 5000, "Saver", false, false, 15, 83},
+	{"AI", "AI-751", "MAA", "CCU", "11:30", "14:00", 150, "A321", "Economy", 162, 5900, "Value", true, false, 25, 79},
+	{"6E", "6E-792", "CCU", "MAA", "06:30", "09:00", 150, "A320", "Economy", 180, 5000, "Saver", false, false, 15, 83},
+	// Bengaluru ↔ Goa
+	{"6E", "6E-341", "BLR", "GOI", "07:00", "08:10", 70, "A320", "Economy", 180, 2500, "Saver", false, false, 15, 87},
+	{"SG", "SG-341", "BLR", "GOI", "13:00", "14:10", 70, "B737", "Economy", 189, 2100, "Saver", false, false, 15, 83},
+	{"6E", "6E-342", "GOI", "BLR", "09:00", "10:10", 70, "A320", "Economy", 180, 2500, "Saver", false, false, 15, 87},
+	// Hyderabad ↔ Kolkata
+	{"6E", "6E-801", "HYD", "CCU", "08:30", "10:50", 140, "A320", "Economy", 180, 4900, "Saver", false, false, 15, 82},
+	{"AI", "AI-801", "HYD", "CCU", "14:00", "16:20", 140, "A319", "Economy", 144, 5700, "Value", true, false, 25, 78},
+	{"6E", "6E-802", "CCU", "HYD", "07:00", "09:20", 140, "A320", "Economy", 180, 4900, "Saver", false, false, 15, 82},
+	// Bengaluru ↔ Thiruvananthapuram
+	{"6E", "6E-411", "BLR", "TRV", "07:30", "09:00", 90, "A320", "Economy", 180, 3200, "Saver", false, false, 15, 88},
+	{"AI", "AI-611", "BLR", "TRV", "13:00", "14:30", 90, "ATR-72", "Economy", 70, 3800, "Value", true, false, 15, 84},
+	{"6E", "6E-412", "TRV", "BLR", "10:00", "11:30", 90, "A320", "Economy", 180, 3200, "Saver", false, false, 15, 88},
+	// Delhi ↔ Kolkata extra
+	{"UK", "UK-751", "DEL", "CCU", "08:00", "10:20", 140, "A320neo", "Economy", 158, 7200, "Flexi", true, true, 20, 91},
+	{"SG", "SG-751", "DEL", "CCU", "17:00", "19:20", 140, "B737", "Economy", 189, 4200, "Saver", false, false, 15, 81},
+	{"UK", "UK-752", "CCU", "DEL", "11:30", "13:50", 140, "A320neo", "Economy", 158, 7200, "Flexi", true, true, 20, 91},
+	// Hyderabad ↔ Goa
+	{"6E", "6E-681", "HYD", "GOI", "07:30", "08:50", 80, "A320", "Economy", 180, 2800, "Saver", false, false, 15, 85},
+	{"AI", "AI-676", "HYD", "GOI", "14:00", "15:20", 80, "A319", "Economy", 144, 3500, "Value", true, false, 25, 81},
+	{"6E", "6E-682", "GOI", "HYD", "09:30", "10:50", 80, "A320", "Economy", 180, 2800, "Saver", false, false, 15, 85},
+	// Mumbai ↔ Ahmedabad extra
+	{"UK", "UK-911", "BOM", "AMD", "08:00", "09:00", 60, "A320neo", "Economy", 158, 4500, "Flexi", true, true, 20, 90},
+	{"SG", "SG-911", "BOM", "AMD", "14:30", "15:30", 60, "B737", "Economy", 189, 2600, "Saver", false, false, 15, 83},
+	{"UK", "UK-912", "AMD", "BOM", "09:30", "10:30", 60, "A320neo", "Economy", 158, 4500, "Flexi", true, true, 20, 90},
+	// Chennai ↔ Thiruvananthapuram
+	{"6E", "6E-421", "MAA", "TRV", "07:00", "08:20", 80, "A320", "Economy", 180, 2600, "Saver", false, false, 15, 87},
+	{"AI", "AI-423", "MAA", "TRV", "13:00", "14:20", 80, "ATR-72", "Economy", 70, 3200, "Value", true, false, 15, 83},
+	{"6E", "6E-422", "TRV", "MAA", "09:30", "10:50", 80, "A320", "Economy", 180, 2600, "Saver", false, false, 15, 87},
+	// Kolkata ↔ Guwahati extra
+	{"AI", "AI-731", "CCU", "GAU", "09:00", "10:00", 60, "ATR-72", "Economy", 70, 3200, "Value", true, false, 15, 82},
+	{"UK", "UK-731", "GAU", "DEL", "12:00", "14:30", 150, "A320neo", "Economy", 158, 6500, "Flexi", true, true, 20, 84},
+	// Delhi ↔ Mysuru
+	{"6E", "6E-481", "DEL", "MYQ", "08:00", "10:30", 150, "A320", "Economy", 180, 5200, "Saver", false, false, 15, 82},
+	{"AI", "AI-486", "MYQ", "DEL", "11:00", "13:30", 150, "A319", "Economy", 144, 6000, "Value", true, false, 25, 78},
 }
 
 func SeedFlights() {
