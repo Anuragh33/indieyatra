@@ -5,6 +5,7 @@ import (
 	"log"
 	"math"
 	"math/rand"
+	"strings"
 	"time"
 
 	"github.com/anuragh/indiebus/backend/internal/db"
@@ -711,6 +712,129 @@ func GenerateTrainRef() string {
 		b[i] = chars[rand.Intn(len(chars))]
 	}
 	return "IY-TRN-" + string(b)
+}
+
+// ExtendTrainSchedules ensures every Go-seeded train has schedules through today+days.
+// Safe to call on every startup — skips trains already covered.
+func ExtendTrainSchedules(days int) error {
+	type trainRow struct {
+		ID      string
+		Number  string
+		Classes string
+	}
+	var trains []trainRow
+	if err := db.DB.Raw("SELECT id::text, number, classes FROM trains").Scan(&trains).Error; err != nil {
+		return err
+	}
+	if len(trains) == 0 {
+		return nil
+	}
+
+	today := time.Now().UTC().Truncate(24 * time.Hour)
+	horizon := today.AddDate(0, 0, days)
+	totalNew := 0
+
+	for _, tr := range trains {
+		var td *trainDef
+		for i := range trainDefs {
+			if trainDefs[i].Number == tr.Number {
+				td = &trainDefs[i]
+				break
+			}
+		}
+		if td == nil {
+			continue // SQL-seeded train with IY-coded number — skip
+		}
+
+		var stops []models.TrainRouteStop
+		if err := db.DB.Where("train_id = ?", tr.ID).Order("stop_number ASC").Find(&stops).Error; err != nil || len(stops) < 2 {
+			continue
+		}
+		fromStationID := stops[0].StationID
+		toStationID := stops[len(stops)-1].StationID
+		totalDist := stops[len(stops)-1].DistanceKM
+
+		var schedCount int64
+		db.DB.Model(&models.TrainSchedule{}).Where("train_id = ?", tr.ID).Count(&schedCount)
+
+		var startDate time.Time
+		if schedCount == 0 {
+			startDate = today
+		} else {
+			var maxDate time.Time
+			db.DB.Model(&models.TrainSchedule{}).
+				Where("train_id = ?", tr.ID).
+				Select("MAX(journey_date)").
+				Scan(&maxDate)
+			startDate = maxDate.AddDate(0, 0, 1)
+			if startDate.Before(today) {
+				startDate = today
+			}
+		}
+		if !startDate.Before(horizon) {
+			continue
+		}
+
+		var schedules []models.TrainSchedule
+		for d := startDate; d.Before(horizon); d = d.AddDate(0, 0, 1) {
+			schedules = append(schedules, models.TrainSchedule{
+				TrainID:       stops[0].TrainID,
+				FromStationID: fromStationID,
+				ToStationID:   toStationID,
+				JourneyDate:   time.Date(d.Year(), d.Month(), d.Day(), 0, 0, 0, 0, time.UTC),
+				DepartureTime: td.DepTime,
+				ArrivalTime:   td.ArrTime,
+				ArrivalDay:    td.ArrDay,
+				DurationMin:   td.DurMin,
+				IsActive:      true,
+			})
+		}
+		if len(schedules) == 0 {
+			continue
+		}
+		if err := db.DB.CreateInBatches(&schedules, 100).Error; err != nil {
+			log.Printf("  ✗ extend schedules for train %s: %v", tr.Number, err)
+			continue
+		}
+
+		classes := strings.Split(tr.Classes, ",")
+		var avails []models.TrainClassAvailability
+		for _, sched := range schedules {
+			for _, cls := range classes {
+				cls = strings.TrimSpace(cls)
+				if cls == "" {
+					continue
+				}
+				cap := classCapacity(cls)
+				avail := cap - rand.Intn(cap/3+1)
+				base, tatkal := classFares(cls, totalDist)
+				base = math.Round((base+float64(rand.Intn(50)-25))/10) * 10
+				avails = append(avails, models.TrainClassAvailability{
+					ScheduleID:  sched.ID,
+					Class:       cls,
+					TotalBerths: cap,
+					Available:   avail,
+					BaseFare:    base,
+					TatkalFare:  tatkal,
+					Status:      "AVAILABLE",
+				})
+			}
+		}
+		if len(avails) > 0 {
+			if err := db.DB.CreateInBatches(&avails, 200).Error; err != nil {
+				log.Printf("  ✗ extend availability for train %s: %v", tr.Number, err)
+			}
+		}
+
+		totalNew += len(schedules)
+	}
+
+	if totalNew > 0 {
+		log.Printf("✓ Extended train schedules: +%d entries (through %s)", totalNew, horizon.Format("2006-01-02"))
+	} else {
+		log.Printf("✓ Train schedules already cover through %s", horizon.Format("2006-01-02"))
+	}
+	return nil
 }
 
 // Ensure uuid is used (referenced in booking creation).

@@ -307,3 +307,103 @@ func SeedFlights() {
 
 	log.Printf("  ✓ %d flight schedules seeded", scheduleCount)
 }
+
+// ExtendFlightSchedules ensures flight schedules are present through today+days.
+// Assumes airports and airlines already exist (SeedFlights must have run first).
+func ExtendFlightSchedules(days int) {
+	var airportCount int64
+	if err := db.DB.Model(&models.Airport{}).Count(&airportCount).Error; err != nil || airportCount == 0 {
+		return
+	}
+
+	today := time.Now().Truncate(24 * time.Hour)
+	horizon := today.AddDate(0, 0, days)
+
+	var schedCount int64
+	db.DB.Model(&models.FlightSchedule{}).Count(&schedCount)
+
+	var startDate time.Time
+	if schedCount == 0 {
+		startDate = today
+	} else {
+		var maxDate time.Time
+		db.DB.Model(&models.FlightSchedule{}).Select("MAX(journey_date)").Scan(&maxDate)
+		startDate = maxDate.AddDate(0, 0, 1)
+		if startDate.Before(today) {
+			startDate = today
+		}
+	}
+	if !startDate.Before(horizon) {
+		log.Printf("✓ Flight schedules already cover through %s", horizon.Format("2006-01-02"))
+		return
+	}
+
+	var airports []models.Airport
+	db.DB.Find(&airports)
+	airportMap := make(map[string]models.Airport, len(airports))
+	for _, a := range airports {
+		airportMap[a.IATA] = a
+	}
+
+	var airlines []models.Airline
+	db.DB.Find(&airlines)
+	airlineMap := make(map[string]models.Airline, len(airlines))
+	for _, a := range airlines {
+		airlineMap[a.Code] = a
+	}
+
+	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
+	var schedules []models.FlightSchedule
+
+	for d := startDate; d.Before(horizon); d = d.AddDate(0, 0, 1) {
+		dayOffset := int(d.Sub(today).Hours() / 24)
+		for _, f := range flightDefs {
+			fromAirport, ok1 := airportMap[f.From]
+			toAirport, ok2 := airportMap[f.To]
+			airline, ok3 := airlineMap[f.AirlineCode]
+			if !ok1 || !ok2 || !ok3 {
+				continue
+			}
+			fareMulti := 1.0 + float64(dayOffset)*0.008
+			if dayOffset < 3 {
+				fareMulti = 1.4 + float64(rng.Intn(20))/100
+			} else if dayOffset > 20 {
+				fareMulti = 0.9 + float64(rng.Intn(15))/100
+			}
+			seats := f.Seats - rng.Intn(f.Seats/3+1)
+			schedules = append(schedules, models.FlightSchedule{
+				FlightNumber:   fmt.Sprintf("%s-%s", f.Number, d.Format("20060102")),
+				AirlineID:      airline.ID,
+				FromAirportID:  fromAirport.ID,
+				ToAirportID:    toAirport.ID,
+				JourneyDate:    d,
+				DepartureTime:  f.DepTime,
+				ArrivalTime:    f.ArrTime,
+				DurationMin:    f.DurMin,
+				Aircraft:       f.Aircraft,
+				CabinClass:     f.CabinClass,
+				TotalSeats:     f.Seats,
+				AvailableSeats: seats,
+				BaseFare:       float64(int(f.BaseFare*fareMulti/10)) * 10,
+				TaxesAndFees:   float64(int(f.BaseFare*fareMulti*0.18/10)) * 10,
+				BaggageKg:      f.BaggageKg,
+				HasMeal:        f.HasMeal,
+				HasWifi:        f.HasWifi,
+				HasUSB:         f.HasWifi,
+				OnTimePercent:  f.OnTime,
+				FareType:       f.FareType,
+				RefundPolicy:   map[string]string{"Saver": "Non-refundable", "Value": "₹3500 cancellation fee", "Flexi": "Full refund"}[f.FareType],
+				IsActive:       true,
+			})
+		}
+	}
+
+	if len(schedules) == 0 {
+		return
+	}
+	if err := db.DB.CreateInBatches(&schedules, 100).Error; err != nil {
+		log.Printf("  ✗ extend flight schedules: %v", err)
+		return
+	}
+	log.Printf("✓ Extended flight schedules: +%d entries (through %s)", len(schedules), horizon.Format("2006-01-02"))
+}

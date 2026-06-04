@@ -119,11 +119,17 @@ func RunIfEmpty() error {
 	db.DB.Model(&models.City{}).Count(&count)
 	if count > 0 {
 		log.Printf("✓ Bus seed skipped (already %d cities)", count)
-		// Still seed trains, flights, hotels if not yet seeded
 		if err := SeedTrainsIfEmpty(); err != nil {
 			return err
 		}
 		SeedFlights()
+		if err := ExtendTrainSchedules(90); err != nil {
+			log.Printf("⚠ extend train schedules: %v", err)
+		}
+		ExtendFlightSchedules(90)
+		if err := ExtendBusSchedules(90); err != nil {
+			log.Printf("⚠ extend bus schedules: %v", err)
+		}
 		if err := SeedHotelsIfEmpty(); err != nil {
 			return err
 		}
@@ -370,8 +376,127 @@ func RunIfEmpty() error {
 		return fmt.Errorf("seed trains: %w", err)
 	}
 	SeedFlights()
+	if err := ExtendTrainSchedules(90); err != nil {
+		log.Printf("⚠ extend train schedules: %v", err)
+	}
+	ExtendFlightSchedules(90)
+	if err := ExtendBusSchedules(90); err != nil {
+		log.Printf("⚠ extend bus schedules: %v", err)
+	}
 	if err := SeedHotelsIfEmpty(); err != nil {
 		return fmt.Errorf("seed hotels: %w", err)
+	}
+	return nil
+}
+
+// ExtendBusSchedules creates bus schedules through today+days for routes that already
+// have at least one schedule (i.e., the top-8 Go-seeded routes). Safe to call on
+// every startup — routes already covered up to horizon are skipped.
+func ExtendBusSchedules(days int) error {
+	// Only extend routes seeded via Go (short 3-letter city codes: MUM, BLR, etc.)
+	var routeIDs []string
+	if err := db.DB.Raw(`
+		SELECT DISTINCT s.route_id::text
+		FROM schedules s
+		JOIN routes r ON r.id = s.route_id
+		JOIN cities fc ON fc.id = r.from_city_id
+		WHERE LENGTH(fc.code) <= 4
+		LIMIT 100
+	`).Scan(&routeIDs).Error; err != nil {
+		return err
+	}
+	if len(routeIDs) == 0 {
+		return nil
+	}
+
+	var buses []models.Bus
+	if err := db.DB.Limit(50).Find(&buses).Error; err != nil || len(buses) == 0 {
+		return nil
+	}
+	var dbOps []models.Operator
+	db.DB.Limit(20).Find(&dbOps)
+	if len(dbOps) == 0 {
+		return nil
+	}
+
+	today := time.Now().UTC().Truncate(24 * time.Hour)
+	horizon := today.AddDate(0, 0, days)
+	totalNew := 0
+
+	for _, routeID := range routeIDs {
+		var route models.Route
+		if err := db.DB.First(&route, "id = ?", routeID).Error; err != nil {
+			continue
+		}
+
+		var schedCount int64
+		db.DB.Model(&models.Schedule{}).Where("route_id = ?", routeID).Count(&schedCount)
+
+		var startDay time.Time
+		if schedCount == 0 {
+			startDay = today
+		} else {
+			var maxDep time.Time
+			db.DB.Model(&models.Schedule{}).
+				Where("route_id = ?", routeID).
+				Select("MAX(departure_at)").
+				Scan(&maxDep)
+			startDay = time.Date(maxDep.Year(), maxDep.Month(), maxDep.Day(), 0, 0, 0, 0, time.UTC).
+				AddDate(0, 0, 1)
+			if startDay.Before(today) {
+				startDay = today
+			}
+		}
+		if !startDay.Before(horizon) {
+			continue
+		}
+
+		var schedules []models.Schedule
+		for d := startDay; d.Before(horizon); d = d.AddDate(0, 0, 1) {
+			numBuses := 4 + rand.Intn(4)
+			for bi := 0; bi < numBuses; bi++ {
+				bus := buses[rand.Intn(len(buses))]
+				op := dbOps[rand.Intn(len(dbOps))]
+				depHour := 6 + rand.Intn(16)
+				dep := time.Date(d.Year(), d.Month(), d.Day(), depHour, rand.Intn(60), 0, 0, time.UTC)
+				dur := route.AvgDurationMin + (rand.Intn(60) - 30)
+				if dur < 30 {
+					dur = 30
+				}
+				arr := dep.Add(time.Duration(dur) * time.Minute)
+				baseFare := 250.0 + float64(route.DistanceKM)*0.85*getFareMultForBus(bus, busTypes)
+				baseFare = math.Round(baseFare/10) * 10
+				schedules = append(schedules, models.Schedule{
+					RouteID:        route.ID,
+					BusID:          bus.ID,
+					OperatorID:     op.ID,
+					DepartureAt:    dep,
+					ArrivalAt:      arr,
+					DurationMin:    dur,
+					Stops:          rand.Intn(3),
+					BaseFare:       baseFare,
+					Currency:       "INR",
+					SeatsTotal:     bus.TotalSeats,
+					SeatsAvailable: bus.TotalSeats - rand.Intn(8),
+					IsActive:       true,
+				})
+				_ = bi
+			}
+		}
+
+		if len(schedules) > 0 {
+			if err := db.DB.CreateInBatches(&schedules, 200).Error; err != nil {
+				log.Printf("  ✗ extend bus schedules for route %s: %v", routeID, err)
+			} else {
+				totalNew += len(schedules)
+			}
+		}
+	}
+
+	if totalNew > 0 {
+		log.Printf("✓ Extended bus schedules: +%d entries (through %s)", totalNew, horizon.Format("2006-01-02"))
+	} else {
+		log.Printf("✓ Bus schedules already cover through %s", horizon.Format("2006-01-02"))
 	}
 	return nil
 }
