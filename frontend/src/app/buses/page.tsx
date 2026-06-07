@@ -61,7 +61,7 @@ export default function Home() {
       <Navbar />
       <main className="pb-24 md:pb-12">
         {/* HERO */}
-        <section className="relative overflow-hidden bg-hero-atmosphere border-b border-border flex flex-col md:min-h-screen">
+        <section className="relative bg-hero-atmosphere border-b border-border flex flex-col md:min-h-screen">
           {/* Image: natural 16:9 on mobile (no crop), absolute fill on desktop */}
           <div className="relative aspect-video md:absolute md:inset-0 overflow-hidden pointer-events-none">
             <img

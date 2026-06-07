@@ -6,8 +6,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
 )
 
 var flightAirports = []models.Airport{

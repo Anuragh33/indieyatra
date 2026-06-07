@@ -1,4 +1,4 @@
-// IndieBus translation keys (English)
+// IndieYatra translation keys (English)
 export default {
   // Nav
   nav: {
@@ -23,7 +23,7 @@ export default {
     priceTrends: "Price Trends",
     priceTrendsSub: "Mumbai → Goa · Last 6 months",
     priceDrop: "↓ 12% drop",
-    premium: "IndieBus Premium",
+    premium: "IndieYatra Premium",
     premiumSub:
       "Unlock unlimited deals, priority support, and zero hidden fees.",
     perkDeals: "Unlimited deals",
@@ -302,7 +302,7 @@ export default {
       sessions: "Active sessions",
       sessionsD: "2 devices signed in",
       delete: "Delete account",
-      deleteD: "Permanently remove your IndieBus account",
+      deleteD: "Permanently remove your IndieYatra account",
     },
     help: {
       title: "Help & support",
@@ -322,7 +322,7 @@ export default {
     chip: "AI-powered trip planner",
     title1: "Tell us your dream trip",
     title2: "we'll plan the rest",
-    sub: "IndieBus AI picks the best routes, stays, and day-by-day itinerary for any India trip — in under 10 seconds.",
+    sub: "IndieYatra AI picks the best routes, stays, and day-by-day itinerary for any India trip — in under 10 seconds.",
     placeholder: "I want to travel from Delhi to Himachal for 5 days in July under ₹3000…",
     planBtn: "Plan my trip",
     tryOne: "Try one of these",
@@ -351,7 +351,7 @@ export default {
       welcome: "Welcome back",
       title: "Your next journey",
       title2: "is one tap away",
-      sub: "Sign in to track live buses, save favorite routes, and unlock IndieBus Premium deals across 500+ operators.",
+      sub: "Sign in to track live buses, save favorite routes, and unlock IndieYatra Premium deals across 500+ operators.",
       signIn: "Sign in",
       newHere: "New here?",
       create: "Create an account",
@@ -368,7 +368,7 @@ export default {
       chip: "500 welcome points",
       title: "Travel India",
       title2: "like a local",
-      sub: "Join 2M+ travelers booking with IndieBus. Get 500 reward points on signup, instant e-tickets on WhatsApp, and AI-powered trip planning.",
+      sub: "Join 2M+ travelers booking with IndieYatra. Get 500 reward points on signup, instant e-tickets on WhatsApp, and AI-powered trip planning.",
       perks: {
         points: "500 reward points on signup",
         gps: "Live GPS bus tracking",

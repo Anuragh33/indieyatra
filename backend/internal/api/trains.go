@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/auth"
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
-	"github.com/anuragh/indiebus/backend/internal/seed"
+	"github.com/anuragh/indieyatra/backend/internal/auth"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/seed"
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
@@ -85,12 +85,34 @@ func (h *Handlers) SearchTrains(c echo.Context) error {
 	startOfDay := time.Date(date.Year(), date.Month(), date.Day(), 0, 0, 0, 0, time.UTC)
 	endOfDay := startOfDay.Add(24 * time.Hour)
 
+	if c.QueryParam("fare_calendar") != "" {
+		return fareCalendarResponse(c, db.DB.Model(&models.TrainSchedule{}).
+			Select("to_char(train_schedules.journey_date, 'YYYY-MM-DD') AS date, MIN(tca.base_fare) AS min_fare").
+			Joins(`JOIN train_route_stops from_stop ON from_stop.train_id::uuid = train_schedules.train_id
+				AND from_stop.deleted_at IS NULL
+				AND from_stop.station_id = (SELECT id FROM stations WHERE code = ? AND deleted_at IS NULL LIMIT 1)`, from).
+			Joins(`JOIN train_route_stops to_stop ON to_stop.train_id::uuid = train_schedules.train_id
+				AND to_stop.deleted_at IS NULL
+				AND to_stop.station_id = (SELECT id FROM stations WHERE code = ? AND deleted_at IS NULL LIMIT 1)`, to).
+			Joins("JOIN train_class_availabilities tca ON tca.schedule_id = train_schedules.id AND tca.available > 0").
+			Where("from_stop.stop_number < to_stop.stop_number").
+			Where("train_schedules.is_active = true"),
+			"train_schedules.journey_date", startOfDay, calendarDays(c))
+	}
+
+	// Search by route stops so any intermediate station pair works (not just origin→terminus).
+	// train_route_stops.train_id is stored as text; cast to uuid for the join.
 	var schedules []models.TrainSchedule
 	db.DB.Preload("Train").
 		Preload("FromStation").
 		Preload("ToStation").
-		Joins("JOIN stations fs ON fs.id = train_schedules.from_station_id AND fs.code = ?", from).
-		Joins("JOIN stations ts ON ts.id = train_schedules.to_station_id AND ts.code = ?", to).
+		Joins(`JOIN train_route_stops from_stop ON from_stop.train_id::uuid = train_schedules.train_id
+			AND from_stop.deleted_at IS NULL
+			AND from_stop.station_id = (SELECT id FROM stations WHERE code = ? AND deleted_at IS NULL LIMIT 1)`, from).
+		Joins(`JOIN train_route_stops to_stop ON to_stop.train_id::uuid = train_schedules.train_id
+			AND to_stop.deleted_at IS NULL
+			AND to_stop.station_id = (SELECT id FROM stations WHERE code = ? AND deleted_at IS NULL LIMIT 1)`, to).
+		Where("from_stop.stop_number < to_stop.stop_number").
 		Where("train_schedules.journey_date >= ? AND train_schedules.journey_date < ?", startOfDay, endOfDay).
 		Where("train_schedules.is_active = ?", true).
 		Order("train_schedules.departure_time ASC").
@@ -374,14 +396,7 @@ func (h *Handlers) CreateTrainBooking(c echo.Context) error {
 		// best-effort: booking reloaded with preloads
 	}
 
-	// Phase 5: WhatsApp delivery
-	if req.ContactPhone != "" {
-		go func() {
-			msg := "Your IndieYatra train booking " + booking.BookingRef + " (PNR: " + booking.PNR + ") is confirmed. " +
-				booking.Schedule.Train.Name + " on " + booking.Schedule.JourneyDate.Format("02 Jan 2006") + ". View details in the app."
-			_ = h.EmailSvc.SendWhatsApp(req.ContactPhone, msg)
-		}()
-	}
+	go SendTrainBookingNotifications(h.EmailSvc, booking, req.ContactEmail, req.ContactPhone)
 
 	return c.JSON(http.StatusCreated, booking)
 }

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/anuragh/indiebus/backend/internal/config"
+	"github.com/anuragh/indieyatra/backend/internal/config"
 )
 
 // AIService — AI Trip Planner. Falls back to rule-based mock if no LLM key is set.

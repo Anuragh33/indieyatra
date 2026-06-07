@@ -53,7 +53,7 @@ function HotelsLanding() {
     <>
       <Navbar />
       <main className="pb-24 md:pb-0">
-        <section className="relative overflow-hidden border-b border-border flex flex-col md:min-h-screen">
+        <section className="relative border-b border-border flex flex-col md:min-h-screen">
           <div className="relative aspect-video md:absolute md:inset-0 overflow-hidden pointer-events-none">
             <img
               src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80"
@@ -81,7 +81,7 @@ function HotelsLanding() {
                 </p>
               </div>
 
-              <div className="bg-bg-elevated border border-border rounded-xl shadow-card overflow-hidden">
+              <div className="bg-bg-elevated border border-border rounded-xl shadow-card">
                 <div className="p-4 space-y-3">
                   {/* Main input row */}
                   <div className="flex flex-col md:flex-row md:items-center gap-2">

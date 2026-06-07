@@ -6,8 +6,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/config"
-	"github.com/anuragh/indiebus/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/config"
+	"github.com/anuragh/indieyatra/backend/internal/models"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/anuragh/indiebus/backend/internal/config"
+	"github.com/anuragh/indieyatra/backend/internal/config"
 	"github.com/razorpay/razorpay-go"
 )
 

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { MapPin, Calendar, Users, Bus, ArrowLeftRight, Search, Plus, X, Mic } from "lucide-react";
 import { apiGet } from "@/lib/api";
@@ -19,22 +19,33 @@ function CityInput({ value, query, suggestions, onQueryChange, onSelect, placeho
   placeholder: string; accent?: boolean;
 }) {
   const [open, setOpen] = useState(false);
+  const wrap = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const close = (e: MouseEvent) => {
+      if (wrap.current && !wrap.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
+  }, []);
+
   return (
-    <div className="relative flex-1 min-w-0">
+    <div ref={wrap} className="relative flex-1 min-w-0">
       <MapPin className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 z-10 pointer-events-none ${accent ? "text-saffron" : "text-teal"}`} />
       <input
         type="text"
         value={value?.name || query}
         onChange={(e) => { onQueryChange(e.target.value); setOpen(true); }}
         onFocus={() => setOpen(true)}
-        onBlur={() => setTimeout(() => setOpen(false), 150)}
         placeholder={placeholder}
         className="input pl-9 w-full"
+        autoComplete="off"
       />
       {open && suggestions.length > 0 && (
-        <div className="absolute z-30 left-0 right-0 top-full mt-1 bg-bg-elevated border border-border rounded-md shadow-card max-h-56 overflow-auto">
+        <div className="absolute z-[9999] top-full mt-1 w-full bg-bg-elevated border border-border rounded-md shadow-card max-h-56 overflow-auto">
           {suggestions.map((c) => (
-            <button key={c.id} onMouseDown={() => { onSelect(c); setOpen(false); }}
+            <button key={c.id}
+              onMouseDown={(e) => { e.preventDefault(); onSelect(c); setOpen(false); }}
               className="w-full text-left px-3 py-2 hover:bg-bg-hover flex items-center justify-between text-sm">
               <span className="font-medium">{c.name} <span className="text-text-muted font-normal text-xs">· {c.state}</span></span>
               <span className="text-xs text-text-muted font-mono ml-2">{c.code}</span>
@@ -150,7 +161,7 @@ export function SearchWidget() {
   };
 
   return (
-    <div className="bg-bg-elevated border border-border rounded-xl shadow-card overflow-hidden">
+    <div className="bg-bg-elevated border border-border rounded-xl shadow-card">
 
       {/* ── Tabs ── */}
       <div className="flex border-b border-border px-4 pt-3">

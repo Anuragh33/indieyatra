@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
 )
 
 type hotelDef struct {

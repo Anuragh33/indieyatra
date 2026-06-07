@@ -3,13 +3,45 @@ package api
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
 	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
 )
+
+// calendarDays parses the &days= query param for fare-calendar requests,
+// clamped to [1, 60]. Defaults to 14.
+func calendarDays(c echo.Context) int {
+	n, err := strconv.Atoi(c.QueryParam("days"))
+	if err != nil || n < 1 {
+		return 14
+	}
+	if n > 60 {
+		return 60
+	}
+	return n
+}
+
+type fareCalendarDay struct {
+	Date    string  `json:"date"`
+	MinFare float64 `json:"min_fare"`
+}
+
+// fareCalendarResponse runs a grouped MIN(fare)-per-day query over a date
+// window and returns [{date, min_fare}] for the PriceCalendar widget. The
+// caller supplies a pre-filtered query, the fully-qualified date column, the
+// window start, and the number of days.
+func fareCalendarResponse(c echo.Context, q *gorm.DB, dateCol string, start time.Time, days int) error {
+	end := start.Add(time.Duration(days) * 24 * time.Hour)
+	var rows []fareCalendarDay
+	q.Where(dateCol+" >= ? AND "+dateCol+" < ?", start, end).
+		Group("1").Order("1").Scan(&rows)
+	return c.JSON(http.StatusOK, rows)
+}
 
 func (h *Handlers) SearchSuggestions(c echo.Context) error {
 	q := strings.ToLower(strings.TrimSpace(c.QueryParam("q")))
@@ -48,6 +80,16 @@ func (h *Handlers) SearchBuses(c echo.Context) error {
 			}
 			travelers = travelers*10 + int(ch-'0')
 		}
+	}
+
+	if c.QueryParam("fare_calendar") != "" {
+		return fareCalendarResponse(c, db.DB.Model(&models.Schedule{}).
+			Select("to_char(schedules.departure_at, 'YYYY-MM-DD') AS date, MIN(schedules.base_fare) AS min_fare").
+			Joins("JOIN routes r ON r.id = schedules.route_id").
+			Joins("JOIN cities fc ON fc.id = r.from_city_id AND fc.code = ?", from).
+			Joins("JOIN cities tc ON tc.id = r.to_city_id AND tc.code = ?", to).
+			Where("schedules.is_active = true AND schedules.seats_available > 0"),
+			"schedules.departure_at", date.Truncate(24*time.Hour), calendarDays(c))
 	}
 
 	cacheKey := from + "|" + to + "|" + dateStr + "|" + travelersStr

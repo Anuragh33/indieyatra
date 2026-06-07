@@ -13,10 +13,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
-	"github.com/anuragh/indiebus/backend/internal/services"
-	"github.com/anuragh/indiebus/backend/internal/websocket"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/services"
+	"github.com/anuragh/indieyatra/backend/internal/websocket"
 	"github.com/google/uuid"
 )
 

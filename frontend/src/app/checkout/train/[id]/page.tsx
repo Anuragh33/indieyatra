@@ -189,7 +189,7 @@ function TrainCheckoutContent({ scheduleId }: { scheduleId: string }) {
   const validate = (): boolean => {
     if (step === "review") {
       if (!selClass) { toastError("Select a class to continue"); return false; }
-      if (!getToken()) { router.push("/login?redirect=" + encodeURIComponent(`/checkout/train/${scheduleId}?class=${selClass}`)); return false; }
+      if (!user && !getToken()) { router.push("/login?redirect=" + encodeURIComponent(`/checkout/train/${scheduleId}?class=${selClass}`)); return false; }
     }
     if (step === "passengers") {
       for (const p of passengers) {

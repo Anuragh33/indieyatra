@@ -227,7 +227,7 @@ export default function RewardsPage() {
                   <li className="flex items-center gap-2"><span className="text-saffron">✓</span> Free cancellation upgrades</li>
                 </ul>
                 <Link
-                  href="/profile"
+                  href="/premium"
                   className="btn-primary w-full text-center block"
                   style={{ background: "linear-gradient(135deg, #FF6B1A 0%, #FF8A3D 100%)" }}
                 >

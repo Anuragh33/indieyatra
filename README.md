@@ -73,7 +73,7 @@ From a rickety state bus between two forgotten towns to a last-minute flight fro
 ## Architecture
 
 ```
-indiebus/
+indieyatra/
 ├── frontend/                   # Next.js 14 App Router
 │   ├── src/
 │   │   ├── app/                # 25+ routes
@@ -200,7 +200,7 @@ cp .env.example .env
 Edit `.env` and fill in your values:
 
 ```env
-DATABASE_URL=postgres://user:password@localhost:5432/indiebus
+DATABASE_URL=postgres://user:password@localhost:5432/indieyatra
 REDIS_URL=redis://localhost:6379
 CLERK_SECRET_KEY=sk_test_...
 RAZORPAY_KEY_ID=rzp_test_...
@@ -331,7 +331,7 @@ The app is deployed as a **Vercel monorepo** with both services configured in `v
 }
 ```
 
-**Production**: [https://indiebus.vercel.app](https://indiebus.vercel.app)
+**Production**: [https://indieyatra.vercel.app](https://indieyatra.vercel.app)
 
 Every push to `main` triggers an automatic production deployment.
 

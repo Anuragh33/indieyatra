@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/auth"
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
-	"github.com/anuragh/indiebus/backend/internal/services"
+	"github.com/anuragh/indieyatra/backend/internal/auth"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/services"
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
@@ -291,4 +291,25 @@ func (h *Handlers) UpdatePreferences(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "update failed"})
 	}
 	return c.JSON(http.StatusOK, map[string]string{"status": "updated"})
+}
+
+// SubscribePremium activates IndieYatra Premium for the authenticated user for
+// one year. Payment is assumed handled by the existing Razorpay flow on the
+// client; this endpoint records the entitlement.
+func (h *Handlers) SubscribePremium(c echo.Context) error {
+	uid := auth.GetUserID(c)
+	if uid == "" {
+		return c.JSON(http.StatusUnauthorized, map[string]string{"error": "unauthorized"})
+	}
+	expires := time.Now().AddDate(1, 0, 0)
+	if err := db.DB.Model(&models.User{}).Where("id = ?", uid).Updates(map[string]interface{}{
+		"is_premium":         true,
+		"premium_expires_at": expires,
+	}).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "subscription failed"})
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"is_premium":         true,
+		"premium_expires_at": expires,
+	})
 }

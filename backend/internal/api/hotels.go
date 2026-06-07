@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/auth"
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/auth"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
@@ -195,6 +195,10 @@ func (h *Handlers) CreateHotelBooking(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid hotel_id"})
 	}
+	var hotel models.Hotel
+	if err := db.DB.First(&hotel, "id = ?", hotelID).Error; err != nil {
+		return c.JSON(http.StatusNotFound, map[string]string{"error": "hotel not found"})
+	}
 	roomID, err := uuid.Parse(req.RoomID)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid room_id"})
@@ -268,13 +272,7 @@ func (h *Handlers) CreateHotelBooking(c echo.Context) error {
 
 	db.DB.Model(&room).Update("available_rooms", room.AvailableRooms-req.RoomCount)
 
-	// Phase 5: WhatsApp delivery
-	if req.GuestPhone != "" {
-		go func() {
-			msg := "Your IndieYatra hotel booking " + ref + " at " + booking.GuestName + " is confirmed. Check-in: " + req.CheckIn + ". View details in the app."
-			_ = h.EmailSvc.SendWhatsApp(req.GuestPhone, msg)
-		}()
-	}
+	go SendHotelBookingNotifications(h.EmailSvc, booking, hotel, room, req.GuestEmail, req.GuestPhone)
 
 	return c.JSON(http.StatusCreated, map[string]interface{}{
 		"booking_ref":  ref,

@@ -1,4 +1,4 @@
-// IndieBus translations — Gujarati (ગુજરાતી)
+// IndieYatra translations — Gujarati (ગુજરાતી)
 import type { Translations } from "./en";
 import en from "./en";
 
@@ -25,7 +25,7 @@ const gu: Translations = {
     viewAll: "બધું જુઓ →",
     priceTrends: "ભાવ પ્રવૃત્તિ",
     priceDrop: "↓ ૧૨% ઘટાડો",
-    premium: "IndieBus પ્રીમિયમ",
+    premium: "IndieYatra પ્રીમિયમ",
     premiumSub: "અમર્યાદિત ડીલ, પ્રાધાન્ય સહાય અને કોઈ છૂપી ફી નહીં.",
     perkDeals: "અમર્યાદિત ડીલ",
     perkSupport: "પ્રાધાન્ય સહાય",

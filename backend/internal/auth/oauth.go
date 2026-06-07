@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/anuragh/indiebus/backend/internal/config"
+	"github.com/anuragh/indieyatra/backend/internal/config"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )

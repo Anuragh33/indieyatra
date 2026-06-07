@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/config"
+	"github.com/anuragh/indieyatra/backend/internal/config"
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -21,7 +21,7 @@ func GenerateToken(userID, email string) (string, error) {
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(7 * 24 * time.Hour)),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
-			Issuer:    "indiebus",
+			Issuer:    "indieyatra",
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

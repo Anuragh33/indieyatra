@@ -1,4 +1,4 @@
-// IndieBus translations — Marathi (मराठी)
+// IndieYatra translations — Marathi (मराठी)
 import type { Translations } from "./en";
 import en from "./en";
 
@@ -24,7 +24,7 @@ const mr: Translations = {
     topDestinationsSub: "भारतीय प्रवाशांच्या आवडत्या मार्ग",
     priceTrends: "किंमत कल",
     priceDrop: "↓ 12% घट",
-    premium: "IndieBus प्रीमियम",
+    premium: "IndieYatra प्रीमियम",
     upgradeNow: "आता अपग्रेड करा",
     popularRoutes: "लोकप्रिय मार्ग",
     from: "पासून",

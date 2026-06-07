@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
 import { MobileNav } from "@/components/MobileNav";
 import { apiGet, apiPost, getToken, WS_URL } from "@/lib/api";
+import { useAuth } from "@/lib/auth";
 import type { Schedule, Seat, Bus, Operator } from "@/lib/types";
 import { formatTime, formatDuration } from "@/lib/utils";
 import { useCurrency } from "@/lib/currency";
@@ -30,6 +31,7 @@ export default function BusDetails() {
   const router = useRouter();
   const id = params.id as string;
   const t = useT();
+  const { user } = useAuth();
   const { success, error: toastError } = useToast();
   const { format: formatPrice } = useCurrency();
   const [schedule, setSchedule] = useState<Schedule | null>(null);
@@ -125,7 +127,7 @@ export default function BusDetails() {
     .reduce((sum, s) => sum + s.price, 0);
 
   const proceedToCheckout = () => {
-    if (!getToken()) {
+    if (!user && !getToken()) {
       router.push("/login?redirect=/checkout");
       return;
     }

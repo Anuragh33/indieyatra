@@ -7,8 +7,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
 	"github.com/google/uuid"
 )
 
@@ -167,35 +167,13 @@ func RunIfEmpty() error {
 	var count int64
 	db.DB.Model(&models.City{}).Count(&count)
 	if count > 0 {
-		log.Printf("✓ Bus seed skipped (already %d cities)", count)
-		if err := SeedAdditionalOperators(); err != nil {
-			log.Printf("⚠ additional operators: %v", err)
-		}
-		if err := SeedAdditionalCities(); err != nil {
-			log.Printf("⚠ additional cities: %v", err)
-		}
-		if err := SeedAdditionalRoutes(); err != nil {
-			log.Printf("⚠ additional routes: %v", err)
-		}
-		if err := SeedTrainsIfEmpty(); err != nil {
-			return err
-		}
-		if err := SeedAdditionalStations(); err != nil {
-			log.Printf("⚠ additional stations: %v", err)
-		}
-		if err := SeedAdditionalTrains(); err != nil {
-			log.Printf("⚠ additional trains: %v", err)
-		}
-		SeedFlights()
-		if err := ExtendTrainSchedules(90); err != nil {
-			log.Printf("⚠ extend train schedules: %v", err)
-		}
-		ExtendFlightSchedules(90)
-		if err := ExtendBusSchedules(90); err != nil {
+		log.Printf("✓ Data already imported (%d cities) — skipping seed", count)
+		ExtendFlightSchedules(30)
+		if err := ExtendBusSchedules(30); err != nil {
 			log.Printf("⚠ extend bus schedules: %v", err)
 		}
-		if err := SeedHotelsIfEmpty(); err != nil {
-			return err
+		if err := GenerateTrainSchedules(30); err != nil {
+			log.Printf("⚠ generate train schedules: %v", err)
 		}
 		return nil
 	}
@@ -487,15 +465,12 @@ func RunIfEmpty() error {
 		log.Printf("⚠ additional trains: %v", err)
 	}
 	SeedFlights()
-	if err := ExtendTrainSchedules(90); err != nil {
-		log.Printf("⚠ extend train schedules: %v", err)
-	}
-	ExtendFlightSchedules(90)
-	if err := ExtendBusSchedules(90); err != nil {
+	ExtendFlightSchedules(30)
+	if err := ExtendBusSchedules(30); err != nil {
 		log.Printf("⚠ extend bus schedules: %v", err)
 	}
-	if err := SeedHotelsIfEmpty(); err != nil {
-		return fmt.Errorf("seed hotels: %w", err)
+	if err := GenerateTrainSchedules(30); err != nil {
+		log.Printf("⚠ generate train schedules: %v", err)
 	}
 	return nil
 }

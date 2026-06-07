@@ -1,4 +1,4 @@
-// IndieBus translations — Telugu (తెలుగు)
+// IndieYatra translations — Telugu (తెలుగు)
 import type { Translations } from "./en";
 import en from "./en";
 
@@ -23,7 +23,7 @@ const te: Translations = {
     topDestinations: "అగ్ర గమ్యాలు",
     priceTrends: "ధర ధోరణి",
     priceDrop: "↓ 12% తగ్గింపు",
-    premium: "IndieBus ప్రీమియం",
+    premium: "IndieYatra ప్రీమియం",
     upgradeNow: "ఇప్పుడే అప్‌గ్రేడ్ చేయండి",
     popularRoutes: "ప్రసిద్ధ మార్గాలు",
     from: "నుండి",

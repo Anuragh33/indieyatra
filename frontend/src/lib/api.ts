@@ -12,17 +12,17 @@ export function setClerkTokenGetter(fn: (() => Promise<string | null>) | null) {
 
 export function getToken(): string | null {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem("indiebus_token");
+  return localStorage.getItem("indieyatra_token");
 }
 
 export function setToken(token: string) {
   if (typeof window === "undefined") return;
-  localStorage.setItem("indiebus_token", token);
+  localStorage.setItem("indieyatra_token", token);
 }
 
 export function clearToken() {
   if (typeof window === "undefined") return;
-  localStorage.removeItem("indiebus_token");
+  localStorage.removeItem("indieyatra_token");
 }
 
 export async function api<T = unknown>(

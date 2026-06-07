@@ -17,7 +17,7 @@ const PREMIUM = [
   "AI Concierge — full access",
   "Early Tatkal access (30 min before public)",
   "Unlimited price alerts",
-  "WhatsApp tickets + updates",
+  "WhatsApp tickets + updates (coming soon)",
   "Free seat selection on flights",
   "Priority 24/7 support",
   "Exclusive member-only deals",

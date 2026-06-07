@@ -8,11 +8,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/auth"
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
-	"github.com/anuragh/indiebus/backend/internal/services"
-	"github.com/anuragh/indiebus/backend/internal/websocket"
+	"github.com/anuragh/indieyatra/backend/internal/auth"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/services"
+	"github.com/anuragh/indieyatra/backend/internal/websocket"
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -327,14 +327,22 @@ func (h *Handlers) VerifyPayment(c echo.Context) error {
 	booking.ETicketSent = true
 	db.DB.Save(&booking)
 
-	// Send e-ticket (logs in dev mode)
 	go func() {
-		subject := "IndieBus e-Ticket: " + booking.BookingRef
-		body := buildETicketHTML(booking)
-		_ = h.EmailSvc.SendETicket(booking.ContactEmail, subject, body)
-		if booking.WhatsAppEnabled {
-			_ = h.EmailSvc.SendWhatsApp(booking.ContactPhone, "Your IndieBus ticket "+booking.BookingRef+" is confirmed. View it in the app: IndieBus > Trips.")
-		}
+		subject := "IndieYatra e-Ticket: " + booking.BookingRef
+		_ = h.EmailSvc.SendETicket(booking.ContactEmail, subject, buildETicketHTML(booking))
+		sms := "IndieYatra Bus Booking CONFIRMED\nRef: " + booking.BookingRef + "\n" +
+			booking.Schedule.Route.FromCity.Name + " → " + booking.Schedule.Route.ToCity.Name +
+			"\n" + booking.Schedule.DepartureAt.Format("02 Jan 2006 15:04") +
+			"\nTotal: ₹" + strconv.FormatFloat(booking.TotalAmount, 'f', 0, 64) +
+			"\nView: indieya.in/trips"
+		_ = h.EmailSvc.SendSMS(booking.ContactPhone, sms)
+		wa := "🚌 *IndieYatra Bus Booking Confirmed*\n\nRef: *" + booking.BookingRef + "*\n" +
+			booking.Schedule.Route.FromCity.Name + " → " + booking.Schedule.Route.ToCity.Name +
+			"\n" + booking.Schedule.DepartureAt.Format("02 Jan 2006") + " at " + booking.Schedule.DepartureAt.Format("15:04") +
+			"\nOperator: " + booking.Schedule.Operator.Name +
+			"\nTotal: *₹" + strconv.FormatFloat(booking.TotalAmount, 'f', 0, 64) + "*" +
+			"\n\nView your ticket: IndieYatra > Trips"
+		_ = h.EmailSvc.SendWhatsApp(booking.ContactPhone, wa)
 	}()
 
 	return c.JSON(http.StatusOK, map[string]string{"status": "verified", "booking_ref": booking.BookingRef})
@@ -362,11 +370,11 @@ func buildETicketHTML(b models.Booking) string {
 	paxList := joinNonEmpty(names, ", ")
 
 	return fmt.Sprintf(`<!doctype html>
-<html><head><meta charset="utf-8"><title>IndieBus e-Ticket %s</title></head>
+<html><head><meta charset="utf-8"><title>IndieYatra e-Ticket %s</title></head>
 <body style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#0F172A;color:#E2E8F0;padding:24px;margin:0">
   <div style="max-width:560px;margin:0 auto;background:#1E293B;border:1px solid #334155;border-radius:16px;overflow:hidden">
     <div style="background:linear-gradient(135deg,#FF6B1A,#FF8A3D);padding:20px 24px">
-      <div style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;opacity:.85">IndieBus · e-Ticket</div>
+      <div style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;opacity:.85">IndieYatra · e-Ticket</div>
       <div style="font-size:24px;font-weight:700;margin-top:4px">Booking %s</div>
       <div style="font-size:13px;opacity:.9;margin-top:2px">Status: <strong>CONFIRMED</strong></div>
     </div>
@@ -406,7 +414,7 @@ func buildETicketHTML(b models.Booking) string {
       </p>
     </div>
     <div style="background:#0F172A;padding:14px 24px;font-size:11px;color:#64748B;text-align:center">
-      IndieBus · Made in India · This is an electronic ticket, no printout required.
+      IndieYatra · Made in India · This is an electronic ticket, no printout required.
     </div>
   </div>
 </body></html>`,

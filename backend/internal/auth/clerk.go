@@ -10,8 +10,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
 	"github.com/clerk/clerk-sdk-go/v2"
 	clerkjwt "github.com/clerk/clerk-sdk-go/v2/jwt"
 	clerkuser "github.com/clerk/clerk-sdk-go/v2/user"

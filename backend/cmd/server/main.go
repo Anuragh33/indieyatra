@@ -9,15 +9,15 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/api"
-	"github.com/anuragh/indiebus/backend/internal/auth"
-	"github.com/anuragh/indiebus/backend/internal/config"
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
-	"github.com/anuragh/indiebus/backend/internal/seed"
-	"github.com/anuragh/indiebus/backend/internal/services"
-	"github.com/anuragh/indiebus/backend/internal/websocket"
-	"github.com/anuragh/indiebus/backend/internal/workers"
+	"github.com/anuragh/indieyatra/backend/internal/api"
+	"github.com/anuragh/indieyatra/backend/internal/auth"
+	"github.com/anuragh/indieyatra/backend/internal/config"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/seed"
+	"github.com/anuragh/indieyatra/backend/internal/services"
+	"github.com/anuragh/indieyatra/backend/internal/websocket"
+	"github.com/anuragh/indieyatra/backend/internal/workers"
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -25,7 +25,7 @@ import (
 
 func main() {
 	cfg := config.Load()
-	log.Printf("🚀 IndieBus API starting (env=%s)", cfg.AppEnv)
+	log.Printf("🚀 IndieYatra API starting (env=%s)", cfg.AppEnv)
 
 	auth.InitClerk(cfg.ClerkSecretKey)
 
@@ -57,10 +57,13 @@ func main() {
 		SMTPUser:       cfg.SMTPUser,
 		SMTPPassword:   cfg.SMTPPassword,
 		EmailFrom:      cfg.EmailFrom,
-		EmailFromName:  "IndieBus",
+		EmailFromName:  "IndieYatra",
 		WhatsAppAPIURL: cfg.WhatsAppAPIURL,
 		WhatsAppToken:  cfg.WhatsAppToken,
 		WhatsAppPhone:  cfg.WhatsAppPhone,
+		TwilioSID:      cfg.TwilioSID,
+		TwilioToken:    cfg.TwilioToken,
+		TwilioFrom:     cfg.TwilioFrom,
 	})
 
 	h := &api.Handlers{
@@ -97,7 +100,7 @@ func main() {
 		}
 	}()
 
-	log.Printf("✓ IndieBus API listening on :%s", cfg.Port)
+	log.Printf("✓ IndieYatra API listening on :%s", cfg.Port)
 
 	// Graceful shutdown
 	quit := make(chan os.Signal, 1)

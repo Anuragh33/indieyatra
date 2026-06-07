@@ -1,4 +1,4 @@
-// IndieBus translations — Kannada (ಕನ್ನಡ)
+// IndieYatra translations — Kannada (ಕನ್ನಡ)
 import type { Translations } from "./en";
 import en from "./en";
 
@@ -23,7 +23,7 @@ const kn: Translations = {
     topDestinations: "ಅಗ್ರ ಗಮ್ಯಸ್ಥಾನಗಳು",
     priceTrends: "ಬೆಲೆ ಪ್ರವೃತ್ತಿ",
     priceDrop: "↓ 12% ಇಳಿಕೆ",
-    premium: "IndieBus ಪ್ರೀಮಿಯಂ",
+    premium: "IndieYatra ಪ್ರೀಮಿಯಂ",
     upgradeNow: "ಈಗ ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಿ",
     popularRoutes: "ಜನಪ್ರಿಯ ಮಾರ್ಗಗಳು",
     from: "ಇಂದ",

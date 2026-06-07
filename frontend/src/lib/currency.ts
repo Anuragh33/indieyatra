@@ -27,6 +27,6 @@ export const useCurrency = create<CurrencyState>()(
         return `₹${new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 }).format(Math.round(inrAmount))}`;
       },
     }),
-    { name: "indiebus-currency" }
+    { name: "indieyatra-currency" }
   )
 );

@@ -1,4 +1,4 @@
-// IndieBus translations — Hindi (हिन्दी)
+// IndieYatra translations — Hindi (हिन्दी)
 import type { Translations } from "./en";
 import en from "./en";
 
@@ -25,7 +25,7 @@ const hi: Translations = {
     viewAll: "सब देखें →",
     priceTrends: "मूल्य रुझान",
     priceDrop: "↓ 12% गिरावट",
-    premium: "IndieBus प्रीमियम",
+    premium: "IndieYatra प्रीमियम",
     premiumSub: "असीमित डील, प्राथमिकता सहायता और कोई छुपी फीस नहीं।",
     perkDeals: "असीमित डील",
     perkSupport: "प्राथमिकता सहायता",

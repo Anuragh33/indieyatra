@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/anuragh/indiebus/backend/internal/auth"
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/auth"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 )
@@ -75,6 +75,17 @@ func (h *Handlers) SearchFlights(c echo.Context) error {
 	}
 	startOfDay := date.Truncate(24 * time.Hour)
 	endOfDay := startOfDay.Add(24 * time.Hour)
+
+	if c.QueryParam("fare_calendar") != "" {
+		return fareCalendarResponse(c, db.DB.Model(&models.FlightSchedule{}).
+			Select("to_char(flight_schedules.journey_date, 'YYYY-MM-DD') AS date, MIN(flight_schedules.base_fare + flight_schedules.taxes_and_fees) AS min_fare").
+			Joins("JOIN airports fa ON fa.id = flight_schedules.from_airport_id").
+			Joins("JOIN airports ta ON ta.id = flight_schedules.to_airport_id").
+			Where("fa.iata = ? AND ta.iata = ?", from, to).
+			Where("flight_schedules.is_active = true AND flight_schedules.available_seats > 0").
+			Where("flight_schedules.deleted_at IS NULL"),
+			"flight_schedules.journey_date", startOfDay, calendarDays(c))
+	}
 
 	var schedules []models.FlightSchedule
 	q := db.DB.Preload("Airline").Preload("FromAirport").Preload("ToAirport").
@@ -282,15 +293,7 @@ func (h *Handlers) CreateFlightBooking(c echo.Context) error {
 
 	booking.Passengers = passengers
 
-	// Phase 5: WhatsApp delivery
-	if req.ContactPhone != "" {
-		go func() {
-			msg := "Your IndieYatra flight booking " + bookingRef + " (PNR: " + booking.PNR + ") is confirmed. " +
-				sched.Airline.Name + " " + sched.FlightNumber + " — " + sched.FromAirport.City + " to " + sched.ToAirport.City +
-				" on " + sched.JourneyDate.Format("02 Jan 2006") + ". View details in the app."
-			_ = h.EmailSvc.SendWhatsApp(req.ContactPhone, msg)
-		}()
-	}
+	go SendFlightBookingNotifications(h.EmailSvc, booking, sched, req.ContactEmail, req.ContactPhone)
 
 	return c.JSON(http.StatusCreated, booking)
 }

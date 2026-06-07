@@ -61,7 +61,7 @@ function AirportInput({ initialValue, onSelect, placeholder }: {
         autoComplete="off"
       />
       {open && (
-        <div className="absolute z-50 top-full mt-1 w-full min-w-[280px] bg-bg-elevated border border-border rounded-md shadow-card max-h-56 overflow-y-auto">
+        <div className="absolute z-[9999] top-full mt-1 w-full min-w-[280px] bg-bg-elevated border border-border rounded-md shadow-card max-h-56 overflow-y-auto">
           {opts.map(a => (
             <button
               key={a.id}
@@ -147,7 +147,7 @@ function FlightsLanding() {
     <>
       <Navbar />
       <main className="min-h-screen pb-24 md:pb-8">
-        <section className="relative overflow-hidden border-b border-border flex flex-col md:min-h-screen">
+        <section className="relative border-b border-border flex flex-col md:min-h-screen">
           <div className="relative aspect-video md:absolute md:inset-0 overflow-hidden pointer-events-none">
             <img
               src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920&q=80"
@@ -175,7 +175,7 @@ function FlightsLanding() {
                 </p>
               </div>
 
-              <div className="bg-bg-elevated border border-border rounded-xl shadow-card overflow-hidden">
+              <div className="bg-bg-elevated border border-border rounded-xl shadow-card">
                 {/* Tabs */}
                 <div className="flex border-b border-border px-4 pt-3">
                   {(["one-way", "round-trip"] as const).map((type) => (

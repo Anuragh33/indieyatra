@@ -205,9 +205,9 @@ export default function ProfilePage() {
               </div>
             </div>
             {!user.is_premium && (
-              <button className="hidden md:flex btn-primary text-sm items-center gap-1">
+              <Link href="/premium" className="hidden md:flex btn-primary text-sm items-center gap-1">
                 <Crown className="w-4 h-4" /> {t("profile.upgrade")}
-              </button>
+              </Link>
             )}
           </div>
 

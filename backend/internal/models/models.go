@@ -15,7 +15,7 @@ type Base struct {
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
-// User represents a registered IndieBus user
+// User represents a registered IndieYatra user
 type User struct {
 	Base
 	ClerkID          string         `gorm:"uniqueIndex;default:null" json:"-"`

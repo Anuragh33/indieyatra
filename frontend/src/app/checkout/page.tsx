@@ -91,7 +91,7 @@ export default function CheckoutPage() {
 
   const next = () => {
     if (step === "review") {
-      if (!getToken()) {
+      if (!user && !getToken()) {
         router.push("/login?redirect=/checkout");
         return;
       }
@@ -158,7 +158,7 @@ export default function CheckoutPage() {
         amount: Math.round(total * 100),
         currency: "INR",
         order_id: orderRes.order_id,
-        name: "IndieBus",
+        name: "IndieYatra",
         description: "Bus Ticket Booking",
         prefill: { email: contact.email, contact: contact.phone },
         theme: { color: "#FF6B1A" },
@@ -399,15 +399,14 @@ export default function CheckoutPage() {
                           </div>
                         </div>
                       </div>
-                      <label className="flex items-center gap-2 text-sm text-text-secondary cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={contact.whatsapp}
-                          onChange={(e) => setContact({ ...contact, whatsapp: e.target.checked })}
-                          className="accent-teal"
-                        />
-                        <MessageCircle className="w-3.5 h-3.5 text-teal" /> {t("checkout.whatsappOpt")}
-                      </label>
+                      <div className="flex items-center gap-2 text-sm text-text-muted opacity-60 cursor-not-allowed select-none">
+                        <input type="checkbox" disabled className="accent-teal" />
+                        <MessageCircle className="w-3.5 h-3.5" />
+                        Send ticket via WhatsApp
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-purple/20 text-purple border border-purple/30 uppercase tracking-wide">
+                          Coming Soon
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </StepCard>
@@ -517,7 +516,7 @@ export default function CheckoutPage() {
                     </h2>
                     <p className="text-text-secondary text-sm mb-4">
                       {t("checkout.confirmedSub")}
-                      {contact.whatsapp && " and WhatsApp"}.
+.
                     </p>
                     {confirmedRef && (
                       <div className="card p-4 inline-block mb-6">
@@ -558,7 +557,7 @@ export default function CheckoutPage() {
                             const date = schedules?.departure_at
                               ? new Date(schedules.departure_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
                               : "";
-                            const msg = `My IndieBus ticket is confirmed! 🚌\nRef: ${confirmedRef}\nRoute: ${from} → ${to}\nDate: ${date}`;
+                            const msg = `My IndieYatra ticket is confirmed! 🚌\nRef: ${confirmedRef}\nRoute: ${from} → ${to}\nDate: ${date}`;
                             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
                           }}
                           className="btn-secondary text-sm flex items-center gap-1"
@@ -616,7 +615,7 @@ export default function CheckoutPage() {
               <ul className="mt-4 space-y-1.5 text-xs text-text-secondary">
                 <Perk text={t("checkout.perks.bestPrice")} />
                 <Perk text={t("checkout.perks.cancel")} />
-                <Perk text={t("checkout.perks.whatsapp")} />
+                <Perk text="WhatsApp tickets (coming soon)" />
                 <Perk text={t("checkout.perks.support")} />
               </ul>
             </aside>

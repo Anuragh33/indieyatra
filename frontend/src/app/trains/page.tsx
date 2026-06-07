@@ -67,7 +67,7 @@ function StationInput({
         autoComplete="off"
       />
       {open && (
-        <div className="absolute z-50 top-full mt-1 w-full min-w-[260px] bg-bg-elevated border border-border rounded-md shadow-card max-h-56 overflow-y-auto">
+        <div className="absolute z-[9999] top-full mt-1 w-full min-w-[260px] bg-bg-elevated border border-border rounded-md shadow-card max-h-56 overflow-y-auto">
           {opts.map(s => (
             <button
               key={s.id}
@@ -159,7 +159,7 @@ function TrainsLanding() {
     <>
       <Navbar />
       <main className="min-h-screen pb-24 md:pb-8">
-        <section className="relative overflow-hidden border-b border-border flex flex-col md:min-h-screen">
+        <section className="relative border-b border-border flex flex-col md:min-h-screen">
           <div className="relative aspect-video md:absolute md:inset-0 overflow-hidden pointer-events-none">
             <img
               src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=1920&q=80"
@@ -188,7 +188,7 @@ function TrainsLanding() {
                 </p>
               </div>
 
-              <div className="bg-bg-elevated border border-border rounded-xl shadow-card overflow-hidden">
+              <div className="bg-bg-elevated border border-border rounded-xl shadow-card">
                 {/* Tabs */}
                 <div className="flex border-b border-border px-4 pt-3">
                   {(["one-way", "round-trip"] as const).map((type) => (

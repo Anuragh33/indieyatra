@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/anuragh/indiebus/backend/internal/auth"
-	"github.com/anuragh/indiebus/backend/internal/db"
-	"github.com/anuragh/indiebus/backend/internal/models"
+	"github.com/anuragh/indieyatra/backend/internal/auth"
+	"github.com/anuragh/indieyatra/backend/internal/db"
+	"github.com/anuragh/indieyatra/backend/internal/models"
 	"github.com/labstack/echo/v4"
 	"golang.org/x/oauth2"
 	"gorm.io/gorm"

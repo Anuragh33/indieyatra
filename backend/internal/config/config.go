@@ -45,6 +45,10 @@ type Config struct {
 	WhatsAppAPIURL string
 	WhatsAppToken  string
 	WhatsAppPhone  string
+
+	TwilioSID   string
+	TwilioToken string
+	TwilioFrom  string
 }
 
 var Cfg *Config
@@ -63,7 +67,7 @@ func Load() *Config {
 		DatabaseURL: getEnv("DATABASE_URL", ""),
 		RedisURL:    getEnv("REDIS_URL", "redis://localhost:6379"),
 
-		JWTSecret:          getEnv("JWT_SECRET", "indiebus-dev-secret-change-me"),
+		JWTSecret:          getEnv("JWT_SECRET", "indieyatra-dev-secret-change-me"),
 		JWTExpiry:          getDurationEnv("JWT_EXPIRY", 24*time.Hour),
 		RefreshTokenExpiry: getDurationEnv("REFRESH_TOKEN_EXPIRY", 7*24*time.Hour),
 
@@ -86,11 +90,15 @@ func Load() *Config {
 		SMTPPort:     getEnv("SMTP_PORT", "587"),
 		SMTPUser:     getEnv("SMTP_USER", ""),
 		SMTPPassword: getEnv("SMTP_PASSWORD", ""),
-		EmailFrom:    getEnv("EMAIL_FROM", "tickets@indiebus.in"),
+		EmailFrom:    getEnv("EMAIL_FROM", "tickets@indieyatra.in"),
 
 		WhatsAppAPIURL: getEnv("WHATSAPP_API_URL", ""),
 		WhatsAppToken:  getEnv("WHATSAPP_TOKEN", ""),
 		WhatsAppPhone:  getEnv("WHATSAPP_PHONE_ID", ""),
+
+		TwilioSID:   getEnv("TWILIO_ACCOUNT_SID", ""),
+		TwilioToken: getEnv("TWILIO_AUTH_TOKEN", ""),
+		TwilioFrom:  getEnv("TWILIO_FROM_NUMBER", ""),
 	}
 
 	Cfg = cfg

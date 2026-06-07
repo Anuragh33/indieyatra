@@ -1,14 +1,14 @@
 package api
 
 import (
-	"github.com/anuragh/indiebus/backend/internal/auth"
+	"github.com/anuragh/indieyatra/backend/internal/auth"
 	"github.com/labstack/echo/v4"
 )
 
 func RegisterRoutes(e *echo.Echo, h *Handlers) {
 	// Public
 	e.GET("/api/health", func(c echo.Context) error {
-		return c.JSON(200, map[string]string{"status": "ok", "service": "indiebus"})
+		return c.JSON(200, map[string]string{"status": "ok", "service": "indieyatra"})
 	})
 	e.POST("/api/auth/register", h.Register)
 	e.POST("/api/auth/login", h.Login)
@@ -50,6 +50,9 @@ func RegisterRoutes(e *echo.Echo, h *Handlers) {
 	e.GET("/api/hotels/cities", h.HotelCities)
 	e.GET("/api/hotels/search", h.SearchHotels)
 	e.GET("/api/hotels/:id", h.GetHotel)
+
+	// Combo deals (transport + hotel) — public
+	e.POST("/api/combos/search", h.SearchCombos)
 
 	// Protected
 	authed := e.Group("/api", auth.Middleware())
@@ -122,6 +125,7 @@ func RegisterRoutes(e *echo.Echo, h *Handlers) {
 	authed.GET("/users/me", h.GetProfile)
 	authed.PUT("/users/me", h.UpdateProfile)
 	authed.PUT("/users/preferences", h.UpdatePreferences)
+	authed.POST("/users/premium/subscribe", h.SubscribePremium)
 
 	// Saved payment methods
 	authed.GET("/payment-methods", h.ListPaymentMethods)

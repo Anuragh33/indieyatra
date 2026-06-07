@@ -47,7 +47,7 @@ export const useLanguage = create<LangState>()(
         }
       },
     }),
-    { name: "indiebus-lang" }
+    { name: "indieyatra-lang" }
   )
 );
 

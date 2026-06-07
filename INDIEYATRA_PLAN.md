@@ -1,5 +1,5 @@
 # IndieYatra — Build Plan
-> IndieBus is 75% done. This plan extends it into a 4-vertical travel super-app.
+> IndieYatra is 75% done. This plan extends it into a 4-vertical travel super-app.
 > Work through phases top to bottom. Check off tasks as they complete.
 
 ---
@@ -38,8 +38,9 @@ Typography: Clash Display (headings) + DM Sans (body) — already loaded.
       - Active tab uses vertical's accent color
       - Tab URLs: / (bus) · /trains · /flights · /hotels
 - [x] Update MobileNav: add Train / Flights / Hotels icons to bottom bar
-- [ ] Home page hero: swap SearchWidget based on active vertical tab
-- [ ] Update sidebar nav (if any) with new verticals
+- [x] Home page hero: 4-vertical chooser (LandingHero cards route to each
+      vertical's own search page — resolved via card grid, not in-place swap)
+- [x] Update sidebar nav (if any) with new verticals
 
 ---
 
@@ -228,14 +229,34 @@ Typography: Clash Display (headings) + DM Sans (body) — already loaded.
 
 ---
 
-## Current Status
-- Phase 0: MOSTLY DONE (hero widget swap + sidebar remaining)
-- Phase 1: NOT STARTED  
-- Phase 2: NOT STARTED
-- Phase 3: NOT STARTED
-- Phase 4: NOT STARTED
-- Phase 5: Partially done (bus WhatsApp exists)
-- Phase 6: Partially done (PWA infra exists)
+## Current Status (audited 2026-06-06 against the actual codebase)
+> The phase checkboxes above predate the build and were never updated. Verified
+> against backend (`go build ./...` clean) and frontend (`tsc --noEmit` clean).
+- Phase 0: DONE — IndieYatra rebrand, tokens, vertical tabs, navbar + mobile nav,
+  hero vertical chooser all shipped.
+- Phase 1 (Trains): BUILT — models, seed (trains + stations + class availability),
+  search/schedule/PNR/booking APIs, /trains, /trains/[id] (with berth map),
+  /trains/search, /trains/booking/[id], train checkout. WhatsApp e-ticket on book.
+- Phase 2 (Flights): BUILT — models, seed, search/detail/booking APIs, /flights,
+  /flights/[id] (with seat map + fare tabs), /flights/search, flight checkout.
+  Fare calendar now wired (backend `fare_calendar` param, 2026-06-06).
+- Phase 3 (Hotels): BUILT — models, seed, cities/search/detail/booking APIs,
+  /hotels, /hotels/[id], /hotels/search, hotel checkout. WhatsApp voucher on book.
+- Phase 4 (Cross-vertical): BUILT — /trips, /rewards, /alerts, /planner,
+  /concierge, /optimize, /wishlist all present and API-wired. Premium page +
+  /api/users/premium/subscribe added 2026-06-06. Combo deals (Flight/Train/Bus +
+  Hotel bundles, POST /api/combos/search + ComboBanner "Bundle & Save" on
+  flights search) added 2026-06-06.
+- Phase 5 (WhatsApp delivery): DONE for all 4 verticals + worker alerts
+  (SendWhatsApp wired in bus/train/flight/hotel booking handlers).
+- Phase 6 (PWA): Partially done (PWA infra + manifest rename exist).
+
+### Verified remaining gaps
+- [ ] Granular sub-resource APIs (/flights/:id/seats, /trains/:id/seats,
+      /hotels/:id/rooms) — seat/berth/room maps are currently rendered
+      client-side from deterministic data, not a dedicated backend endpoint.
+- [ ] Premium subscribe is recorded directly (no real payment capture step);
+      wire to Razorpay if real billing is required.
 
 ## Notes
 - Never rebuild the existing bus vertical — only extend/integrate it

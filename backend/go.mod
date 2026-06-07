@@ -1,4 +1,4 @@
-module github.com/anuragh/indiebus/backend
+module github.com/anuragh/indieyatra/backend
 
 go 1.24.0
 

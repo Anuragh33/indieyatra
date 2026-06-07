@@ -5,6 +5,7 @@ import { Plane, Search, ArrowLeftRight, SlidersHorizontal, Wifi, Utensils, Lugga
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
 import { Navbar } from "@/components/Navbar";
 import { MobileNav } from "@/components/MobileNav";
+import { ComboBanner } from "@/components/ComboBanner";
 import { api } from "@/lib/api";
 
 interface Airport { id: string; iata: string; name: string; city: string; state: string; }
@@ -252,6 +253,10 @@ function FlightSearchInner() {
             {minFare > 0 && !loading && <span className="text-text-muted">· from <span className="text-flight font-semibold">₹{Math.round(minFare).toLocaleString()}</span></span>}
           </div>
         </div>
+
+        {fromParam && toParam && (
+          <ComboBanner from={fromParam} to={toParam} date={dateParam} travelers={adultsParam} />
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr_280px] gap-4">
           {/* Filters */}

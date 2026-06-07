@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/anuragh/indiebus/backend/internal/services"
+	"github.com/anuragh/indieyatra/backend/internal/services"
 )
 
 type Handlers struct {

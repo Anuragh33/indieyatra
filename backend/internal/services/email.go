@@ -9,6 +9,7 @@ import (
 	"net"
 	"net/http"
 	"net/smtp"
+	"net/url"
 	"strings"
 	"time"
 )
@@ -27,20 +28,28 @@ type EmailService struct {
 	whatsAppToken string
 	whatsAppPhone string
 
+	twilioSID   string
+	twilioToken string
+	twilioFrom  string
+
 	httpClient *http.Client
 }
 
 type EmailConfig struct {
-	SMTPHost     string
-	SMTPPort     string
-	SMTPUser     string
-	SMTPPassword string
-	EmailFrom    string
+	SMTPHost      string
+	SMTPPort      string
+	SMTPUser      string
+	SMTPPassword  string
+	EmailFrom     string
 	EmailFromName string
 
 	WhatsAppAPIURL string
 	WhatsAppToken  string
 	WhatsAppPhone  string
+
+	TwilioSID   string
+	TwilioToken string
+	TwilioFrom  string
 }
 
 func NewEmailService(cfg EmailConfig) *EmailService {
@@ -54,6 +63,9 @@ func NewEmailService(cfg EmailConfig) *EmailService {
 		whatsAppURL:   cfg.WhatsAppAPIURL,
 		whatsAppToken: cfg.WhatsAppToken,
 		whatsAppPhone: cfg.WhatsAppPhone,
+		twilioSID:     cfg.TwilioSID,
+		twilioToken:   cfg.TwilioToken,
+		twilioFrom:    cfg.TwilioFrom,
 		httpClient: &http.Client{
 			Timeout: 10 * time.Second,
 		},
@@ -184,6 +196,44 @@ func (s *EmailService) SendWhatsApp(to, body string) error {
 		buf := new(bytes.Buffer)
 		_, _ = buf.ReadFrom(resp.Body)
 		return errors.New("whatsapp api error: " + resp.Status + " " + buf.String())
+	}
+	return nil
+}
+
+// SendSMS sends a plain-text SMS via the Twilio REST API. Falls back to stdout
+// logging when credentials are not configured so dev keeps working without keys.
+func (s *EmailService) SendSMS(to, body string) error {
+	if s.twilioSID == "" || s.twilioToken == "" || s.twilioFrom == "" {
+		log.Printf("📱 [SMS] to=%s\n%s\n", to, body)
+		return nil
+	}
+
+	dest := strings.TrimSpace(to)
+	dest = strings.ReplaceAll(dest, " ", "")
+	dest = strings.ReplaceAll(dest, "-", "")
+	if !strings.HasPrefix(dest, "+") {
+		dest = "+" + dest
+	}
+
+	form := strings.NewReader("To=" + dest + "&From=" + s.twilioFrom + "&Body=" + url.QueryEscape(body))
+	apiURL := fmt.Sprintf("https://api.twilio.com/2010-04-01/Accounts/%s/Messages.json", s.twilioSID)
+	req, err := http.NewRequest("POST", apiURL, form)
+	if err != nil {
+		return err
+	}
+	req.SetBasicAuth(s.twilioSID, s.twilioToken)
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	resp, err := s.httpClient.Do(req)
+	if err != nil {
+		log.Printf("📱 [SMS] send error to=%s: %v", dest, err)
+		return err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode >= 300 {
+		buf := new(bytes.Buffer)
+		_, _ = buf.ReadFrom(resp.Body)
+		return errors.New("twilio api error: " + resp.Status + " " + buf.String())
 	}
 	return nil
 }

@@ -1,4 +1,4 @@
-// IndieBus translations — Bengali (বাংলা)
+// IndieYatra translations — Bengali (বাংলা)
 import type { Translations } from "./en";
 import en from "./en";
 
@@ -25,7 +25,7 @@ const bn: Translations = {
     viewAll: "সব দেখুন →",
     priceTrends: "মূল্য প্রবণতা",
     priceDrop: "↓ ১২% হ্রাস",
-    premium: "IndieBus প্রিমিয়াম",
+    premium: "IndieYatra প্রিমিয়াম",
     premiumSub: "সীমাহীন ডিল, অগ্রাধিকার সহায়তা এবং কোনো লুকানো ফি নেই।",
     perkDeals: "সীমাহীন ডিল",
     perkSupport: "অগ্রাধিকার সহায়তা",

@@ -37,6 +37,6 @@ export const useAuth = create<AuthState>()(
         set({ user: null });
       },
     }),
-    { name: "indiebus-auth" }
+    { name: "indieyatra-auth" }
   )
 );

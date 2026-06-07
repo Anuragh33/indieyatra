@@ -318,7 +318,7 @@ export default function BookingDetailPage() {
                 const date = booking.schedule?.departure_at
                   ? new Date(booking.schedule.departure_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
                   : "";
-                const msg = `My IndieBus ticket is confirmed! 🚌\nRef: ${booking.booking_ref}\nRoute: ${from} → ${to}\nDate: ${date}\nTotal: ${formatPrice(booking.total_amount)}`;
+                const msg = `My IndieYatra ticket is confirmed! 🚌\nRef: ${booking.booking_ref}\nRoute: ${from} → ${to}\nDate: ${date}\nTotal: ${formatPrice(booking.total_amount)}`;
                 window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
               }}
               className="btn-secondary flex items-center gap-2"

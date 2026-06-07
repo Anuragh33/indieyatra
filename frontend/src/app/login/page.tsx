@@ -4,9 +4,13 @@ import { dark } from "@clerk/themes";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 import { useTheme } from "@/lib/theme";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function LoginPage() {
+function LoginPageInner() {
   const { theme } = useTheme();
+  const params = useSearchParams();
+  const redirectUrl = params.get("redirect") || "/";
   const isDark = theme === "dark";
   return (
     <div className="min-h-screen grid md:grid-cols-2">
@@ -60,6 +64,7 @@ export default function LoginPage() {
           <SignIn
             routing="hash"
             signUpUrl="/register"
+            forceRedirectUrl={redirectUrl}
             appearance={{
               baseTheme: isDark ? dark : undefined,
               variables: {
@@ -104,5 +109,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginPageInner />
+    </Suspense>
   );
 }

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Train, ArrowLeft, Clock, Zap, Coffee, MapPin,
-  ChevronRight, Info,
+  ChevronRight, Info, ChevronDown, ChevronUp,
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { MobileNav } from "@/components/MobileNav";
@@ -189,6 +189,7 @@ export default function TrainDetailPage({ params }: { params: { id: string } }) 
   const [data, setData] = useState<DetailResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<"stations" | "coach" | "fare">("stations");
+  const [showAllStops, setShowAllStops] = useState(false);
   const [selClass, setSelClass] = useState<string | null>(null);
 
   useEffect(() => {
@@ -333,7 +334,7 @@ export default function TrainDetailPage({ params }: { params: { id: string } }) 
                   </tr>
                 </thead>
                 <tbody>
-                  {stops.map((s, i) => {
+                  {(showAllStops ? stops : stops.slice(0, 5)).map((s, i) => {
                     const isOrigin = s.arrival_time === "--";
                     const isTerm = s.departure_time === "--";
                     return (
@@ -379,6 +380,18 @@ export default function TrainDetailPage({ params }: { params: { id: string } }) 
                 </tbody>
               </table>
             </div>
+            {stops.length > 5 && (
+              <button
+                onClick={() => setShowAllStops(v => !v)}
+                className="w-full py-3 flex items-center justify-center gap-2 text-sm text-train hover:bg-train/5 transition-colors border-t border-border"
+              >
+                {showAllStops ? (
+                  <><ChevronUp className="w-4 h-4" /> Show less</>
+                ) : (
+                  <><ChevronDown className="w-4 h-4" /> View all {stops.length} stations</>
+                )}
+              </button>
+            )}
           </div>
         )}
 

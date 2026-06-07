@@ -1,4 +1,4 @@
-// IndieBus translations — Tamil (தமிழ்)
+// IndieYatra translations — Tamil (தமிழ்)
 import type { Translations } from "./en";
 import en from "./en";
 
@@ -23,7 +23,7 @@ const ta: Translations = {
     topDestinations: "சிறந்த இடங்கள்",
     priceTrends: "விலை போக்கு",
     priceDrop: "↓ 12% குறைவு",
-    premium: "IndieBus பிரீமியம்",
+    premium: "IndieYatra பிரீமியம்",
     upgradeNow: "இப்போது மேம்படுத்து",
     popularRoutes: "பிரபலமான பாதைகள்",
     from: "இருந்து",
